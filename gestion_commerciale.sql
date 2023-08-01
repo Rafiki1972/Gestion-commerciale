@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3307
--- Généré le : sam. 29 juil. 2023 à 22:12
--- Version du serveur : 10.4.24-MariaDB
--- Version de PHP : 8.1.6
+-- Hôte : 127.0.0.1
+-- Généré le : mar. 01 août 2023 à 13:29
+-- Version du serveur : 10.4.25-MariaDB
+-- Version de PHP : 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,7 +32,9 @@ CREATE TABLE `achat` (
   `DateDAchat` date DEFAULT NULL,
   `SupplierID` int(11) DEFAULT NULL,
   `MontantTotal` decimal(10,2) DEFAULT NULL,
-  `Notes` text DEFAULT NULL
+  `Notes` text DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -47,7 +49,9 @@ CREATE TABLE `article` (
   `Description` text DEFAULT NULL,
   `Code` varchar(50) DEFAULT NULL,
   `Cout` decimal(10,2) DEFAULT NULL,
-  `PrixDeVente` decimal(10,2) DEFAULT NULL
+  `PrixDeVente` decimal(10,2) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -62,7 +66,9 @@ CREATE TABLE `articleachat` (
   `ArticleID` int(11) DEFAULT NULL,
   `Quantite` int(11) DEFAULT NULL,
   `PrixUnitaire` decimal(10,2) DEFAULT NULL,
-  `SousTotal` decimal(10,2) DEFAULT NULL
+  `SousTotal` decimal(10,2) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -77,7 +83,9 @@ CREATE TABLE `articlevente` (
   `ArticleID` int(11) DEFAULT NULL,
   `Quantite` int(11) DEFAULT NULL,
   `PrixUnitaire` decimal(10,2) DEFAULT NULL,
-  `SousTotal` decimal(10,2) DEFAULT NULL
+  `SousTotal` decimal(10,2) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -92,7 +100,9 @@ CREATE TABLE `client` (
   `NomDeFamille` varchar(50) NOT NULL,
   `NumeroDeContact` varchar(20) DEFAULT NULL,
   `Email` varchar(100) DEFAULT NULL,
-  `ConditionsDePaiement` varchar(100) DEFAULT NULL
+  `ConditionsDePaiement` varchar(100) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -108,7 +118,9 @@ CREATE TABLE `employe` (
   `NumeroDeContact` varchar(20) DEFAULT NULL,
   `Email` varchar(100) DEFAULT NULL,
   `Poste` varchar(100) DEFAULT NULL,
-  `Salaire` decimal(10,2) DEFAULT NULL
+  `Salaire` decimal(10,2) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -122,7 +134,9 @@ CREATE TABLE `fournisseur` (
   `NomDuFournisseur` varchar(100) NOT NULL,
   `NumeroDeContact` varchar(20) DEFAULT NULL,
   `Email` varchar(100) DEFAULT NULL,
-  `ConditionsDePaiement` varchar(100) DEFAULT NULL
+  `ConditionsDePaiement` varchar(100) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -136,7 +150,9 @@ CREATE TABLE `production` (
   `DateDeProduction` date DEFAULT NULL,
   `NomDuProduit` varchar(100) NOT NULL,
   `QuantiteProduite` int(11) DEFAULT NULL,
-  `Cout` decimal(10,2) DEFAULT NULL
+  `Cout` decimal(10,2) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -151,7 +167,9 @@ CREATE TABLE `stock` (
   `Description` text DEFAULT NULL,
   `QuantiteDisponible` int(11) DEFAULT NULL,
   `PointDeReapprovisionnement` int(11) DEFAULT NULL,
-  `Emplacement` varchar(100) DEFAULT NULL
+  `Emplacement` varchar(100) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -164,7 +182,9 @@ CREATE TABLE `timesheet` (
   `TimesheetID` int(11) NOT NULL,
   `EmployeeID` int(11) DEFAULT NULL,
   `Date` date DEFAULT NULL,
-  `HeuresTravaillees` decimal(6,2) DEFAULT NULL
+  `HeuresTravaillees` decimal(6,2) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -178,7 +198,23 @@ CREATE TABLE `transactioncompte` (
   `DateDeLaTransaction` date DEFAULT NULL,
   `TypeDeTransaction` varchar(20) DEFAULT NULL,
   `Montant` decimal(10,2) DEFAULT NULL,
-  `Notes` text DEFAULT NULL
+  `Notes` text DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user`
+--
+
+CREATE TABLE `user` (
+  `user_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -192,7 +228,9 @@ CREATE TABLE `vente` (
   `DateDeVente` date DEFAULT NULL,
   `ClientID` int(11) DEFAULT NULL,
   `MontantTotal` decimal(10,2) DEFAULT NULL,
-  `Notes` text DEFAULT NULL
+  `Notes` text DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -272,6 +310,12 @@ ALTER TABLE `transactioncompte`
   ADD PRIMARY KEY (`TransactionID`);
 
 --
+-- Index pour la table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- Index pour la table `vente`
 --
 ALTER TABLE `vente`
@@ -347,6 +391,12 @@ ALTER TABLE `timesheet`
 --
 ALTER TABLE `transactioncompte`
   MODIFY `TransactionID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `user`
+--
+ALTER TABLE `user`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `vente`
