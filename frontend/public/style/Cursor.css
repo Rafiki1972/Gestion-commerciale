@@ -1,0 +1,16 @@
+#trailer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    width: 20px;
+    background-color: purple;
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .5s ease;
+}

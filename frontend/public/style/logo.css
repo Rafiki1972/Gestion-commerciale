@@ -1,0 +1,28 @@
+.logo-image {
+    position: absolute;
+    filter :drop-shadow(10px 10px 30px rgba(0, 0, 0, 0.26));
+    animation: LogoAnimation 5s backwards alternate infinite;
+}
+
+.logo-image:nth-child(1){
+    
+}
+
+@keyframes LogoAnimation {
+    from{
+        scale: 1.2;
+        transform: translateY(-50px);
+    }
+}
+
+@media (max-width:600px) {
+    .logo-image {
+        width: 100px;
+    }
+}
+
+@media (max-width:800px) {
+    .logo-image {
+        width: 150px;
+    }
+}
