@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { Helmet } from "react-helmet"
 import Chart from "chart.js";
-
-export default function BarChart() {
+interface ChartDarkMode {
+    DarkMode: boolean
+}
+export default function BarChart(props: ChartDarkMode) {
+    let DarkMode = props.DarkMode;
     React.useEffect(() => {
         const dataPieBar = {
             labels: ["Atay", "N3na3", "Khtek", "Mamak", "Caffe", "Chofan"],
@@ -47,15 +50,15 @@ export default function BarChart() {
             <Helmet>
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             </Helmet>
-            <div className="relative my-5 flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-purple-100">
+            <div className={`relative my-5 flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded transition ${DarkMode ? 'bg-gray-700' : 'bg-purple-100'}`}>
                 <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">
-                            <h1 className="text-purple-600  text-lg font-black	tracking-wide">
-                                Products On Stock :
+                            <h1 className={`text-lg font-black tracking-wide ${DarkMode ? 'text-white' : 'text-purple-600 '}`}>
+                                Products Percentage :
                             </h1>
-                            <p className="text-purple-400  font-extrabold text-sm mt-2">
-                                How much products left on stock
+                            <p className={`font-extrabold text-sm mt-2 ${DarkMode ? 'text-gray-100' : 'text-purple-400'}`}>
+                                Percentage of each product
                             </p>
                         </div>
                     </div>

@@ -1,8 +1,11 @@
 'use client'
-
-export const Footer = () => {
+interface FooterDarkmMode {
+    DarkMode : boolean
+}
+export const Footer = (props : FooterDarkmMode) => {
+    let DarkMode = props.DarkMode;
     return (
-        <div className="relative bg-purple-900">
+        <div className={`relative ${ DarkMode ? 'bg-gray-900' : 'bg-purple-900'}`}>
             <div className="absolute end-4 top-4 sm:end-6 sm:top-6 lg:end-8 lg:top-8">
                 <a
                     // onClick={handleGoUpClick}
@@ -26,7 +29,7 @@ export const Footer = () => {
                 </a>
             </div>
             <svg
-                className="absolute top-0 w-full h-6 -mt-5 sm:-mt-10 sm:h-16 text-purple-900"
+                className={`absolute top-0 w-full h-6 -mt-5 sm:-mt-10 sm:h-16 ${ DarkMode ? 'text-gray-900' : 'text-purple-900'}`}
                 preserveAspectRatio="none"
                 viewBox="0 0 1440 54"
             >

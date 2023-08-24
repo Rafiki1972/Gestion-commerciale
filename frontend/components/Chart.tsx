@@ -1,8 +1,11 @@
 import React from "react";
 import Chart from "chart.js";
 
-
-export default function CardLineChart() {
+interface ChartComponentProps {
+    DarkMode: boolean;
+}
+export default function CardLineChart(props: ChartComponentProps) {
+    let DarkMode = props.DarkMode;
     React.useEffect(() => {
         const January = [
             {
@@ -103,7 +106,7 @@ export default function CardLineChart() {
     }, []);
     return (
         <>
-            <div className="shadow-2xl relative flex flex-col min-w-0 break-words w-full mb-6 rounded bg-purple-700">
+            <div className={`shadow-2xl relative flex flex-col min-w-0 break-words w-full mb-6 rounded ${ DarkMode ? 'bg-gray-700' : 'bg-purple-700'}`}>
                 <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">
@@ -115,32 +118,12 @@ export default function CardLineChart() {
                                 <select
                                     name="HeadlineAct"
                                     id="HeadlineAct"
-                                    className="p-1.5 cursor-pointer rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+                                    className={`py-1.5 px-2 cursor-pointer rounded-lg border-gray-300 sm:text-sm ${DarkMode ? 'bg-transparent border text-white' : 'text-gray-700 '}`}
                                 >
                                     <option value="2023">2023</option>
                                     <option value="2022">2022</option>
                                     <option value="2021">2021</option>
                                     <option value="2020">2020</option>
-                                </select>
-                            </div>
-                            {/* Mounth */}
-                            <div>
-                                <select
-                                    name="HeadlineAct"
-                                    id="HeadlineAct"
-                                    className="p-1.5 cursor-pointer rounded-lg border-gray-300 text-gray-700 sm:text-sm"
-                                >
-                                    <option value="January">January</option>
-                                    <option value="February">February</option>
-                                    <option value="March">March</option>
-                                    <option value="April">April</option>
-                                    <option value="May">May</option>
-                                    <option value="June">June</option>
-                                    <option value="July">July</option>
-                                    <option value="September">September</option>
-                                    <option value="October">October</option>
-                                    <option value="November">November</option>
-                                    <option value="December">December</option>
                                 </select>
                             </div>
                         </div>

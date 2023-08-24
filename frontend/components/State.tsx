@@ -1,17 +1,17 @@
-import { useDarkMode } from '../contexts/click';
 import { getCookie } from './cookie'
-
-export const State = () => {
-    let isDark = getCookie('DarkMode');
+interface ChartComponentProps {
+    DarkMode: boolean;
+}
+export const State = (props : ChartComponentProps) => {
+    let DarkMode = props.DarkMode;
     return (
         <div className="ap-5 my-5">
             <h1
-                className={`${isDark ? 'text-white' : 'text-gray-800' // Add bg-purple-900 when darkMode is true
-                    } text-lg font-black tracking-wide`}
+                className='text-lg font-black tracking-wide'
             >Products sold :</h1>
             <div className="flex gap-5 my-5">
                 <article
-                    className="transition shadow-xl flex items-end justify-between rounded-lg border border-gray-100 bg-white p-6 dark:border-gray-800 dark:bg-gray-900"
+                    className={`transition shadow-xl flex items-end justify-between rounded-lg border border-gray-100 p-6 ${ DarkMode ? 'bg-gray-200' : 'bg-white'}`}
                 >
                     <div className="flex items-center gap-4">
                         <span
@@ -62,7 +62,7 @@ export const State = () => {
                     </div>
                 </article>
                 <article
-                    className="transition shadow-xl flex items-end justify-between rounded-lg border border-gray-100 bg-white p-6 dark:border-gray-800 dark:bg-gray-900"
+                    className={`transition shadow-xl flex items-end justify-between rounded-lg border border-gray-100 p-6 ${ DarkMode ? 'bg-gray-200' : 'bg-white'}`}
                 >
                     <div className="flex items-center gap-4">
                         <span
@@ -114,7 +114,7 @@ export const State = () => {
                 </article>
 
                 <article
-                    className="transition shadow-xl flex items-end justify-between rounded-lg border border-gray-100 bg-white p-6 dark:border-gray-800 dark:bg-gray-900"
+                    className={`transition shadow-xl flex items-end justify-between rounded-lg border border-gray-100 p-6 ${ DarkMode ? 'bg-gray-200' : 'bg-white'}`}
                 >
                     <div className="flex items-center gap-4">
                         <span

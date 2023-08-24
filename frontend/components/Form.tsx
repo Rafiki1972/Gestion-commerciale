@@ -69,6 +69,7 @@ export const Form = () => {
                 console.log(response.data);
                 // Assuming response.data is an array of User objects
                 setUsers(response.data); // Update the users state with the fetched data
+
             })
             .catch(error => {
                 console.error('Error fetching data:', error);

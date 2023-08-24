@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "api/users.js", "components/cookie.js", "components/LogOut.js", "components/Chart.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "api/users.js", "components/cookie.js", "components/LogOut.js", "components/Chart.tsx", "components/ProductDetails.js", "components/EditArticle.js", "components/NavBar.js"],
   "exclude": ["node_modules"]
 }
