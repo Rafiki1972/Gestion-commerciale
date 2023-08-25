@@ -22,19 +22,6 @@ function Dashboard() {
     // Storing the last selected Item in local starage
 
 
-    const handleDarkMode = () => {
-        setDarkMode(!DarkMode)
-
-        if (DarkMode) {
-            document.documentElement.style.setProperty('--wb-bg', 'white');
-            document.documentElement.style.setProperty('--wt-bg', 'purple');
-        } else {
-            document.documentElement.style.setProperty('--wb-bg', 'black');
-            document.documentElement.style.setProperty('--wt-bg', 'white');
-        }
-    }
-
-
     /* The `useEffect` hook is used in React to perform side effects in functional components. In this code
     snippet, there are two `useEffect` hooks. */
     /* This `useEffect` hook is used to retrieve the value of the `selectedItem` from the local storage and
@@ -59,6 +46,18 @@ function Dashboard() {
     useEffect(() => {
         window.localStorage.setItem('DarkMode', JSON.stringify(DarkMode));
     }, [DarkMode]);
+
+    const handleDarkMode = () => {
+        setDarkMode(!DarkMode)
+
+        if (DarkMode) {
+            document.documentElement.style.setProperty('--wb-bg', 'white');
+            document.documentElement.style.setProperty('--wt-bg', 'purple');
+        } else {
+            document.documentElement.style.setProperty('--wb-bg', 'black');
+            document.documentElement.style.setProperty('--wt-bg', 'white');
+        }
+    }
 
     const handleItemClick = (item: any) => {
         setSelectedItem(item);

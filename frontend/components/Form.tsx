@@ -66,7 +66,6 @@ export const Form = () => {
     useEffect(() => {
         axios.get('http://localhost:3001/api/test')
             .then(response => {
-                console.log(response.data);
                 // Assuming response.data is an array of User objects
                 setUsers(response.data); // Update the users state with the fetched data
 

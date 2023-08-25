@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import EditArticle from './EditArticle'
+import axios from 'axios';
 
-
-const ProductDetails = ({ product, onClose , openAlert}) => {
+const ProductDetails = ({ product, onClose, openAlert, fetchProducts }) => {
     const [EditProduct, setEditProduct] = useState(null)
 
     const openEditProduct = (product) => {
@@ -14,12 +14,21 @@ const ProductDetails = ({ product, onClose , openAlert}) => {
         setEditProduct(null);
     };
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         var confirmDelete = confirm('Sure you want to delete this item ??');
-        if (confirmDelete) { 
-            onClose() ;
-            openAlert('Product Deleted Succefully');
-        };
+        if (confirmDelete) {
+
+            try {
+                axios.post('http://localhost:3001/api/deleteProduct', {
+                    ArticleID: product.ArticleID,
+                });
+                fetchProducts();
+                onClose();
+                openAlert('Product Deleted Successfully');
+            } catch (error) {
+                console.log('Error deleting product');
+            }
+        }
     }
 
 
@@ -37,16 +46,17 @@ const ProductDetails = ({ product, onClose , openAlert}) => {
                     className="absolute top-0 right-0 bg-black opacity-50 z-[-1] text-gray-600 hover:text-gray-800 w-[100%] h-[100%]"
                 >
                 </button>
-                <h2 className="text-xl font-bold mb-4">{product.title}</h2>
+                <h2 className="text-xl font-bold mb-4">{product.NomDeLArticle}</h2>
                 <div className="flex justify-center">
                     <img
-                        src={product.image}
-                        alt={product.title}
+                        src={`http://localhost:3001/images/` + product.product_image}
+
+                        alt={product.NomDeLArticle}
                         className="h-48 w-48 object-cover"
                     />
                 </div>
-                <p className="mt-4 text-gray-700">{product.description}</p>
-                <p className="mt-2 text-gray-900 font-semibold">{product.price} DH</p>
+                <p className="mt-4 text-gray-700">{product.Description}</p>
+                <p className="mt-2 text-gray-900 font-semibold">{product.Cout} DH</p>
             </div>
             <div className='mt-5'>
                 <div
@@ -78,7 +88,7 @@ const ProductDetails = ({ product, onClose , openAlert}) => {
                 </div>
             </div>
             {EditProduct && (
-                <EditArticle product={product} onClose={closeEditProduct} openAlert={openAlert} />
+                <EditArticle product={product} onClose={onClose} openAlert={openAlert} />
             )}
         </motion.div>
     );

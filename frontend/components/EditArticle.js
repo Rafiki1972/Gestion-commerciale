@@ -1,24 +1,51 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import axios from 'axios';
+const EditArticle = ({ product, onClose, openAlert }) => {
+    const [productData, setProductData] = useState({
+        articleID: product.ArticleID,
+        nomDeLArticle: product.NomDeLArticle,
+        description: product.Description,
+        code: product.Code,
+        cout: product.Cout,
+        prixDeVente: product.PrixDeVente,
+    });
+    const [selectedImage, setSelectedImage] = useState(null);
 
-const EditArticle = ({ product, onClose , openAlert}) => {
-    const [editedArticle, setEditedArticle] = useState(product);
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setEditedArticle((prevArticle) => ({
-            ...prevArticle,
-            [name]: value,
-        }));
+    const handleSave = async () => {
+        const formData = new FormData();
+        formData.append('ArticleID', productData.articleID);
+        formData.append('updatenomDeLArticle', productData.nomDeLArticle);
+        formData.append('updatedescription', productData.description);
+        formData.append('updatecode', productData.code);
+        formData.append('updatecout', productData.cout);
+        formData.append('updateprixDeVente', productData.prixDeVente);
+        if (selectedImage) {
+            formData.append('image', selectedImage);
+        }
+        try {
+            axios.post('http://localhost:3001/api/editProduct', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            // You can implement the logic here to save the edited article.
+            // For example, you can make an API call to update the article data.
+            openAlert('Product Edited Successfully');
+            // Close the edit modal
+            onClose();
+        } catch (error) {
+            console.log('Error editing product', error);
+        }
+
     };
 
-    const handleSave = () => {
-        // You can implement the logic here to save the edited article.
-        // For example, you can make an API call to update the article data.
-        console.log('Edited Article:', editedArticle);
-        openAlert('Product Edited Succefully');
-        // Close the edit modal
-        onClose();
+    const handleImageChange = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setSelectedImage(file);
+        }
     };
 
     return (
@@ -37,22 +64,42 @@ const EditArticle = ({ product, onClose , openAlert}) => {
                 </button>
                 <h2 className="text-xl font-bold mb-4">Edit Article</h2>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Title</label>
+                    <label className="block text-sm font-medium text-gray-700">Nom De LArticle</label>
                     <input
                         type="text"
-                        name="title"
-                        value={editedArticle.title}
-                        onChange={handleInputChange}
+                        name="NomDeLArticle"
+                        value={productData.nomDeLArticle}
+                        onChange={(e) => setProductData({ ...productData, nomDeLArticle: e.target.value })}
                         className="mt-1 p-2 w-full border-gray-300 rounded border"
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Price</label>
+                    <label className="block text-sm font-medium text-gray-700">Code</label>
                     <input
                         type="text"
-                        name="price"
-                        value={editedArticle.price}
-                        onChange={handleInputChange}
+                        name="Code"
+                        value={productData.code}
+                        onChange={(e) => setProductData({ ...productData, code: e.target.value })}
+                        className="mt-1 p-2 w-full border-gray-300 rounded  border"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Cout</label>
+                    <input
+                        type="text"
+                        name="Cout"
+                        value={productData.cout}
+                        onChange={(e) => setProductData({ ...productData, cout: e.target.value })}
+                        className="mt-1 p-2 w-full border-gray-300 rounded  border"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Prix De Vente</label>
+                    <input
+                        type="text"
+                        name="PrixDeVente"
+                        value={productData.prixDeVente}
+                        onChange={(e) => setProductData({ ...productData, prixDeVente: e.target.value })}
                         className="mt-1 p-2 w-full border-gray-300 rounded  border"
                     />
                 </div>
@@ -60,8 +107,8 @@ const EditArticle = ({ product, onClose , openAlert}) => {
                     <label className="block text-sm font-medium text-gray-700">Description</label>
                     <textarea
                         name="description"
-                        value={editedArticle.description}
-                        onChange={handleInputChange}
+                        value={productData.description}
+                        onChange={(e) => setProductData({ ...productData, description: e.target.value })}
                         className="mt-1 p-2 w-full border-gray-300 rounded  border"
                     />
                 </div>
@@ -70,7 +117,8 @@ const EditArticle = ({ product, onClose , openAlert}) => {
                     <input
                         type="file"
                         name="image"
-                        onChange={handleInputChange}
+                        accept="image/*"
+                        onChange={handleImageChange}
                         className="mt-1 p-2 w-full border-gray-300 rounded  border"
                     />
                 </div>
@@ -94,3 +142,39 @@ const EditArticle = ({ product, onClose , openAlert}) => {
 };
 
 export default EditArticle;
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴⚪🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪⚫⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪⚪⚪🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪⚫⚪⚪⚪🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴🔴🔴🔴
+// 🔴🔴🔴⚪⚪⚪⚪⚪⚫⚫⚫⚪⚫⚫⚫⚫⚫⚪⚪⚪🔴🔴🔴
+// 🔴🔴⚪⚪⚪⚫⚪⚪⚪⚫⚫⚫⚫⚫⚪⚫⚫⚫⚪⚪⚪🔴🔴
+// 🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪⚫⚫⚫⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴
+// 🔴🔴⚪⚪⚪⚫⚫⚫⚪⚫⚫⚫⚫⚫⚪⚪⚪⚫⚪⚪⚪🔴🔴
+// 🔴🔴🔴⚪⚪⚪⚫⚫⚫⚫⚫⚪⚫⚫⚫⚪⚪⚪⚪⚪🔴🔴🔴
+// 🔴🔴🔴🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴⚪⚪⚪⚫⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴⚪⚪⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪⚫⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴⚪🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
+// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴

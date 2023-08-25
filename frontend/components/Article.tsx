@@ -19,7 +19,6 @@ const ArticleComponent = (props: ArticleProps) => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [AlertState, setAlertState] = useState(null);
     const [AddArticle, setAddArticle] = useState(false);
-    const [productsCheck, setProductsCheck] = useState([]);
 
 
 
@@ -35,21 +34,16 @@ const ArticleComponent = (props: ArticleProps) => {
         setDisp('block');
     };
 
-    useEffect(() => {
+    const fetchProducts = () => {
         axios.get('http://localhost:3001/api/Product')
             .then(response => {
                 setProducts(response.data);
-                // setInterval(() => {
-                //     setProductsCheck(response.data);
-                //     if(products !== productsCheck ){
-                //         console.log('data is not the same')
-                //     }
-                // },1000)
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
             });
-    }, []);
+    };
+    fetchProducts();
 
 
 
@@ -64,6 +58,9 @@ const ArticleComponent = (props: ArticleProps) => {
 
     const openAlert = (text: any) => {
         setAlertState(text);
+        setTimeout(() => {
+            setAlertState(null);
+        }, 3000);
     };
     const closeAlert = () => {
         setAlertState(null);
@@ -153,46 +150,49 @@ const ArticleComponent = (props: ArticleProps) => {
                             </div>
                         </div>
                         <ul className={`mt-4 grid gap-4 sm:grid-cols-2 ${view}`}>
-                            {products.map(product => (
-                                <li key={product['ArticleID']} className='shadow hover:shadow-xl overflow-hidden'>
-                                    <div className={` bg-white border rounded group block cursor-pointer ${disp}`}
-                                        onClick={() => {
-                                            openProductDetails(product);
-                                        }}
-                                    >
+                            {products && products.length > 0 ? (
+                                products.map(product => (
+                                    <li key={product['ArticleID']} className='shadow hover:shadow-xl overflow-hidden'>
+                                        <div className={` bg-white border rounded group block cursor-pointer ${disp}`}
+                                            onClick={() => {
+                                                openProductDetails(product);
+                                            }}
+                                        >
 
-                                        <img
-                                            src={`data:image/jpeg;base64,${btoa(String.fromCharCode.apply(null, product['product_image']['data']))}`}
+                                            <img
+                                                src={`http://localhost:3001/images/` + product['product_image']}
 
-                                            alt={product['NomDeLArticle']}
-                                            className={`h-[350px] object-cover transition duration-500 group-hover:scale-105 ${img}`}
-                                        />
+                                                alt={product['NomDeLArticle']}
+                                                className={`h-[350px] object-cover transition duration-500 group-hover:scale-105 ${img}`}
+                                            />
 
+                                            <div className="relative p-3">
+                                                <h3 className="text-lg text-gray-700 group-hover:underline group-hover:underline-offset-4 font-bold">
+                                                    {product['NomDeLArticle']}
+                                                </h3>
 
-                                        <div className="relative p-3">
-                                            <h3 className="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4">
-                                                {product['NomDeLArticle']}
-                                            </h3>
-
-                                            <p className="mt-2">
-                                                <span className="sr-only"> Regular Price </span>
-                                                <span className="tracking-wider text-gray-900">
-                                                    {product['PrixDeVente']} DH
-                                                </span>
-                                            </p>
+                                                <p className="mt-2">
+                                                    <span className="sr-only"> Regular Price </span>
+                                                    <span className="tracking-wider text-gray-900">
+                                                        {product['PrixDeVente']} DH
+                                                    </span>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            ))}
+                                    </li>
+                                ))
+                            ) : (
+                                <p>No products found.</p>
+                            )}
                         </ul>
                         {selectedProduct && (
-                            <ProductDetails product={selectedProduct} onClose={closeProductDetails} openAlert={openAlert} />
+                            <ProductDetails product={selectedProduct} onClose={closeProductDetails} openAlert={openAlert} fetchProducts={fetchProducts} />
                         )}
                         {AlertState && (
                             <Alert AlertText={AlertState} closeAlert={closeAlert} />
                         )}
                         {AddArticle && (
-                            <AddProductForm closeAddProduct={handleAddAricle} />
+                            <AddProductForm closeAddProduct={handleAddAricle} fetchProducts={fetchProducts} />
                         )}
                         <div className='fixed z-90 top-10 right-8 group'>
                             <div className='flex items-end justify-center flex-col'>
