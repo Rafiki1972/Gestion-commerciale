@@ -7,6 +7,7 @@ import Article from '../components/Article';
 import FollowCursor from '../components/FollowCursor';
 import { Footer } from '../components/Footer';
 import { NavBar } from '../components/NavBar';
+import Client from '../components/Client';
 import { motion, AnimatePresence } from 'framer-motion';
 // for navbar
 /* These import statements are importing specific icons from different icon libraries
@@ -62,19 +63,19 @@ function Dashboard() {
     const handleItemClick = (item: any) => {
         setSelectedItem(item);
     };
-
+    console.log(selectedItem)
     return (
         <div className={`transition ${DarkMode ? 'bg-gray-400' : ''}`}>
             <FollowCursor />
             <NavBar handleItemClick={handleItemClick} handleDarkMode={handleDarkMode} DarkMode={DarkMode} selectedItem={selectedItem} />
             <AnimatePresence mode='wait'>
-                <AnimatePresence mode='wait'>
-                    {selectedItem === 'article' ? (
-                        <Article DarkMode={DarkMode} />
-                    ) : (
-                        <DashboardComponnent DarkMode={DarkMode} />
-                    )}
-                </AnimatePresence>
+                {selectedItem === 'article' ? (
+                    <Article DarkMode={DarkMode} />
+                ) : selectedItem === 'client' ? (
+                    <Client DarkMode={DarkMode} />
+                ) : (
+                    <DashboardComponnent DarkMode={DarkMode} />
+                )}
             </AnimatePresence>
             <Footer DarkMode={DarkMode} />
         </div>

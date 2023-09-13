@@ -14,7 +14,7 @@ export const NavBar = ({ handleItemClick, handleDarkMode, DarkMode , selectedIte
     return (
         <aside
             id="sidebar"
-            className={`fixed z-20 h-full top-1 left-1 flex lg:flex flex-shrink-0 fle-col lg:w-64 transition-all rounded overflow-hidden fixed z-20 h-full top-1 left-1 flex lg:flex flex-shrink-0 fle-col lg:w-64 transition-all rounded overflow-hidden ${DarkMode ? 'bg-gray-800' : 'bg-purple-800'}`}
+            className={`fixed z-20 h-full top-1 left-1 flex lg:flex flex-shrink-0 w-2/12 transition-all rounded overflow-hidden fixed z-20 flex lg:flex flex-shrink-0 fle-col lg:w-64 transition-all rounded overflow-hidden ${DarkMode ? 'bg-gray-800' : 'bg-purple-800'}`}
             aria-label="Sidebar"
         >
             <CheckCookie />
@@ -64,18 +64,14 @@ export const NavBar = ({ handleItemClick, handleDarkMode, DarkMode , selectedIte
                                 />
                                 <span className="ml-4  hidden md:block">Article</span>
                             </div>
-                            <div className={`text-base cursor-pointer text-white font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}`}>
-                                <svg className="w-6 h-6 text-white flex-shrink-0 group-hover:text-white transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                                    <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"></path>
-                                </svg>
-                                <span className="ml-3  hidden md:block">Documentation</span>
-                            </div>
-                            <div className={`text-base cursor-pointer text-white font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}`}>
-                                <svg className="w-6 h-6 text-white flex-shrink-0 group-hover:text-white transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
-                                </svg>
-                                <span className="ml-3  hidden md:block">Components</span>
+                            <div
+                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${ selectedItem === 'client' ? ' text-amber-400' : 'text-white'}`}
+                                onClick={() => handleItemClick('client')}
+                            >
+                                <MdProductionQuantityLimits
+                                    className="w-5 h-5 flex-shrink-0 transition duration-75"
+                                />
+                                <span className="ml-4  hidden md:block">Client</span>
                             </div>
                         </div>
                     </div>

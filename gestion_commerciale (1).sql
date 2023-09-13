@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : sam. 26 août 2023 à 21:05
--- Version du serveur : 10.4.28-MariaDB
--- Version de PHP : 8.2.4
+-- Hôte : 127.0.0.1:3306
+-- Généré le : ven. 01 sep. 2023 à 13:11
+-- Version du serveur : 10.4.24-MariaDB
+-- Version de PHP : 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,7 +35,7 @@ CREATE TABLE `achat` (
   `Notes` text DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -53,14 +53,7 @@ CREATE TABLE `article` (
   `product_image` varchar(1500) NOT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `article`
---
-
-INSERT INTO `article` (`ArticleID`, `NomDeLArticle`, `Description`, `Code`, `Cout`, `PrixDeVente`, `product_image`, `created_at`, `last_modification`) VALUES
-(31, 'fuck it ', 'Your sense of adventure doesn’t just disappear when you have kids, so why should your family holiday options be limited? ', '1078', 25.00, 20.00, 'image_1693064134844.png', '2023-08-26', '2023-08-26');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -77,7 +70,7 @@ CREATE TABLE `articleachat` (
   `SousTotal` decimal(10,2) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -94,7 +87,7 @@ CREATE TABLE `articlevente` (
   `SousTotal` decimal(10,2) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -111,7 +104,15 @@ CREATE TABLE `client` (
   `ConditionsDePaiement` varchar(100) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `client`
+--
+
+INSERT INTO `client` (`ClientID`, `Prenom`, `NomDeFamille`, `NumeroDeContact`, `Email`, `ConditionsDePaiement`, `created_at`, `last_modification`) VALUES
+(1, 'John', 'Doe', '1234567890', 'john.doe@example.com', NULL, NULL, NULL),
+(2, 'Jack', 'Sparow', '0987654321', 'Jack.Sparow@example.com', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -129,7 +130,7 @@ CREATE TABLE `employe` (
   `Salaire` decimal(10,2) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -145,7 +146,7 @@ CREATE TABLE `fournisseur` (
   `ConditionsDePaiement` varchar(100) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -161,7 +162,7 @@ CREATE TABLE `production` (
   `Cout` decimal(10,2) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -178,7 +179,7 @@ CREATE TABLE `stock` (
   `Emplacement` varchar(100) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -193,7 +194,7 @@ CREATE TABLE `timesheet` (
   `HeuresTravaillees` decimal(6,2) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -209,7 +210,7 @@ CREATE TABLE `transactioncompte` (
   `Notes` text DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -225,7 +226,7 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `user`
@@ -249,7 +250,7 @@ CREATE TABLE `vente` (
   `Notes` text DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Index pour les tables déchargées
@@ -354,7 +355,7 @@ ALTER TABLE `achat`
 -- AUTO_INCREMENT pour la table `article`
 --
 ALTER TABLE `article`
-  MODIFY `ArticleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `ArticleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT pour la table `articleachat`
@@ -372,7 +373,7 @@ ALTER TABLE `articlevente`
 -- AUTO_INCREMENT pour la table `client`
 --
 ALTER TABLE `client`
-  MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `employe`
