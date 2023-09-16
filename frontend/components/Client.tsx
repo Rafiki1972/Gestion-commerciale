@@ -22,9 +22,28 @@ export default function Client(props: Client) {
     }
     fetchClient();
 
+
     const handleAddClient = () => {
         setAddClient(!AddClient);
     };
+
+
+    //delete a client....
+
+    const handleDelete = async () => {
+        var confirmDelete = confirm('Sure you want to delete this client ??');
+        if (confirmDelete) {
+
+            try {
+                axios.post('http://localhost:3001/api/deleteClient', {
+                    ClientID: client.ClientID,
+                });
+                fetchClients();
+            } catch (error) {
+                console.log('Error deleting client');
+            }
+        }
+    }
 
     return (
         <div className="p-4 w-9/12 min-h-[100vh] ml-auto relative overflow-x-auto my-5 shadow-md sm:rounded-lg">
@@ -59,6 +78,12 @@ export default function Client(props: Client) {
                         <th scope="col" className="px-6 py-3">
                             Conditions De Paiement
                         </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,6 +103,12 @@ export default function Client(props: Client) {
                             </td>
                             <td className="px-6 py-4  text-gray-800">
                                 {user['ConditionsDePaiement']}
+                            </td>
+                            <td className="px-1 py-4  text-gray-800">
+                                <button className='px-3 py-2 text-white bg-cyan-500 rounded'>Edit</button>
+                             </td>
+                            <td className="px-1 py-4  text-gray-800">
+                            <button className='px-3 py-2 text-white bg-red-500 rounded' onClick={handleDelete}>Delete</button>
                             </td>
                         </tr>
                     ))}
