@@ -14,7 +14,7 @@ export const NavBar = ({ handleItemClick, handleDarkMode, DarkMode , selectedIte
     return (
         <aside
             id="sidebar"
-            className={`fixed z-20 h-full top-1 left-1 flex lg:flex flex-shrink-0 w-2/12 transition-all rounded overflow-hidden fixed z-20 flex lg:flex flex-shrink-0 fle-col lg:w-64 transition-all rounded overflow-hidden ${DarkMode ? 'bg-gray-800' : 'bg-purple-800'}`}
+            className={`fixed z-20 h-full top-0 left-0 flex lg:flex flex-shrink-0 w-2/12 transition-all overflow-hidden lg:flex flex-shrink-0 fle-col lg:w-64 transition-all rounded overflow-hidden ${DarkMode ? 'bg-gray-800' : 'bg-purple-800'}`}
             aria-label="Sidebar"
         >
             <CheckCookie />

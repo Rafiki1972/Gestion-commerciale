@@ -229,10 +229,10 @@ app.post('/api/editClient', async (req, res) => {
 
   const sql = `
     UPDATE client
-    SET Prenom = ?, NomDeFamille = ?, NumeroDeContact = ?, Email = ?, ConditionsDePaiement = ?
+    SET Prenom = ?, NomDeFamille = ?, NumeroDeContact = ?, Email = ?, ConditionsDePaiement = ? , last_modification = NOW()
     WHERE ClientID = ?
   `;
-  con.query(sql, [updatePrenom, updateNomDeFamille, updateNumeroDeContact, updateEmail, updateConditionsDePaiement], function (err, result) {
+  con.query(sql, [updatePrenom, updateNomDeFamille, updateNumeroDeContact, updateEmail, updateConditionsDePaiement, ClientID], function (err, result) {
     if (err) {
       console.error('Error updating data:', err);
       res.status(500).json({ error: 'Internal Server Error' });

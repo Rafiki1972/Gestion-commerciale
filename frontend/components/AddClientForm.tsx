@@ -5,9 +5,10 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 interface AddClientPorps {
     closeAddClient: () => void;
-    fetchClients(): void
+    fetchClients(): void;
+    openAlert(): void;
 }
-const AddClientForm = ({ closeAddClient, fetchClients }: AddClientPorps) => {
+const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPorps) => {
     const [clientData, setClientData] = useState({
         Prenom: '',
         NomDeFamille: '',
@@ -23,11 +24,11 @@ const AddClientForm = ({ closeAddClient, fetchClients }: AddClientPorps) => {
 
         try {
             const response = await axios.post('http://localhost:3001/api/addClient', {
-            Prenom : clientData.Prenom,
-            NomDeFamille : clientData.NomDeFamille,
-            NumeroDeContact : clientData.NumeroDeContact,
-            Email : clientData.Email,
-            ConditionsDePaiement : clientData.ConditionsDePaiement,
+                Prenom: clientData.Prenom,
+                NomDeFamille: clientData.NomDeFamille,
+                NumeroDeContact: clientData.NumeroDeContact,
+                Email: clientData.Email,
+                ConditionsDePaiement: clientData.ConditionsDePaiement,
             });
             setMessage(response.data.message);
             setClientData({
@@ -40,6 +41,7 @@ const AddClientForm = ({ closeAddClient, fetchClients }: AddClientPorps) => {
         } catch (error) {
             console.log('Error adding product');
         }
+        openAlert();
         closeAddClient()
         fetchClients();
     };
