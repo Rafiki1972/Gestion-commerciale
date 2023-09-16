@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+const mysql = require('mysql');;
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
@@ -10,17 +10,21 @@ app.use(express.static('public'));
 
 
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "gestion_commerciale"
+const con = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'gestion_commerciale',
+});
+con.connect((err) => {
+  if (err) {
+    console.error('Error connecting to the database: ' + err.stack);
+    return;
+  }
+  console.log('Connected to the database as ID ' + con.threadId);
+  // Now you can perform database operations
 });
 
-con.connect(function (err) {
-  if (err) throw err;
-  console.log('Connected to the database'); // Log a message when connected
-});
 
 
 // Route to fetch user data from the database......................................................................................
@@ -46,6 +50,23 @@ app.get('/api/test', (req, res) => {
 
 app.get('/api/Product', (req, res) => {
   con.query("SELECT * FROM article ", function (err, result) {
+    if (err) {
+      console.error('Error fetching data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (result.length > 0) {
+      res.json(result); // Return the first record
+      // console.log(result);
+    } else {
+      res.json({ message: 'No data available' });
+    }
+  });
+});
+
+app.get('/api/Client', (req, res) => {
+  con.query("SELECT * FROM client ", function (err, result) {
     if (err) {
       console.error('Error fetching data:', err);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -173,6 +194,80 @@ app.post('/api/deleteProduct', async (req, res) => {
 });
 // Delet Product from poducts table....................................................................................
 
+
+
+app.use(express.json());
+app.post('/api/addClient', async (req, res) => {
+  const { Prenom, NomDeFamille, NumeroDeContact, Email, ConditionsDePaiement } = req.body;
+
+  const sql = `
+    INSERT INTO client (Prenom, NomDeFamille,  NumeroDeContact,  Email, ConditionsDePaiement , created_at , last_modification )
+    VALUES (?, ?, ?, ?, ?, NOW(), NOW())
+  `;
+
+  con.query(sql, [Prenom, NomDeFamille, NumeroDeContact, Email, ConditionsDePaiement], function (err, result) {
+    if (err) {
+      console.error('Error adding data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Client added successfully');
+    res.status(200).json({ message: 'Client added successfully' });
+  });
+});
+//// Route to add a new product to the database.........................................................................................////
+
+
+
+
+// Edit Product from poducts table....................................................................................
+
+app.use(express.json());
+app.post('/api/editClient', async (req, res) => {
+  const { ClientID, updatePrenom, updateNomDeFamille, updateNumeroDeContact, updateEmail, updateConditionsDePaiement } = req.body;
+
+  const sql = `
+    UPDATE client
+    SET Prenom = ?, NomDeFamille = ?, NumeroDeContact = ?, Email = ?, ConditionsDePaiement = ?
+    WHERE ClientID = ?
+  `;
+  con.query(sql, [updatePrenom, updateNomDeFamille, updateNumeroDeContact, updateEmail, updateConditionsDePaiement], function (err, result) {
+    if (err) {
+      console.error('Error updating data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Client updated successfully');
+    res.status(200).json({ message: 'Client updated successfully' });
+  });
+});
+// Edit Client from poducts table....................................................................................
+
+
+
+
+
+// Delet Client from poducts table....................................................................................
+app.post('/api/deleteClient', async (req, res) => {
+  const { ClientID } = req.body;
+  const sql = `
+    DELETE FROM client WHERE ClientID = ? 
+  `;
+
+  con.query(sql, [ClientID], function (err, result) {
+    if (err) {
+      console.error('Error Deleting data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Client deleted successfully');
+    res.status(200).json({ message: 'Client deleted successfully' });
+  });
+});
+// Delet Client from poducts table....................................................................................
 
 
 const PORT = 3001;
