@@ -270,6 +270,27 @@ app.post('/api/deleteClient', async (req, res) => {
 // Delet Client from poducts table....................................................................................
 
 
+// Generate radom code, check if it's exist
+// Define a route to check if a code exists
+app.get('/api/checkCode/:code', (req, res) => {
+  const codeToCheck = req.params.code;
+  console.log(codeToCheck)
+  con.query(`SELECT * FROM article WHERE code = ${codeToCheck} `, function (err, result) {
+    if (err) {
+      console.error('Error fetching data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (result.length > 0) {
+      res.json({ exists: true });
+
+    } else {
+      res.json({ exists: false });
+    }
+  });
+});
+
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

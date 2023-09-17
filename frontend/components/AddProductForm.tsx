@@ -1,6 +1,6 @@
 // components/AddProductForm.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 interface AddProucttPorps {
@@ -61,6 +61,57 @@ const AddProductForm = ({ closeAddProduct, fetchProducts }: AddProucttPorps) => 
         }
     };
 
+
+    // Generate random code 
+    const generateUniqueCode = async () => {
+        let uniqueCode;
+
+        // Keep generating codes until a unique one is found
+        while (true) {
+            // Generate a random number between 1000 and 9999
+            const randomCode = Math.floor(1000 + Math.random() * 9000);
+            // Combine it with a prefix if needed
+            uniqueCode = `PROD-${randomCode}`;
+
+            // Check if the code exists in the product API
+            const codeExists = await checkCodeExists(uniqueCode);
+            if (!codeExists) {
+                // If the code doesn't exist, break out of the loop
+                break;
+            }
+        }
+
+        // return uniqueCode;
+        setProductData({
+            ...productData, // Spread the existing state
+            code: uniqueCode, // Update the code field with the new value
+        });
+    };
+
+    const checkCodeExists = async (code: any) => {
+        try {
+            // Make an HTTP GET request to your product API to check if the code exists
+            const response = await axios.get(`http://localhost:3001/api/checkCode/${code}`);
+
+            if (response.data.exists === true) {
+                // Code exists
+                return true;
+            } else {
+                // Code does not exist
+                return false;
+            }
+        } catch (error) {
+            // Handle any errors that occur during the request
+            console.error('Error checking code existence:', error);
+            return false; // Assume the code doesn't exist in case of an error
+        }
+    };
+
+    useEffect(() => {
+        // Call the generateUniqueCode function only once on component mount
+        generateUniqueCode();
+    }, []); // The empty dependency array ensures this effect runs once
+
     return (
         <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -102,6 +153,7 @@ const AddProductForm = ({ closeAddProduct, fetchProducts }: AddProucttPorps) => 
                         <input
                             type="text"
                             id="code"
+                            readOnly={true}
                             value={productData.code}
                             onChange={(e) => setProductData({ ...productData, code: e.target.value })}
                             className="mt-1 p-2 w-full border-gray-300 rounded border"
@@ -146,3 +198,4 @@ const AddProductForm = ({ closeAddProduct, fetchProducts }: AddProucttPorps) => 
 };
 
 export default AddProductForm;
+// 1991

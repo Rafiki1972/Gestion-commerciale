@@ -12,7 +12,6 @@ interface User {
     user_type: string;
     created_at: string | null;
     last_modification: string | null;
-    // Add other properties if needed
 }
 
 
@@ -24,7 +23,7 @@ export const Form = () => {
     // from
 
     const [formData, setFormData] = useState({
-        type: 'admen', // Default to Admin user type
+        type: 'admin', // Default to Admin user type
         username: '',
         password: '',
     });
