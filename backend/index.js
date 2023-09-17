@@ -195,6 +195,7 @@ app.post('/api/deleteProduct', async (req, res) => {
 // Delet Product from poducts table....................................................................................
 
 
+// Route to add a new client to the database.........................................................................................////
 
 app.use(express.json());
 app.post('/api/addClient', async (req, res) => {
@@ -216,12 +217,12 @@ app.post('/api/addClient', async (req, res) => {
     res.status(200).json({ message: 'Client added successfully' });
   });
 });
-//// Route to add a new product to the database.........................................................................................////
+// Route to add a new client to the database.........................................................................................////
 
 
 
 
-// Edit Product from poducts table....................................................................................
+// Edit Client from table....................................................................................
 
 app.use(express.json());
 app.post('/api/editClient', async (req, res) => {
@@ -243,7 +244,7 @@ app.post('/api/editClient', async (req, res) => {
     res.status(200).json({ message: 'Client updated successfully' });
   });
 });
-// Edit Client from poducts table....................................................................................
+// Edit Client from table....................................................................................
 
 
 
@@ -270,7 +271,7 @@ app.post('/api/deleteClient', async (req, res) => {
 // Delet Client from poducts table....................................................................................
 
 
-// Generate radom code, check if it's exist
+// Generate radom code, check if it's exist............................
 // Define a route to check if a code exists
 app.get('/api/checkCode/:code', (req, res) => {
   const codeToCheck = req.params.code;
@@ -290,6 +291,101 @@ app.get('/api/checkCode/:code', (req, res) => {
     }
   });
 });
+// Generate radom code, check if it's exist............................
+
+
+
+
+app.get('/api/Supplier', (req, res) => {
+  con.query("SELECT * FROM fournisseur ", function (err, result) {
+    if (err) {
+      console.error('Error fetching data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (result.length > 0) {
+      res.json(result); // Return the first record
+      // console.log(result);
+    } else {
+      res.json({ message: 'No data available' });
+    }
+  });
+});
+// Route to add a new supplier to the database.........................................................................................////
+
+app.use(express.json());
+app.post('/api/addSupplier', async (req, res) => {
+  const { NomDuFournisseur, NumeroDeContact, Email, ConditionsDePaiement } = req.body;
+
+  const sql = `
+    INSERT INTO fournisseur (NomDuFournisseur , NumeroDeContact,  Email, ConditionsDePaiement , created_at , last_modification )
+    VALUES (?, ?, ?, ?, NOW(), NOW())
+  `;
+
+  con.query(sql, [NomDuFournisseur, NumeroDeContact, Email, ConditionsDePaiement], function (err, result) {
+    if (err) {
+      console.error('Error adding data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Supplier added successfully');
+    res.status(200).json({ message: 'Supplier added successfully' });
+  });
+});
+// Route to add a new supplier to the database.........................................................................................////
+
+
+
+// Route to delete supplier from the database.........................................................................................////
+app.post('/api/deleteSupplier', async (req, res) => {
+  const { SupplierID } = req.body;
+  const sql = `
+    DELETE FROM fournisseur WHERE SupplierID = ? 
+  `;
+
+  con.query(sql, [SupplierID], function (err, result) {
+    if (err) {
+      console.error('Error Deleting data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Supplier deleted successfully');
+    res.status(200).json({ message: 'Supplier deleted successfully' });
+  });
+});
+// Route to delete supplier from the database.........................................................................................////
+
+// Edit supplier from table....................................................................................
+
+app.use(express.json());
+app.post('/api/editSupplier', async (req, res) => {
+  const { SupplierID, updateNomDuFournisseur, updateNumeroDeContact, updateEmail, updateConditionsDePaiement } = req.body;
+  console.log(req.body)
+  const sql = `
+    UPDATE fournisseur
+    SET NomDuFournisseur = ?, NumeroDeContact = ?, Email = ?, ConditionsDePaiement = ? , last_modification = NOW()
+    WHERE SupplierID = ?
+  `;
+  con.query(sql, [updateNomDuFournisseur, updateNumeroDeContact, updateEmail, updateConditionsDePaiement, SupplierID], function (err, result) {
+    if (err) {
+      console.error('Error updating data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Client updated successfully');
+    res.status(200).json({ message: 'Client updated successfully' });
+  });
+});
+// Edit supplier from table....................................................................................
+
+
+
+
+
 
 const PORT = 3001;
 app.listen(PORT, () => {
