@@ -195,6 +195,7 @@ app.post('/api/deleteProduct', async (req, res) => {
 // Delet Product from poducts table....................................................................................
 
 
+// Route to add a new client to the database.........................................................................................////
 
 app.use(express.json());
 app.post('/api/addClient', async (req, res) => {
@@ -216,12 +217,12 @@ app.post('/api/addClient', async (req, res) => {
     res.status(200).json({ message: 'Client added successfully' });
   });
 });
-//// Route to add a new product to the database.........................................................................................////
+// Route to add a new client to the database.........................................................................................////
 
 
 
 
-// Edit Product from poducts table....................................................................................
+// Edit Client from table....................................................................................
 
 app.use(express.json());
 app.post('/api/editClient', async (req, res) => {
@@ -229,10 +230,10 @@ app.post('/api/editClient', async (req, res) => {
 
   const sql = `
     UPDATE client
-    SET Prenom = ?, NomDeFamille = ?, NumeroDeContact = ?, Email = ?, ConditionsDePaiement = ?
+    SET Prenom = ?, NomDeFamille = ?, NumeroDeContact = ?, Email = ?, ConditionsDePaiement = ? , last_modification = NOW()
     WHERE ClientID = ?
   `;
-  con.query(sql, [updatePrenom, updateNomDeFamille, updateNumeroDeContact, updateEmail, updateConditionsDePaiement], function (err, result) {
+  con.query(sql, [updatePrenom, updateNomDeFamille, updateNumeroDeContact, updateEmail, updateConditionsDePaiement, ClientID], function (err, result) {
     if (err) {
       console.error('Error updating data:', err);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -243,7 +244,7 @@ app.post('/api/editClient', async (req, res) => {
     res.status(200).json({ message: 'Client updated successfully' });
   });
 });
-// Edit Client from poducts table....................................................................................
+// Edit Client from table....................................................................................
 
 
 
@@ -268,6 +269,206 @@ app.post('/api/deleteClient', async (req, res) => {
   });
 });
 // Delet Client from poducts table....................................................................................
+
+
+// Generate radom code, check if it's exist............................
+// Define a route to check if a code exists
+app.get('/api/checkCode/:code', (req, res) => {
+  const codeToCheck = req.params.code;
+  console.log(codeToCheck)
+  con.query(`SELECT * FROM article WHERE code = ${codeToCheck} `, function (err, result) {
+    if (err) {
+      console.error('Error fetching data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (result.length > 0) {
+      res.json({ exists: true });
+
+    } else {
+      res.json({ exists: false });
+    }
+  });
+});
+// Generate radom code, check if it's exist............................
+
+
+
+// Supplier............................................(fornisseu)
+app.get('/api/Supplier', (req, res) => {
+  con.query("SELECT * FROM fournisseur ", function (err, result) {
+    if (err) {
+      console.error('Error fetching data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (result.length > 0) {
+      res.json(result); // Return the first record
+      // console.log(result);
+    } else {
+      res.json({ message: 'No data available' });
+    }
+  });
+});
+// Route to add a new supplier to the database.........................................................................................////
+
+app.use(express.json());
+app.post('/api/addSupplier', async (req, res) => {
+  const { NomDuFournisseur, NumeroDeContact, Email, ConditionsDePaiement } = req.body;
+
+  const sql = `
+    INSERT INTO fournisseur (NomDuFournisseur , NumeroDeContact,  Email, ConditionsDePaiement , created_at , last_modification )
+    VALUES (?, ?, ?, ?, NOW(), NOW())
+  `;
+
+  con.query(sql, [NomDuFournisseur, NumeroDeContact, Email, ConditionsDePaiement], function (err, result) {
+    if (err) {
+      console.error('Error adding data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Supplier added successfully');
+    res.status(200).json({ message: 'Supplier added successfully' });
+  });
+});
+// Route to add a new supplier to the database.........................................................................................////
+
+
+
+// Route to delete supplier from the database.........................................................................................////
+app.post('/api/deleteSupplier', async (req, res) => {
+  const { SupplierID } = req.body;
+  const sql = `
+    DELETE FROM fournisseur WHERE SupplierID = ? 
+  `;
+
+  con.query(sql, [SupplierID], function (err, result) {
+    if (err) {
+      console.error('Error Deleting data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Supplier deleted successfully');
+    res.status(200).json({ message: 'Supplier deleted successfully' });
+  });
+});
+// Route to delete supplier from the database.........................................................................................////
+
+// Edit supplier from table....................................................................................
+
+app.use(express.json());
+app.post('/api/editSupplier', async (req, res) => {
+  const { SupplierID, updateNomDuFournisseur, updateNumeroDeContact, updateEmail, updateConditionsDePaiement } = req.body;
+  console.log(req.body)
+  const sql = `
+    UPDATE fournisseur
+    SET NomDuFournisseur = ?, NumeroDeContact = ?, Email = ?, ConditionsDePaiement = ? , last_modification = NOW()
+    WHERE SupplierID = ?
+  `;
+  con.query(sql, [updateNomDuFournisseur, updateNumeroDeContact, updateEmail, updateConditionsDePaiement, SupplierID], function (err, result) {
+    if (err) {
+      console.error('Error updating data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Supplier updated successfully');
+    res.status(200).json({ message: 'Supplier updated successfully' });
+  });
+});
+// Edit supplier from table....................................................................................
+
+// Supplier............................................(fornisseu)
+app.get('/api/Worker', (req, res) => {
+  con.query("SELECT * FROM employe ", function (err, result) {
+    if (err) {
+      console.error('Error fetching data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (result.length > 0) {
+      res.json(result); // Return the first record
+      // console.log(result);
+    } else {
+      res.json({ message: 'No data available' });
+    }
+  });
+});
+
+
+// Route to delete worker from the database.........................................................................................////
+app.post('/api/deleteWorker', async (req, res) => {
+  const { WorkerID } = req.body;
+  const sql = `
+    DELETE FROM employe WHERE EmployeeID = ? 
+  `;
+
+  con.query(sql, [WorkerID], function (err, result) {
+    if (err) {
+      console.error('Error Deleting data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Worker deleted successfully');
+    res.status(200).json({ message: 'Worker deleted successfully' });
+  });
+});
+// Route to delete worker from the database.........................................................................................////
+
+app.post('/api/addWorker', async (req, res) => {
+
+  const { Prenom, NomDeFamille, NumeroDeContact, Email, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient, GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine } = req.body;
+
+  const sql = `
+    INSERT INTO employe (Prenom, NomDeFamille,  NumeroDeContact,  Email, Poste , Salaire , GestionDesEmployes , GestionDesArticles, GestionDesClient, GestionDesFournisseur , GestionDeStock , GestionDesAchats ,  GestionDesVentes , GestionDesFactures , GestionDesResourcesHumaine , created_at , last_modification )
+    VALUES (? , ? ,  ? ,  ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, NOW(), NOW())
+  `;
+
+  con.query(sql, [Prenom, NomDeFamille, NumeroDeContact, Email, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient, GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine], function (err, result) {
+    if (err) {
+      console.error('Error adding data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Worker added successfully');
+    res.status(200).json({ message: 'Worker added successfully' });
+  });
+});
+// Route to add a new worker to the database.........................................................................................////
+// Edit worker from table....................................................................................
+
+app.use(express.json());
+app.post('/api/editWorker', async (req, res) => {
+  const { EmployeeID, Prenom, NomDeFamille, NumeroDeContact, Email, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient,
+    GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine } = req.body;
+
+  const sql = `
+    UPDATE employe
+    SET Prenom = ?, NomDeFamille = ?, NumeroDeContact = ?, Email = ?, Poste = ?, Salaire = ?, GestionDesEmployes = ?, GestionDesArticles = ?, GestionDesClient = ?,
+    GestionDesFournisseur = ?, GestionDeStock = ?, GestionDesAchats = ?, GestionDesVentes = ?, GestionDesFactures = ?, GestionDesResourcesHumaine  = ?, last_modification = NOW()
+    WHERE EmployeeID  = ?
+  `;
+  con.query(sql, [Prenom, NomDeFamille, NumeroDeContact, Email, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient,
+    GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine, EmployeeID], function (err, result) {
+      if (err) {
+        console.error('Error updating data:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+        return;
+      }
+
+      console.log('Worker updated successfully');
+      res.status(200).json({ message: 'Worker updated successfully' });
+    });
+});
+// Edit worker from table....................................................................................
+
 
 
 const PORT = 3001;

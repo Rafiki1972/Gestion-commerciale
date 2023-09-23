@@ -8,15 +8,12 @@ import FollowCursor from '../components/FollowCursor';
 import { Footer } from '../components/Footer';
 import { NavBar } from '../components/NavBar';
 import Client from '../components/Client';
-import { motion, AnimatePresence } from 'framer-motion';
+import Supplier from '../components/Supplier';
+import Worker from '../components/Worker';
+import { AnimatePresence } from 'framer-motion';
 // for navbar
 /* These import statements are importing specific icons from different icon libraries
 (`react-icons/vsc`, `react-icons/io5`, `react-icons/md`). */
-import { VscAccount } from "react-icons/vsc";
-import { IoMoon, IoLogOut } from "react-icons/io5";
-import { MdProductionQuantityLimits } from "react-icons/md";
-import LogoutButton from '../components/LogOut';
-import CheckCookie from '../components/cookie';
 function Dashboard() {
     const [selectedItem, setSelectedItem] = useState('dashboard'); // Default selected item
     const [DarkMode, setDarkMode] = useState(false); // Default selected item
@@ -65,7 +62,7 @@ function Dashboard() {
     };
     console.log(selectedItem)
     return (
-        <div className={`transition ${DarkMode ? 'bg-gray-400' : ''}`}>
+        <div className={`transition bg-black/50`}>
             <FollowCursor />
             <NavBar handleItemClick={handleItemClick} handleDarkMode={handleDarkMode} DarkMode={DarkMode} selectedItem={selectedItem} />
             <AnimatePresence mode='wait'>
@@ -73,6 +70,10 @@ function Dashboard() {
                     <Article DarkMode={DarkMode} />
                 ) : selectedItem === 'client' ? (
                     <Client DarkMode={DarkMode} />
+                ) : selectedItem === 'supplier' ? (
+                    <Supplier DarkMode={DarkMode} />
+                ) : selectedItem === 'worker' ? (
+                    <Worker DarkMode={DarkMode} />
                 ) : (
                     <DashboardComponnent DarkMode={DarkMode} />
                 )}

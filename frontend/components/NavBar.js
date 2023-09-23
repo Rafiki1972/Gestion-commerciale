@@ -5,23 +5,24 @@ import React from 'react';
 import { VscAccount } from "react-icons/vsc";
 import { IoMoon, IoLogOut } from "react-icons/io5";
 import { FaRegSun } from "react-icons/fa6";
+import { FaHospitalUser, FaUserTag } from "react-icons/fa";
 import { HiChartPie } from "react-icons/hi2";
-import { MdProductionQuantityLimits } from "react-icons/md";
+import { MdSell, MdWork } from "react-icons/md";
 import LogoutButton from './LogOut';
 import CheckCookie from './cookie';
 
-export const NavBar = ({ handleItemClick, handleDarkMode, DarkMode , selectedItem}) => {
+export const NavBar = ({ handleItemClick, handleDarkMode, DarkMode, selectedItem }) => {
     return (
         <aside
             id="sidebar"
-            className={`fixed z-20 h-full top-1 left-1 flex lg:flex flex-shrink-0 w-2/12 transition-all rounded overflow-hidden fixed z-20 flex lg:flex flex-shrink-0 fle-col lg:w-64 transition-all rounded overflow-hidden ${DarkMode ? 'bg-gray-800' : 'bg-purple-800'}`}
+            className={`fixed z-20 h-full top-0 left-0 flex lg:flex flex-shrink-0 w-2/12 transition-all transition-all overflow-hidden ${DarkMode ? 'bg-gray-800' : 'bg-purple-800'}`}
             aria-label="Sidebar"
         >
             <CheckCookie />
             <div className="relative flex-1 flex flex-col min-h-0 pt-0">
                 <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-                    <div className="flex-1 px-3 divide-y space-y-1">
-                        <ul className="space-y-2 pb-2">
+                    <div className="flex-1 px-3 border-b  divide-y space-y-1">
+                        <ul className="">
                             <li>
                                 {/* <form action="#" method="GET" className="">
                             <label htmlFor="mobile-search" className="">Search</label>
@@ -37,7 +38,7 @@ export const NavBar = ({ handleItemClick, handleDarkMode, DarkMode , selectedIte
                             </li>
                             <li>
                                 <div className="rounded-lg flex items-center justify-center p-2 hover:bg-purple-400 group">
-                                    <img src='../images/logo.svg' width={70} />
+                                    <img src='../images/logo.svg' width={50} />
                                     {/* <span className="ml-3  hidden md:block hidden md:block">Dashboard</span> */}
                                 </div>
                             </li>
@@ -46,7 +47,7 @@ export const NavBar = ({ handleItemClick, handleDarkMode, DarkMode , selectedIte
                         <div className="space-y-2 pt-2">
                             <div
                                 className={
-                                    `text-base cursor-pointer  font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'} ${ selectedItem === 'dahsboard' ? ' text-amber-400' : 'text-white'}`
+                                    `text-base cursor-pointer  font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'} ${selectedItem === 'dahsboard' ? ' text-amber-400' : 'text-white'}`
                                 }
                                 onClick={() => handleItemClick('dahsboard')}
                             >
@@ -56,26 +57,71 @@ export const NavBar = ({ handleItemClick, handleDarkMode, DarkMode , selectedIte
                                 <span className="ml-4  hidden md:block">Dashboard</span>
                             </div>
                             <div
-                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${ selectedItem === 'article' ? ' text-amber-400' : 'text-white'}`}
+                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'article' ? ' text-amber-400' : 'text-white'}`}
                                 onClick={() => handleItemClick('article')}
                             >
-                                <MdProductionQuantityLimits
+                                <MdSell
                                     className="w-5 h-5 flex-shrink-0 transition duration-75"
                                 />
                                 <span className="ml-4  hidden md:block">Article</span>
                             </div>
                             <div
-                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${ selectedItem === 'client' ? ' text-amber-400' : 'text-white'}`}
+                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'client' ? ' text-amber-400' : 'text-white'}`}
                                 onClick={() => handleItemClick('client')}
                             >
-                                <MdProductionQuantityLimits
+                                <FaUserTag
                                     className="w-5 h-5 flex-shrink-0 transition duration-75"
                                 />
                                 <span className="ml-4  hidden md:block">Client</span>
                             </div>
+                            <div
+                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'supplier' ? ' text-amber-400' : 'text-white'}`}
+                                onClick={() => handleItemClick('supplier')}
+                            >
+                                <FaHospitalUser
+                                    className="w-5 h-5 flex-shrink-0 transition duration-75"
+                                />
+                                <span className="ml-4  hidden md:block">Supplier</span>
+                            </div>
+                            <div
+                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'worker' ? ' text-amber-400' : 'text-white'}`}
+                                onClick={() => handleItemClick('worker')}
+                            >
+                                <MdWork
+                                    className="w-5 h-5 flex-shrink-0 transition duration-75"
+                                />
+                                <span className="ml-4  hidden md:block">worker</span>
+                            </div>
+                            <div
+                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'client' ? ' text-amber-400' : 'text-white'}`}
+                                onClick={() => handleItemClick('sell')}
+                            >
+                                <FaHospitalUser
+                                    className="w-5 h-5 flex-shrink-0 transition duration-75"
+                                />
+                                <span className="ml-4  hidden md:block">sell</span>
+                            </div>
+                            <div
+                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'client' ? ' text-amber-400' : 'text-white'}`}
+                                onClick={() => handleItemClick('achat')}
+                            >
+                                <FaHospitalUser
+                                    className="w-5 h-5 flex-shrink-0 transition duration-75"
+                                />
+                                <span className="ml-4  hidden md:block">achat</span>
+                            </div>
+                            <div
+                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'client' ? ' text-amber-400' : 'text-white'}`}
+                                onClick={() => handleItemClick('achat')}
+                            >
+                                <FaHospitalUser
+                                    className="w-5 h-5 flex-shrink-0 transition duration-75"
+                                />
+                                <span className="ml-4  hidden md:block">Facteure et devis</span>
+                            </div>
                         </div>
                     </div>
-                    <div className="px-3 space-y-2">
+                    <div className="px-3 pt-2 space-y-2">
                         <a href=""
                             className={`text-base text-white font-normal rounded-lg flex items-center p-2  group ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}`}>
                             <VscAccount

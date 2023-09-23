@@ -1,42 +1,37 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
-const EditArticle = ({ product, onClose, openAlert }) => {
-    const [productData, setProductData] = useState({
-        articleID: product.ArticleID,
-        nomDeLArticle: product.NomDeLArticle,
-        description: product.Description,
-        code: product.Code,
-        cout: product.Cout,
-        prixDeVente: product.PrixDeVente,
+const EditArticle = ({ client, onClose, openAlert, fetchClient }) => {
+    const [clientData, setClientData] = useState({
+        ClientID: client.ClientID,
+        Prenom: client.Prenom,
+        NomDeFamille: client.NomDeFamille,
+        NumeroDeContact: client.NumeroDeContact,
+        Email: client.Email,
+        ConditionsDePaiement: client.ConditionsDePaiement,
     });
-    const [selectedImage, setSelectedImage] = useState(null);
 
 
     const handleSave = async () => {
-        const formData = new FormData();
-        formData.append('ArticleID', productData.articleID);
-        formData.append('updatenomDeLArticle', productData.nomDeLArticle);
-        formData.append('updatedescription', productData.description);
-        formData.append('updatecode', productData.code);
-        formData.append('updatecout', productData.cout);
-        formData.append('updateprixDeVente', productData.prixDeVente);
-        if (selectedImage) {
-            formData.append('image', selectedImage);
-        }
         try {
-            axios.post('http://localhost:3001/api/editProduct', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            axios.post('http://localhost:3001/api/editClient',
+                {
+                    ClientID: clientData.ClientID,
+                    updatePrenom: clientData.Prenom,
+                    updateNomDeFamille: clientData.NomDeFamille,
+                    updateNumeroDeContact: clientData.NumeroDeContact,
+                    updateEmail: clientData.Email,
+                    updateConditionsDePaiement: clientData.ConditionsDePaiement,
+                }
+            );
             // You can implement the logic here to save the edited article.
             // For example, you can make an API call to update the article data.
-            openAlert('Product Edited Successfully');
+            fetchClient();
+            openAlert('Client Edited Successfully');
             // Close the edit modal
             onClose();
         } catch (error) {
-            console.log('Error editing product', error);
+            console.log('Error editing client', error);
         }
 
     };
@@ -62,63 +57,53 @@ const EditArticle = ({ product, onClose, openAlert }) => {
                     className="absolute top-0 right-0 bg-black opacity-50 z-[-1] text-gray-600 hover:text-gray-800 w-[100%] h-[100%]"
                 >
                 </button>
-                <h2 className="text-xl font-bold mb-4">Edit Article</h2>
+                <h2 className="text-xl font-bold mb-4">Edit Client</h2>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Nom De LArticle</label>
+                    <label className="block text-sm font-medium text-gray-700">Prenom</label>
                     <input
                         type="text"
                         name="NomDeLArticle"
-                        value={productData.nomDeLArticle}
-                        onChange={(e) => setProductData({ ...productData, nomDeLArticle: e.target.value })}
+                        value={clientData.Prenom}
+                        onChange={(e) => setClientData({ ...clientData, Prenom: e.target.value })}
                         className="mt-1 p-2 w-full border-gray-300 rounded border"
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Code</label>
+                    <label className="block text-sm font-medium text-gray-700">Nom</label>
                     <input
                         type="text"
                         name="Code"
-                        value={productData.code}
-                        onChange={(e) => setProductData({ ...productData, code: e.target.value })}
+                        value={clientData.NomDeFamille}
+                        onChange={(e) => setClientData({ ...clientData, NomDeFamille: e.target.value })}
                         className="mt-1 p-2 w-full border-gray-300 rounded  border"
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Cout</label>
+                    <label className="block text-sm font-medium text-gray-700">Numero De Contact</label>
                     <input
                         type="text"
                         name="Cout"
-                        value={productData.cout}
-                        onChange={(e) => setProductData({ ...productData, cout: e.target.value })}
+                        value={clientData.NumeroDeContact}
+                        onChange={(e) => setClientData({ ...clientData, NumeroDeContact: e.target.value })}
                         className="mt-1 p-2 w-full border-gray-300 rounded  border"
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Prix De Vente</label>
+                    <label className="block text-sm font-medium text-gray-700">Email</label>
                     <input
                         type="text"
                         name="PrixDeVente"
-                        value={productData.prixDeVente}
-                        onChange={(e) => setProductData({ ...productData, prixDeVente: e.target.value })}
+                        value={clientData.Email}
+                        onChange={(e) => setClientData({ ...clientData, Email: e.target.value })}
                         className="mt-1 p-2 w-full border-gray-300 rounded  border"
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Description</label>
+                    <label className="block text-sm font-medium text-gray-700">Conditions De Paiement</label>
                     <textarea
                         name="description"
-                        value={productData.description}
-                        onChange={(e) => setProductData({ ...productData, description: e.target.value })}
-                        className="mt-1 p-2 w-full border-gray-300 rounded  border"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Image</label>
-                    <input
-                        type="file"
-                        name="image"
-                        accept="image/*"
-                        onChange={handleImageChange}
+                        value={clientData.ConditionsDePaiement}
+                        onChange={(e) => setClientData({ ...clientData, ConditionsDePaiement: e.target.value })}
                         className="mt-1 p-2 w-full border-gray-300 rounded  border"
                     />
                 </div>
@@ -142,39 +127,3 @@ const EditArticle = ({ product, onClose, openAlert }) => {
 };
 
 export default EditArticle;
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴⚪🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪⚫⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪⚪⚪🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪⚫⚪⚪⚪🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴🔴🔴🔴
-// 🔴🔴🔴⚪⚪⚪⚪⚪⚫⚫⚫⚪⚫⚫⚫⚫⚫⚪⚪⚪🔴🔴🔴
-// 🔴🔴⚪⚪⚪⚫⚪⚪⚪⚫⚫⚫⚫⚫⚪⚫⚫⚫⚪⚪⚪🔴🔴
-// 🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪⚫⚫⚫⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴
-// 🔴🔴⚪⚪⚪⚫⚫⚫⚪⚫⚫⚫⚫⚫⚪⚪⚪⚫⚪⚪⚪🔴🔴
-// 🔴🔴🔴⚪⚪⚪⚫⚫⚫⚫⚫⚪⚫⚫⚫⚪⚪⚪⚪⚪🔴🔴🔴
-// 🔴🔴🔴🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴⚪⚪⚪⚫⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴⚪⚪⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪⚫⚫⚫⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪⚫⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴⚪⚪⚪🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴⚪🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴
-// 🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴🔴

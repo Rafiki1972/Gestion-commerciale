@@ -3,15 +3,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-interface AddClientPorps {
-    closeAddClient: () => void;
-    fetchClients(): void;
+interface AddSupllierPorps {
+    closeAddSupplier: () => void;
+    fetchSupplier(): void;
     openAlert(): void;
 }
-const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPorps) => {
-    const [clientData, setClientData] = useState({
-        Prenom: '',
-        NomDeFamille: '',
+const AddSupplierForm = ({ openAlert, closeAddSupplier, fetchSupplier }: AddSupllierPorps) => {
+    const [supplierData, setSupplierData] = useState({
+        NomDuFournisseur: '',
         NumeroDeContact: '',
         Email: '',
         ConditionsDePaiement: '',
@@ -23,27 +22,24 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:3001/api/addClient', {
-                Prenom: clientData.Prenom,
-                NomDeFamille: clientData.NomDeFamille,
-                NumeroDeContact: clientData.NumeroDeContact,
-                Email: clientData.Email,
-                ConditionsDePaiement: clientData.ConditionsDePaiement,
+            const response = await axios.post('http://localhost:3001/api/addSupplier', {
+                NomDuFournisseur: supplierData.NomDuFournisseur,
+                NumeroDeContact: supplierData.NumeroDeContact,
+                Email: supplierData.Email,
+                ConditionsDePaiement: supplierData.ConditionsDePaiement,
             });
-            setMessage(response.data.message);
-            setClientData({
-                Prenom: '',
-                NomDeFamille: '',
+            setSupplierData({
+                NomDuFournisseur: '',
                 NumeroDeContact: '',
                 Email: '',
                 ConditionsDePaiement: '',
             });
         } catch (error) {
-            console.log('Error adding product');
+            console.log('Error adding supplier');
         }
         openAlert();
-        closeAddClient()
-        fetchClients();
+        closeAddSupplier()
+        fetchSupplier();
     };
 
 
@@ -57,30 +53,20 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
         >
             <div className='bg-white p-4 rounded-lg min-w-[500px] max-w-md'>
                 <button
-                    onClick={closeAddClient}
+                    onClick={closeAddSupplier}
                     className="absolute top-0 right-0 bg-black opacity-50 z-[-1] text-gray-600 hover:text-gray-800 w-[100%] h-[100%]"
                 >
                 </button>
-                <h2 className="text-xl font-bold mb-4">Add New Client</h2>
+                <h2 className="text-xl font-bold mb-4">Add New Supplier</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="Prenom">Prénom de client</label>
+                        <label className="block text-sm font-medium text-gray-700" htmlFor="Prenom">Prénom de fornisseur</label>
                         <input
                             type="text"
                             id="Prenom"
-                            value={clientData.Prenom}
+                            value={supplierData.NomDuFournisseur}
                             className="mt-1 p-2 w-full border-gray-300 rounded border"
-                            onChange={(e) => setClientData({ ...clientData, Prenom: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">nom de client</label>
-                        <input
-                            type="text"
-                            id="NomDeFamille"
-                            value={clientData.NomDeFamille}
-                            onChange={(e) => setClientData({ ...clientData, NomDeFamille: e.target.value })}
-                            className="mt-1 p-2 w-full border-gray-300 rounded border"
+                            onChange={(e) => setSupplierData({ ...supplierData, NomDuFournisseur: e.target.value })}
                         />
                     </div>
                     <div>
@@ -88,8 +74,8 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
                         <input
                             type="text"
                             id="NumeroDeContact"
-                            value={clientData.NumeroDeContact}
-                            onChange={(e) => setClientData({ ...clientData, NumeroDeContact: e.target.value })}
+                            value={supplierData.NumeroDeContact}
+                            onChange={(e) => setSupplierData({ ...supplierData, NumeroDeContact: e.target.value })}
                             className="mt-1 p-2 w-full border-gray-300 rounded border"
                         />
                     </div>
@@ -98,8 +84,8 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
                         <input
                             type="mail"
                             id="Email"
-                            value={clientData.Email}
-                            onChange={(e) => setClientData({ ...clientData, Email: e.target.value })}
+                            value={supplierData.Email}
+                            onChange={(e) => setSupplierData({ ...supplierData, Email: e.target.value })}
                             className="mt-1 p-2 w-full border-gray-300 rounded border"
                         />
                     </div>
@@ -108,8 +94,8 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
                         <input
                             type="text"
                             id="ConditionsDePaiement"
-                            value={clientData.ConditionsDePaiement}
-                            onChange={(e) => setClientData({ ...clientData, ConditionsDePaiement: e.target.value })}
+                            value={supplierData.ConditionsDePaiement}
+                            onChange={(e) => setSupplierData({ ...supplierData, ConditionsDePaiement: e.target.value })}
                             className="mt-1 p-2 w-full border-gray-300 rounded border"
                         />
                     </div>
@@ -121,4 +107,4 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
     );
 };
 
-export default AddClientForm;
+export default AddSupplierForm;

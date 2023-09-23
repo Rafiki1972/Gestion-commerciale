@@ -2,16 +2,16 @@ import { getCookie } from './cookie'
 interface ChartComponentProps {
     DarkMode: boolean;
 }
-export const State = (props : ChartComponentProps) => {
+export const State = (props: ChartComponentProps) => {
     let DarkMode = props.DarkMode;
     return (
         <div className="ap-5 my-5">
-            <h1
-                className='text-lg font-black tracking-wide'
-            >Products sold :</h1>
+            <h1 className='text-lg font-black tracking-wide text-white'>
+                Products sold :
+            </h1>
             <div className="flex gap-5 my-5">
                 <article
-                    className={`transition shadow-xl flex items-end justify-between rounded-lg border border-gray-100 p-6 ${ DarkMode ? 'bg-gray-200' : 'bg-white'}`}
+                    className={`transition shadow-xl flex items-end justify-between rounded-lg border border-gray-100 p-6 ${DarkMode ? 'bg-gray-200' : 'bg-white'}`}
                 >
                     <div className="flex items-center gap-4">
                         <span
@@ -62,7 +62,7 @@ export const State = (props : ChartComponentProps) => {
                     </div>
                 </article>
                 <article
-                    className={`transition shadow-xl flex items-end justify-between rounded-lg border border-gray-100 p-6 ${ DarkMode ? 'bg-gray-200' : 'bg-white'}`}
+                    className={`transition shadow-xl flex items-end justify-between rounded-lg border border-gray-100 p-6 ${DarkMode ? 'bg-gray-200' : 'bg-white'}`}
                 >
                     <div className="flex items-center gap-4">
                         <span
@@ -114,7 +114,7 @@ export const State = (props : ChartComponentProps) => {
                 </article>
 
                 <article
-                    className={`transition shadow-xl flex items-end justify-between rounded-lg border border-gray-100 p-6 ${ DarkMode ? 'bg-gray-200' : 'bg-white'}`}
+                    className={`transition shadow-xl flex items-end justify-between rounded-lg border border-gray-100 p-6 ${DarkMode ? 'bg-gray-200' : 'bg-white'}`}
                 >
                     <div className="flex items-center gap-4">
                         <span
