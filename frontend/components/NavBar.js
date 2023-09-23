@@ -84,7 +84,7 @@ export const NavBar = ({ handleItemClick, handleDarkMode, DarkMode, selectedItem
                                 <span className="ml-4  hidden md:block">Supplier</span>
                             </div>
                             <div
-                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'client' ? ' text-amber-400' : 'text-white'}`}
+                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'worker' ? ' text-amber-400' : 'text-white'}`}
                                 onClick={() => handleItemClick('worker')}
                             >
                                 <MdWork

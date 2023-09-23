@@ -9,6 +9,7 @@ import { Footer } from '../components/Footer';
 import { NavBar } from '../components/NavBar';
 import Client from '../components/Client';
 import Supplier from '../components/Supplier';
+import Worker from '../components/Worker';
 import { AnimatePresence } from 'framer-motion';
 // for navbar
 /* These import statements are importing specific icons from different icon libraries
@@ -71,6 +72,8 @@ function Dashboard() {
                     <Client DarkMode={DarkMode} />
                 ) : selectedItem === 'supplier' ? (
                     <Supplier DarkMode={DarkMode} />
+                ) : selectedItem === 'worker' ? (
+                    <Worker DarkMode={DarkMode} />
                 ) : (
                     <DashboardComponnent DarkMode={DarkMode} />
                 )}
