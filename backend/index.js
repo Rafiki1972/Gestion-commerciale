@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path')
-
+const bcrypt = require('bcrypt');
 const app = express();
 app.use(cors());
 app.use(express.static('public'));
@@ -423,14 +423,15 @@ app.post('/api/deleteWorker', async (req, res) => {
 
 app.post('/api/addWorker', async (req, res) => {
 
-  const { Prenom, NomDeFamille, NumeroDeContact, Email, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient, GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine } = req.body;
+  const { Prenom, NomDeFamille, NumeroDeContact, Email, Password, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient, GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine } = req.body;
+  const hashedPassword = await bcrypt.hash(Password, saltRounds);
 
   const sql = `
-    INSERT INTO employe (Prenom, NomDeFamille,  NumeroDeContact,  Email, Poste , Salaire , GestionDesEmployes , GestionDesArticles, GestionDesClient, GestionDesFournisseur , GestionDeStock , GestionDesAchats ,  GestionDesVentes , GestionDesFactures , GestionDesResourcesHumaine , created_at , last_modification )
-    VALUES (? , ? ,  ? ,  ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?, NOW(), NOW())
+    INSERT INTO employe (Prenom, NomDeFamille,  NumeroDeContact,  Email, Password, Poste , Salaire , GestionDesEmployes , GestionDesArticles, GestionDesClient, GestionDesFournisseur , GestionDeStock , GestionDesAchats ,  GestionDesVentes , GestionDesFactures , GestionDesResourcesHumaine , created_at , last_modification )
+    VALUES (? , ? ,  ? ,  ? , ? , ? , ? , ? , ?, ? , ? , ? , ? , ? , ? , ?, NOW(), NOW())
   `;
 
-  con.query(sql, [Prenom, NomDeFamille, NumeroDeContact, Email, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient, GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine], function (err, result) {
+  con.query(sql, [Prenom, NomDeFamille, NumeroDeContact, Email, hashedPassword, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient, GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine], function (err, result) {
     if (err) {
       console.error('Error adding data:', err);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -445,17 +446,22 @@ app.post('/api/addWorker', async (req, res) => {
 // Edit worker from table....................................................................................
 
 app.use(express.json());
+const saltRounds = 10; // You can adjust the number of salt rounds based on your security requirements
+
+
 app.post('/api/editWorker', async (req, res) => {
-  const { EmployeeID, Prenom, NomDeFamille, NumeroDeContact, Email, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient,
+  const { EmployeeID, Prenom, NomDeFamille, NumeroDeContact, Email, Password, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient,
     GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine } = req.body;
+  // Hash the password
+  const hashedPassword = await bcrypt.hash(Password, saltRounds);
 
   const sql = `
     UPDATE employe
-    SET Prenom = ?, NomDeFamille = ?, NumeroDeContact = ?, Email = ?, Poste = ?, Salaire = ?, GestionDesEmployes = ?, GestionDesArticles = ?, GestionDesClient = ?,
+    SET Prenom = ?, NomDeFamille = ?, NumeroDeContact = ?, Email = ?, Password = ? ,Poste = ?, Salaire = ?, GestionDesEmployes = ?, GestionDesArticles = ?, GestionDesClient = ?,
     GestionDesFournisseur = ?, GestionDeStock = ?, GestionDesAchats = ?, GestionDesVentes = ?, GestionDesFactures = ?, GestionDesResourcesHumaine  = ?, last_modification = NOW()
     WHERE EmployeeID  = ?
   `;
-  con.query(sql, [Prenom, NomDeFamille, NumeroDeContact, Email, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient,
+  con.query(sql, [Prenom, NomDeFamille, NumeroDeContact, Email, hashedPassword, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient,
     GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine, EmployeeID], function (err, result) {
       if (err) {
         console.error('Error updating data:', err);

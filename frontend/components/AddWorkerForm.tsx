@@ -15,6 +15,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
         NomDeFamille: '',
         NumeroDeContact: '',
         Email: '',
+        Password: '',
         Poste: '',
         Salaire: '',
         GestionDesEmployes: 0,
@@ -62,6 +63,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                 NomDeFamille: WorkerData.NomDeFamille,
                 NumeroDeContact: WorkerData.NumeroDeContact,
                 Email: WorkerData.Email,
+                Password: WorkerData.Password,
                 Poste: WorkerData.Poste,
                 Salaire: WorkerData.Salaire,
                 GestionDesEmployes: WorkerData.GestionDesEmployes,
@@ -306,6 +308,16 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                                 className="mt-1 p-2 w-full border-gray-300 rounded border"
                             />
                         </div>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mt-5" htmlFor="Password">Mots De Pass</label>
+                        <input
+                            type="text"
+                            id="Password"
+                            value={WorkerData.Password}
+                            onChange={(e) => setWorkerData({ ...WorkerData, Password: e.target.value })}
+                            className="mt-1 p-2 w-full border-gray-300 rounded border"
+                        />
                     </div>
                     <div>
                         <div className="mb-4">

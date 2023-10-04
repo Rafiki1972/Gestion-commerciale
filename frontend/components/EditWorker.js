@@ -9,6 +9,7 @@ const EditArticle = ({ Worker, onClose, openAlert, fetchWorker }) => {
         NomDeFamille: Worker.NomDeFamille,
         NumeroDeContact: Worker.NumeroDeContact,
         Email: Worker.Email,
+        Password: Worker.Password,
         Poste: Worker.Poste,
         Salaire: Worker.Salaire,
         GestionDesEmployes: Worker.GestionDesEmployes,
@@ -42,6 +43,7 @@ const EditArticle = ({ Worker, onClose, openAlert, fetchWorker }) => {
                     NomDeFamille: WorkerData.NomDeFamille,
                     NumeroDeContact: WorkerData.NumeroDeContact,
                     Email: WorkerData.Email,
+                    Password: WorkerData.Password,
                     Poste: WorkerData.Poste,
                     Salaire: WorkerData.Salaire,
                     GestionDesEmployes: WorkerData.GestionDesEmployes,
@@ -261,6 +263,16 @@ const EditArticle = ({ Worker, onClose, openAlert, fetchWorker }) => {
                             name="PrixDeVente"
                             value={WorkerData.Email}
                             onChange={(e) => setWorkerData({ ...WorkerData, Email: e.target.value })}
+                            className="mt-1 p-2 w-full border-gray-300 rounded  border"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700">Password</label>
+                        <input
+                            type="text"
+                            name="PrixDeVente"
+                            // value={WorkerData.Password}
+                            onChange={(e) => setWorkerData({ ...WorkerData, Password: e.target.value })}
                             className="mt-1 p-2 w-full border-gray-300 rounded  border"
                         />
                     </div>
