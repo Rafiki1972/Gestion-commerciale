@@ -2,6 +2,7 @@
 
 import '../app/globals.css'
 import React, { useState, useEffect } from 'react';
+import axios from 'axios'
 import DashboardComponnent from '../components/DashboardComponnent';
 import Article from '../components/Article';
 import FollowCursor from '../components/FollowCursor';
@@ -10,7 +11,28 @@ import { NavBar } from '../components/NavBar';
 import Client from '../components/Client';
 import Supplier from '../components/Supplier';
 import Worker from '../components/Worker';
+import Vente from '../components/Vente';
+import { getCookie } from '../components/cookie';
 import { AnimatePresence } from 'framer-motion';
+interface User {
+    EmployeeID: 9,
+    Prenom: string,
+    NomDeFamille: string,
+    NumeroDeContact: string,
+    Email: string,
+    Password: string,
+    Poste: string,
+    Salaire: number,
+    GestionDesEmployes: number,
+    GestionDesArticles: number,
+    GestionDesClient: number,
+    GestionDesFournisseur: number,
+    GestionDeStock: number,
+    GestionDesAchats: number,
+    GestionDesVentes: number,
+    GestionDesFactures: number,
+    GestionDesResourcesHumaine: number,
+}
 // for navbar
 /* These import statements are importing specific icons from different icon libraries
 (`react-icons/vsc`, `react-icons/io5`, `react-icons/md`). */
@@ -19,6 +41,7 @@ function Dashboard() {
     const [DarkMode, setDarkMode] = useState(false); // Default selected item
     // Storing the last selected Item in local starage
 
+    const [worker, setWorker] = useState<User[]>([]);
 
     /* The `useEffect` hook is used in React to perform side effects in functional components. In this code
     snippet, there are two `useEffect` hooks. */
@@ -60,11 +83,39 @@ function Dashboard() {
     const handleItemClick = (item: any) => {
         setSelectedItem(item);
     };
-    console.log(selectedItem)
+    useEffect(() => {
+        const userId = getCookie('userId'); // Retrieve the user ID from the cookie
+        console.log(userId);
+        // Make an API request to fetch all worker data
+        axios.get('http://localhost:3001/api/Worker')
+            .then(response => {
+                // Assuming response.data is an array of Worker objects
+                setWorker(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching worker data:', error);
+            });
+    }, []); // Empty dependency array, so this effect runs once on component mount
+
+    useEffect(() => {
+        const userId = getCookie('userId'); // Retrieve the user ID from the cookie
+
+        // Find the worker with the matching user ID
+        const selectedWorker = worker.find(w => w.EmployeeID === Number(userId));
+
+        if (selectedWorker) {
+            // Now you have the selected worker's data in the selectedWorker variable
+            console.log('Worker found');
+        } else {
+            console.log('Worker not found');
+        }
+    }, [worker]); // This effect depends on the worker state
+
+
     return (
         <div className={`transition bg-black/50`}>
             <FollowCursor />
-            <NavBar handleItemClick={handleItemClick} handleDarkMode={handleDarkMode} DarkMode={DarkMode} selectedItem={selectedItem} />
+            <NavBar worker={worker} handleItemClick={handleItemClick} handleDarkMode={handleDarkMode} DarkMode={DarkMode} selectedItem={selectedItem} />
             <AnimatePresence mode='wait'>
                 {selectedItem === 'article' ? (
                     <Article DarkMode={DarkMode} />
@@ -74,6 +125,8 @@ function Dashboard() {
                     <Supplier DarkMode={DarkMode} />
                 ) : selectedItem === 'worker' ? (
                     <Worker DarkMode={DarkMode} />
+                ) : selectedItem === 'vente' ? (
+                    <Vente DarkMode={DarkMode} />
                 ) : (
                     <DashboardComponnent DarkMode={DarkMode} />
                 )}

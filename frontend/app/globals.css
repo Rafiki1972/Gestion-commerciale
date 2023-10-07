@@ -58,3 +58,7 @@ body:hover #trailer {
   --background: black;
   --foreground: white;
 }
+
+input[type=checkbox] {
+  accent-color: gray;
+}

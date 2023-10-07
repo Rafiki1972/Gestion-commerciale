@@ -48,7 +48,7 @@ const EditArticle = ({ Supplier, onClose, openAlert, fetchSupplier }) => {
                     className="absolute top-0 right-0 bg-black opacity-50 z-[-1] text-gray-600 hover:text-gray-800 w-[100%] h-[100%]"
                 >
                 </button>
-                <h2 className="text-xl font-bold mb-4">Edit Client</h2>
+                <h2 className="text-xl font-bold mb-4">Edit Fournisseur</h2>
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700">Nom complet</label>
                     <input

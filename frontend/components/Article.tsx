@@ -87,9 +87,7 @@ const ArticleComponent = (props: ArticleProps) => {
                             </h2>
 
                             <p className="mt-4 max-w-md text-white">
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
-                                praesentium cumque iure dicta incidunt est ipsam, officia dolor fugit
-                                natus?
+                            To manage and organize your products
                             </p>
                         </header>
                         <div className="mt-8 flex items-center justify-between">

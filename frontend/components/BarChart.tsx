@@ -8,7 +8,7 @@ export default function BarChart(props: ChartDarkMode) {
     let DarkMode = props.DarkMode;
     React.useEffect(() => {
         const dataPieBar = {
-            labels: ["Atay", "N3na3", "drink", "milk", "Caffe", "Chofan"],
+            labels: ["Penicillin", "Minoxidil", "Ampicilline", "Doxycycline", "Amikacine", "Ceftriaxone"],
             datasets: [
                 {
                     label: "Gestion Commercial",

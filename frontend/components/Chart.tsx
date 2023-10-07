@@ -12,7 +12,7 @@ export default function CardLineChart(props: ChartComponentProps) {
                 label: new Date().getFullYear(),
                 backgroundColor: "#58rg47",
                 borderColor: "#3182ce",
-                data: [65, 78, 66, 44, 56],
+                data: [65, 78, 66, 44, 56, 45],
                 fill: false,
             }
         ]
@@ -20,11 +20,12 @@ export default function CardLineChart(props: ChartComponentProps) {
             type: "line",
             data: {
                 labels: [
-                    "Atay",
-                    "Caffe",
-                    "Alchohol",
-                    "Raybi",
-                    "Mon3ich",
+                    "Penicillin", 
+                    "Minoxidil",
+                     "Ampicilline", 
+                     "Doxycycline", 
+                     "Amikacine", 
+                     "Ceftriaxone"
                 ],
                 datasets: January,
             },
