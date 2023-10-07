@@ -29,7 +29,7 @@ con.connect((err) => {
 
 // Route to fetch user data from the database......................................................................................
 // Test route to fetch and return a sample record from the database
-app.get('/api/test', (req, res) => {
+app.get('/api/admin', (req, res) => {
   con.query("SELECT * FROM user ", function (err, result) {
     if (err) {
       console.error('Error fetching data:', err);
@@ -49,7 +49,7 @@ app.get('/api/test', (req, res) => {
 // Test route to fetch and return a sample record from the database
 
 app.get('/api/Product', (req, res) => {
-  con.query("SELECT * FROM article ", function (err, result) {
+  con.query("SELECT * FROM article ORDER BY NomDeLArticle ASC", function (err, result) {
     if (err) {
       console.error('Error fetching data:', err);
       res.status(500).json({ error: 'Internal Server Error' });

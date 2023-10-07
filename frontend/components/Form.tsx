@@ -3,12 +3,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { setCookie, getCookie, removeCookie } from '../components/cookie';
 import { useRouter } from 'next/navigation'; // Import useRouter from Next.js
+const bcrypt = require('bcryptjs');
+
 
 interface User {
     user_id: number;
     username: string;
-    email: string;
-    password: string;
+    Prenom: string;
+    Email: string;
+    EmployeeID: string;
+    Password: string;
     user_type: string;
     created_at: string | null;
     last_modification: string | null;
@@ -17,6 +21,7 @@ interface User {
 
 export const Form = () => {
     const [users, setUsers] = useState<User[]>([]);
+    const [worker, setWorker] = useState<User[]>([]);
     const router = useRouter(); // Initialize useRouter
     const [userInput, setuserInput] = useState(true);
 
@@ -24,50 +29,83 @@ export const Form = () => {
 
     const [formData, setFormData] = useState({
         type: 'admin', // Default to Admin user type
-        username: '',
-        password: '',
+        Email: '',
+        Password: '',
     });
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
-        if (name === 'type') {
-            setFormData({ ...formData, [name]: value, username: '', password: '' }); // Reset username and password on type change
-        } else {
-            setFormData({ ...formData, [name]: value });
-        }
+        setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (formData.type === 'admin') {
+            // Check if the entered username and hashed password match any user in the state
+            const foundUser = users.find(user => user.Email === formData.Email);
 
-        // Check if the entered username and password match any user in the state
-        const foundUser = users.find(user => user.username === formData.username && user.password === formData.password);
+            if (foundUser) {
+                const passwordMatch = await bcrypt.compare(formData.Password, foundUser.Password);
 
-        if (foundUser) {
-            setCookie('username', foundUser.username); // Assuming 'user' is the cookie name
+                if (passwordMatch) {
+                    // Passwords match, set cookies and navigate to Dashboard
+                    setCookie('username', foundUser.username);
+                    setCookie('usertype', 'admin');
+                    setCookie('userId', foundUser.user_id);
 
-            if (formData.type === foundUser.user_type) {
-                router.push('./Dashboard'); // Navigate to the Dashboard based on user type
+                    router.push('./Dashboard');
+                } else {
+                    console.log('Invalid username or password');
+                    setuserInput(false);
+                }
             } else {
-                console.log('User type does not match');
+                console.log('Invalid username or password');
                 setuserInput(false);
             }
-        } else {
-            console.log('Invalid username or password');
-            setuserInput(false);
+        } else if (formData.type === 'worker') {
+            // Check if the entered username and hashed password match any user in the state
+            const foundWorker = worker.find(w => w.Email === formData.Email);
+
+            if (foundWorker) {
+                const passwordMatch = await bcrypt.compare(formData.Password, foundWorker.Password);
+
+                if (passwordMatch) {
+                    // Passwords match, set cookies and navigate to Dashboard
+                    setCookie('usertype', 'worker');
+                    setCookie('username', foundWorker.Prenom);
+                    setCookie('userId', foundWorker.EmployeeID);
+
+                    router.push('./Dashboard');
+                } else {
+                    console.log('Invalid username or password');
+                    setuserInput(false);
+                }
+            } else {
+                console.log('Invalid username or password');
+                setuserInput(false);
+            }
         }
     };
+
 
 
 
 
     // from
     useEffect(() => {
-        axios.get('http://localhost:3001/api/test')
+        axios.get('http://localhost:3001/api/admin')
             .then(response => {
                 // Assuming response.data is an array of User objects
                 setUsers(response.data); // Update the users state with the fetched data
 
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+        axios.get('http://localhost:3001/api/worker')
+            .then(response => {
+                // Assuming response.data is an array of User objects
+                setWorker(response.data); // Update the users state with the fetched data
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -81,7 +119,7 @@ export const Form = () => {
                 </h3>
                 {!userInput && (
                     <span className="mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                        {formData.username === '' || formData.password === '' ? 'Please enter username and password' : 'Invalid username, password, or user type'}
+                        {formData.Email === '' || formData.Password === '' ? 'Please enter username and password' : 'Invalid username, password, or user type'}
                     </span>
                 )}
 
@@ -165,19 +203,19 @@ export const Form = () => {
                     </div>
                     <div className="mb-1 sm:mb-2">
                         <label htmlFor="email" className="inline-block mb-1 font-medium">
-                            Username
+                            Email
                         </label>
                         <input
                             placeholder={
-                                formData.username ? formData.username : 'Musta hr'
+                                formData.Email ? formData.Email : 'Musta hr'
                             }
                             required
-                            pattern="[a-zA-Z\s]+"
-                            type="text"
+                            // pattern="[a-zA-Z\s]+"
+                            type="Email"
                             className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-900 focus:outline-none focus:shadow-outline invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 "
-                            id="username"
-                            name="username"
-                            value={formData.username}
+                            id="email"
+                            name="Email"
+                            value={formData.Email}
                             onChange={handleChange}
                         />
                     </div>
@@ -187,14 +225,14 @@ export const Form = () => {
                         </label>
                         <input
                             placeholder={
-                                formData.password ? formData.password : ''
+                                formData.Password ? formData.Password : ''
                             }
                             required
                             type="password"
                             className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-purple-900 focus:outline-none focus:shadow-outline"
-                            id="password"
-                            name="password"
-                            value={formData.password}
+                            id="Password"
+                            name="Password"
+                            value={formData.Password}
                             onChange={handleChange}
                         />
                     </div>

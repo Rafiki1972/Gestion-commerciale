@@ -13,6 +13,7 @@
     "@types/node": "20.4.8",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
+    "bcryptjs": "^2.4.3",
     "chart.js": "^2.9.4",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
