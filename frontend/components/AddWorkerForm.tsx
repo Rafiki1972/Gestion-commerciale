@@ -229,14 +229,9 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-50 cursor-pointer"
+            className="bg-black/80 fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-50"
         >
             <div className='bg-white p-4 rounded-lg min-w-[500px] max-w-[950px]'>
-                <button
-                    onClick={closeAddWorker}
-                    className="absolute top-0 right-0 bg-black opacity-50 z-[-1] text-gray-600 hover:text-gray-800 w-[100%] h-[100%]"
-                >
-                </button>
                 <h2 className="text-xl font-bold mb-4">Add New Worker</h2>
                 <form onSubmit={handleSubmit}>
                     <div className='grid grid-cols-2 gap-3'>
@@ -324,7 +319,15 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                             {accessLevelsDropdown}
                         </div>
                     </div>
+                    <div className='flex items-center justify-center gap-2'>
+                        <button
+                            onClick={closeAddWorker}
+                            className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
+                        >
+                            Cancel
+                        </button>
                     <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Add Worker</button>
+                    </div>
                 </form>
             </div >
         </motion.div >

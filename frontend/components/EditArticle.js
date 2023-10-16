@@ -54,14 +54,9 @@ const EditArticle = ({ product, onClose, openAlert }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-gray-800 bg-opacity-80 z-50"
+            className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-black/80 z-50"
         >
             <div className="bg-white p-4 rounded-lg w-2/3">
-                <button
-                    onClick={onClose}
-                    className="absolute top-0 right-0 bg-black opacity-50 z-[-1] text-gray-600 hover:text-gray-800 w-[100%] h-[100%]"
-                >
-                </button>
                 <h2 className="text-xl font-bold mb-4">Edit Article</h2>
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700">Nom De LArticle</label>

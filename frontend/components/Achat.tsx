@@ -2,43 +2,50 @@ import React, { useState, useEffect } from 'react';
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import AddClientForm from './AddClientForm';
+import AddAchatForm from './AddAchatForm';
 import Alert from './Alert'
-import EditClient from './EditClient'
+import Product from './Product'
+import { BiShowAlt } from "react-icons/bi";
 
 
-interface Client {
+interface Achat {
     DarkMode: boolean;
 }
 
-export default function Client(props: Client) {
+export default function Achat(props: Achat) {
 
     let DarkMode = props.DarkMode;
     const [AlertState, setAlertState] = useState(null);
-    const [client, setClient] = useState([]);
-    const [AddClient, setAddClient] = useState(false);
-    const [selectedClient, setSelectedClient] = useState(null);
+    const [Achat, setAchat] = useState([]);
+    const [AddAchat, setAddAchat] = useState(false);
+    const [productData, setProductData] = useState([]);
+    const [isProductPopupOpen, setIsProductPopupOpen] = useState(false);
 
 
+    // Function to open the product popup and set the product data.
 
-    function fetchClient() {
-        fetch('http://localhost:3001/api/Client')
+    const handleOpenProductPopup = (data: any) => {
+        setProductData(data);
+        setIsProductPopupOpen(true);
+    };
+
+    // Function to close the product popup.
+
+    const handleCloseProductPopup = () => {
+        setIsProductPopupOpen(false);
+    };
+
+    function fetchAchat() {
+        fetch('http://localhost:3001/api/Achat')
             .then((res) => res.json())
-            .then((data) => setClient(data));
+            .then((data) => setAchat(data));
     }
-    fetchClient();
-
-    const openEditClient = (client: any) => {
-        setSelectedClient(client);
-    };
-
-    const closeOpenEditClient = () => {
-        setSelectedClient(null);
-    };
+    fetchAchat();
 
 
-    const handleAddClient = () => {
-        setAddClient(!AddClient);
+
+    const handleAddAchat = () => {
+        setAddAchat(!AddAchat);
     };
 
 
@@ -54,20 +61,20 @@ export default function Client(props: Client) {
     };
 
 
-    //delete a client....
+    //delete a Achat....
 
-    const handleDelete = (ClientID: any) => {
-        var confirmDelete = confirm('Sure you want to delete this client ??');
+    const handleDelete = (AchatID: any) => {
+        let confirmDelete = confirm('Sure you want to delete this Sell ??');
         if (confirmDelete) {
 
             try {
-                axios.post('http://localhost:3001/api/deleteClient', {
-                    ClientID: ClientID,
+                axios.post('http://localhost:3001/api/deleteAchat', {
+                    AchatID: AchatID,
                 });
-                openAlert('Client Deleted Successfully');
-                fetchClient();
+                openAlert('Achat Deleted Successfully');
+                fetchAchat();
             } catch (error) {
-                console.log('Error deleting client');
+                console.log('Error deleting Achat');
             }
         }
     }
@@ -79,19 +86,19 @@ export default function Client(props: Client) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
             className="px-8 py-5 w-10/12 min-h-[100vh] ml-auto relative overflow-x-auto mb-5 shadow-md sm:rounded-lg">
-            {AddClient && (
-                <AddClientForm openAlert={() => openAlert('Client added Successfully')} closeAddClient={handleAddClient} fetchClients={fetchClient} />
+            {AddAchat && (
+                <AddAchatForm openAlert={() => openAlert('Achat added Successfully')} closeAddAchat={handleAddAchat} fetchAchat={fetchAchat} />
             )}
             {AlertState && (
                 <Alert AlertText={AlertState} closeAlert={closeAlert} />
             )}
-            {selectedClient && (
-                <EditClient client={selectedClient} onClose={closeOpenEditClient} openAlert={openAlert} fetchClient={fetchClient} />
+            {isProductPopupOpen && (
+                <Product productData={productData} closeProduct={handleCloseProductPopup} />
             )}
             <div className='fixed z-90 bottom-10 right-8 group'>
                 <div className='flex items-end justify-center flex-col'>
-                    <p className={`rounded-full -translate-x-10 p-4 drop-shadow-lg flex justify-center items-center text-white shadow-xl opacity-0 group-hover:opacity-100 transition delay-700 duration-300 ease-in-out mb-2 rounded-ee-none ${DarkMode ? 'bg-gray-600' : 'bg-purple-600'}`}>Add Client</p>
-                    <button onClick={handleAddClient} title="Add Client"
+                    <p className={`rounded-full -translate-x-10 p-4 drop-shadow-lg flex justify-center items-center text-white shadow-xl opacity-0 group-hover:opacity-100 transition delay-700 duration-300 ease-in-out mb-2 rounded-ee-none ${DarkMode ? 'bg-gray-600' : 'bg-purple-600'}`}>Add Achat</p>
+                    <button onClick={handleAddAchat} title="Add Achat"
                         className={`rounded-full drop-shadow-lg flex justify-center items-center text-white text-2xl h-14 w-14 shadow-xl ${DarkMode ? 'bg-gray-600 hover:bg-gray-400' : 'bg-purple-600 hover:bg-purple-400'}`}>
                         <AiOutlineAppstoreAdd />
                     </button>
@@ -99,7 +106,7 @@ export default function Client(props: Client) {
             </div>
 
             <h1 className='py-4 font-black text-white whitespace-nowrap uppercase tracking-wider'>
-                LISTS DES CLIENTS
+                LISTS DES Achat
             </h1>
 
 
@@ -109,16 +116,19 @@ export default function Client(props: Client) {
                 <thead className={`text-xs uppercase ${DarkMode ? 'bg-gray-900 text-white' : ' bg-purple-900 text-white '}`}>
                     <tr>
                         <th scope="col" className="px-6 py-3">
-                            Nom
+                            Date De Achat
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Phone
+                            Fornisseur
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Email
+                            Montant Total
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Conditions De Paiement
+                            Notes
+                        </th>
+                        <th scope="col" className="px-6 py-3">
+                            Products
                         </th>
                         <th>
 
@@ -129,35 +139,41 @@ export default function Client(props: Client) {
                     </tr>
                 </thead>
                 <tbody>
-                    {client && client.length > 0 ? (
-                        client.map((user) => (
+                    {Achat && Achat.length > 0 ? (
+                        Achat.map((Achat) => (
                             <tr
-                                key={user['ClientID']}
-                                className={`border-b dark:bg-gray-900 even:bg-gray-50 even:text-black  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
+                                key={Achat['PurchaseID']}
+                                className={`border-b dark:bg-gray-900 even:bg-gray-10 even:text-black hover:opacity-90 ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
                             >
                                 <td className="px-6 py-4 font-black whitespace-nowrap">
-                                    {user['Prenom']} {user['NomDeFamille']}
+                                    {new Date(Achat['DateDAchat']).toLocaleDateString('en-US', {
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: 'numeric',
+                                    })}
                                 </td>
                                 <td className="px-6 py-4 ">
-                                    {user['NumeroDeContact']}
+                                    {Achat['NomDuFournisseur']}
                                 </td>
                                 <td className="px-6 py-4 ">
-                                    {user['Email']}
+                                    {Achat['MontantTotal']} DH
                                 </td>
                                 <td className="px-6 py-4 ">
-                                    {user['ConditionsDePaiement']}
+                                    {Achat['Notes']}
                                 </td>
-                                <td className="px-1 py-4 ">
-                                    <button className='px-3 py-2 text-white bg-cyan-500 rounded transition hover:bg-cyan-500/50 border border-white hover:border-black'
-                                        onClick={() => openEditClient(user)}
+
+                                <td className="px-6 py-4 flex items-center justify-center">
+                                    <div
+                                        className="flex items-center justify-center cursor-pointer border hover:border-black w-10 items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+                                        onClick={() => handleOpenProductPopup(Achat['Products'])}
                                     >
-                                        Edit
-                                    </button>
+                                        <BiShowAlt className="w-5 h-5 flex-shrink-0 transition duration-75" />
+                                    </div>
                                 </td>
                                 <td className="px-1 py-4 ">
                                     <button
                                         className='px-3 py-2 text-white bg-red-500 rounded transition hover:bg-red-500/50 border border-white hover:border-black'
-                                        onClick={() => handleDelete(user['ClientID'])}
+                                        onClick={() => handleDelete(Achat['PurchaseID'])}
                                     >
                                         Delete
                                     </button>
@@ -168,8 +184,8 @@ export default function Client(props: Client) {
                         <tr
                             className={`border-b dark:bg-gray-900 even:bg-gray-50  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
                         >
-                            <td className="px-1 py-4">
-                                Add clients first
+                            <td className="px-6 py-4">
+                                Add Data first
                             </td>
                             <td className="px-1 py-4"></td>
                             <td className="px-1 py-4"></td>

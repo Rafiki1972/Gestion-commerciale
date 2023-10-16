@@ -30,17 +30,17 @@ function DashboardComponnent(props: DashboardComponentProps) {
             <div className={`flex transition flex wrap min-h-screen`}>
                 <div className="w-1/4">
                 </div>
-                <div className=" w-full w-3/4 mx-3 my-5 grid grid-cols-1 gap-4">
+                <div className=" w-10/12 mr-14 my-5 grid grid-cols-1 gap-4">
                     <State DarkMode={DarkMode} />
                     <CardLineChart DarkMode={DarkMode} />
-                    <div className='flex gap-5 flex-wrap'>
-                        <div className='md:w-[49%] w-[100%]'>
+                    {/* <div className='flex gap-5 flex-wrap'> */}
+                        {/* <div className='md:w-[49%] w-[100%]'>
                             <ChartCircle DarkMode={DarkMode} />
-                        </div>
-                        <div className='md:w-[49%] w-[100%]'>
-                            <BarChart DarkMode={DarkMode} />
-                        </div>
-                    </div>
+                        </div> */}
+                        {/* <div className='md:w-[100%] w-[100%]'> */}
+                        <BarChart DarkMode={DarkMode} />
+                        {/* </div> */}
+                    {/* </div> */}
                     <Table DarkMode={DarkMode} />
                 </div>
             </div>

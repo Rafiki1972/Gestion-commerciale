@@ -132,7 +132,7 @@ export default function Worker(props: Worker) {
                 </div>
             </div>
 
-            <h1 className='py-4 font-black text-white whitespace-nowrap'>
+            <h1 className='py-4 font-black text-white whitespace-nowrap uppercase tracking-wider'>
                 LISTS DES WorkerS
             </h1>
 

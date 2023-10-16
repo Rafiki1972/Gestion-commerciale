@@ -3,30 +3,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
-interface AddVentePorps {
-    closeAddVente: () => void;
-    fetchVentes(): void;
+interface AddAchatPorps {
+    closeAddAchat: () => void;
+    fetchAchat(): void;
     openAlert(): void;
 }
-const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) => {
-    const [VenteData, setVenteData] = useState({
-        ClientID: '',
+const AddAchatForm = ({ openAlert, closeAddAchat, fetchAchat }: AddAchatPorps) => {
+    const [AchatData, setAchatData] = useState({
+        SupplierID: '',
         MontantTotal: '',
         Notes: '',
     });
-    const [ClientId, setClientId] = useState('');
+    const [SupplierId, setSupplierId] = useState('');
     const [showProducts, setshowProducts] = useState(false);
     const [Total, setTotal] = useState(0);
 
     const [selectedProducts, setSelectedProducts] = useState<Record<string, number>>({});
     const [selectedProductsPrice, setSelectedProductsPrice] = useState<Record<string, number>>({});
 
-    const [Client, setClient] = useState([]);
+    const [Supplier, setSupplier] = useState([]);
     const [Products, setProducts] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:3001/api/Client')
+        fetch('http://localhost:3001/api/Supplier')
             .then((res) => res.json())
-            .then((data) => setClient(data));
+            .then((data) => setSupplier(data));
     }, []);
     useEffect(() => {
         fetch('http://localhost:3001/api/Product')
@@ -34,9 +34,9 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
             .then((data) => setProducts(data));
     }, []);
 
-    const handleClientChange = (e: any) => {
-        const selectedClient = e.target.value;
-        setClientId(selectedClient);
+    const handleSupplierChange = (e: any) => {
+        const selectedSupplier = e.target.value;
+        setSupplierId(selectedSupplier);
     };
 
 
@@ -46,7 +46,7 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
 
 
     // Function to handle changes in the number of products
-    const handleQuantityChange = (productId: any, quantity: any, price: any) => {
+    const handleQuantityChange = (productId: any, quantity: any, price: any) => {   
         // Calculate the previous quantity for the selected product
         const prevQuantity = selectedProducts[productId] || 0;
 
@@ -74,10 +74,10 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3001/api/addVente', {
-                ClientID: ClientId,
+            const response = await axios.post('http://localhost:3001/api/addAchat', {
+                SupplierID: SupplierId,
                 MontantTotal: Total, // Use the calculated Total
-                Notes: VenteData.Notes,
+                Notes: AchatData.Notes,
                 SelectedProducts: selectedProducts, // Send the selected products data
                 SelectedProductsPrice: selectedProductsPrice, // Send the selected products prices
             });
@@ -86,8 +86,8 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
             console.log('Error adding product');
         }
         openAlert();
-        closeAddVente()
-        fetchVentes();
+        closeAddAchat()
+        fetchAchat();
     };
 
 
@@ -100,25 +100,25 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
             className="bg-black/80 fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-50"
         >
             <div className='bg-white p-4 rounded-lg min-w-[500px] max-w-md'>
-                <h2 className="text-xl font-bold mb-4">Add New Vente</h2>
+                <h2 className="text-xl font-bold mb-4">Add New Achat</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4 w-full">
                         <select
-                            onChange={handleClientChange}
+                            onChange={handleSupplierChange}
                             className="w-full bg-transparent text-gray-900 border border-gray-200 px-4 py-2"
                         >
                             <option
                                 className="text-black"
                                 value="">
-                                Select Client
+                                Select Supplier
                             </option>
-                            {Client && Client.length > 0 ? (
-                                Client.map((ClientInfo) => (
+                            {Supplier && Supplier.length > 0 ? (
+                                Supplier.map((SupplierInfo) => (
                                     <option
-                                        key={ClientInfo['ClientID']}
+                                        key={SupplierInfo['SupplierID']}
                                         className="text-black"
-                                        value={ClientInfo['ClientID']}>
-                                        {ClientInfo['NomDeFamille']} {ClientInfo['Prenom']}
+                                        value={SupplierInfo['SupplierID']}>
+                                        {SupplierInfo['NomDuFournisseur']}
                                     </option>
                                 ))
                             ) : (
@@ -129,7 +129,6 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
                     </div>
                     <div className="mb-4 w-full">
                         <div
-                            // onChange={handleClientChange}
                             className="w-full flex relative bg-transparent text-gray-900 border border-gray-200 px-4 pt-2"
                         >
                             <div className="text-black mb-2 w-full" onClick={handleShowProducts}>
@@ -143,7 +142,7 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
                                                 <div>
                                                     {/* <input className="m-2" type='checkbox' id={ProductsInfo['NomDeLArticle']} value={ProductsInfo['ArticleID']} /> */}
                                                     <label htmlFor={ProductsInfo['NomDeLArticle']}>
-                                                        {ProductsInfo['NomDeLArticle']} {` ( ${ProductsInfo['PrixDeVente']} Dh )`}
+                                                        {ProductsInfo['NomDeLArticle']} {` ( ${ProductsInfo['Cout']} Dh )`}
                                                     </label>
                                                 </div>
                                                 <div className='float-right'>
@@ -156,7 +155,7 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
                                                             handleQuantityChange(
                                                                 ProductsInfo['ArticleID'],
                                                                 parseInt(e.target.value),
-                                                                parseInt(ProductsInfo['PrixDeVente'])
+                                                                parseInt(ProductsInfo['Cout'])
                                                             )
                                                         }
                                                         value={selectedProducts[ProductsInfo['ArticleID']] || 0}
@@ -165,7 +164,7 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="text-black">No Prodcuts found</div>
+                                        <div className="text-black">No Suppliers found</div>
                                     )}
                                 </div>
                             }
@@ -176,8 +175,8 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
                         <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">Notes</label>
                         <textarea
                             id="NomDeFamille"
-                            value={VenteData.Notes}
-                            onChange={(e) => setVenteData({ ...VenteData, Notes: e.target.value })}
+                            value={AchatData.Notes}
+                            onChange={(e) => setAchatData({ ...AchatData, Notes: e.target.value })}
                             className="mt-1 p-2 w-full border-gray-300 rounded border"
                         />
                     </div>
@@ -191,12 +190,12 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
                     </div>
                     <div className='flex items-center justify-center gap-2'>
                         <button
-                            onClick={closeAddVente}
+                            onClick={closeAddAchat}
                             className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
                         >
                             Cancel
                         </button>
-                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Add Vente</button>
+                    <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Add Achat</button>
                     </div>
                 </form>
             </div>
@@ -204,4 +203,4 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
     );
 };
 
-export default AddVenteForm;
+export default AddAchatForm;

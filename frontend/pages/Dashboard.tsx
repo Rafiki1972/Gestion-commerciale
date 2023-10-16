@@ -13,6 +13,11 @@ import Supplier from '../components/Supplier';
 import Worker from '../components/Worker';
 import Vente from '../components/Vente';
 import { getCookie } from '../components/cookie';
+import Achat from '../components/Achat';
+import Stock from '../components/Stock';
+import Transaction from '../components/TransactionCompte';
+import Production from '../components/Production';
+import TimeSheet from '../components/TimeSheet';
 import { AnimatePresence } from 'framer-motion';
 interface User {
     EmployeeID: 9,
@@ -113,7 +118,7 @@ function Dashboard() {
 
 
     return (
-        <div className={`transition bg-black/50`}>
+        <div className={`transition bg-black/50 ${DarkMode ? 'bg-gradient-to-r from-slate-900 to-slate-700' : 'bg-gradient-to-r from-purple-500 to-purple-900'}`}>
             <FollowCursor />
             <NavBar worker={worker} handleItemClick={handleItemClick} handleDarkMode={handleDarkMode} DarkMode={DarkMode} selectedItem={selectedItem} />
             <AnimatePresence mode='wait'>
@@ -127,6 +132,16 @@ function Dashboard() {
                     <Worker DarkMode={DarkMode} />
                 ) : selectedItem === 'vente' ? (
                     <Vente DarkMode={DarkMode} />
+                ) : selectedItem === 'achat' ? (
+                    <Achat DarkMode={DarkMode} />
+                ) : selectedItem === 'stock' ? (
+                    <Stock DarkMode={DarkMode} />
+                ) : selectedItem === 'transaction' ? (
+                    <Transaction DarkMode={DarkMode} />
+                ) : selectedItem === 'production' ? (
+                    <Production DarkMode={DarkMode} />
+                ) : selectedItem === 'timesheet' ? (
+                    <TimeSheet DarkMode={DarkMode} />
                 ) : (
                     <DashboardComponnent DarkMode={DarkMode} />
                 )}

@@ -477,6 +477,393 @@ app.post('/api/editWorker', async (req, res) => {
 
 
 
+// Vente backend
+// Add Vente to database....................................................................................
+app.post('/api/addVente', async (req, res) => {
+  const { ClientID, MontantTotal, Notes, SelectedProducts, SelectedProductsPrice } = req.body;
+  // Insert data into the 'vente' table
+  const venteSql = `
+      INSERT INTO vente (DateDeVente, ClientID, MontantTotal, Notes, last_modification)
+      VALUES (NOW(), ?, ?, ? ,NOW())
+  `;
+
+  con.query(venteSql, [ClientID, MontantTotal, Notes], function (err, result) {
+    if (err) {
+      console.error('Error adding vente data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    const venteId = result.insertId; // Get the ID of the newly inserted vente
+
+    // Insert data into the 'articlevente' table for each selected product
+    const articleventeSql = `
+          INSERT INTO articlevente (SaleID, ArticleID, Quantite, PrixUnitaire, SousTotal, created_at,last_modification)
+          VALUES (?, ?, ?, ?, ?, NOW(), NOW())
+      `;
+
+    for (const productId in SelectedProducts) {
+      if (SelectedProducts.hasOwnProperty(productId)) {
+        const quantity = SelectedProducts[productId];
+        const price = SelectedProductsPrice[productId];
+        const sousTotal = quantity * price;
+
+        con.query(articleventeSql, [venteId, productId, quantity, price, sousTotal], function (err, result) {
+          if (err) {
+            console.error('Error adding articlevente data:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+          }
+        });
+      }
+    }
+
+    console.log('Data added successfully');
+    res.status(200).json({ message: 'Data added successfully' });
+  });
+});
+
+
+// Add Vente to database....................................................................................
+// Select Vente From data base
+// Add a new route for /api/Vente
+app.get('/api/Vente', (req, res) => {
+  // SQL query to fetch data
+  const sql = `
+        SELECT
+        v.SaleID,
+        v.DateDeVente,
+        c.Prenom AS Prenom,
+        c.NomDeFamille AS NomDeFamille,
+        v.MontantTotal,
+        CONCAT('[', GROUP_CONCAT(
+          JSON_OBJECT(
+            'ArticleID', av.ArticleID,
+            'NomDeLArticle', a.NomDeLArticle, -- Join with article table
+            'Quantite', av.Quantite,
+            'PrixUnitaire', av.PrixUnitaire,
+            'SousTotal', av.SousTotal
+          )
+          SEPARATOR ','
+        ), ']') AS Products,
+        v.Notes
+        FROM vente v
+        JOIN client c ON v.ClientID = c.ClientID
+        JOIN articlevente av ON v.SaleID = av.SaleID
+        JOIN article a ON av.ArticleID = a.ArticleID -- Join with the article table
+        GROUP BY v.SaleID;
+  `;
+
+  con.query(sql, function (err, result) {
+    if (err) {
+      console.error('Error fetching Vente data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    // Process the result as needed, and return it as a JSON response
+    res.status(200).json(result);
+  });
+});
+
+// Delete Vente from table 
+app.post('/api/deleteVente', (req, res) => {
+  const { VenteID } = req.body; // Get the VenteID from the URL parameter
+  // SQL query to delete the vente
+  const sql = 'DELETE FROM vente WHERE SaleID = ?';
+
+  con.query(sql, [VenteID], (err, result) => {
+    if (err) {
+      console.error('Error deleting Vente:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(200).json({ message: 'Vente deleted successfully' });
+    }
+  });
+});
+
+
+// Achat backend
+// Add Achat to database....................................................................................
+app.post('/api/addAchat', async (req, res) => {
+  const { SupplierID, MontantTotal, Notes, SelectedProducts, SelectedProductsPrice } = req.body;
+  // Insert data into the 'achat' table
+  const venteSql = `
+      INSERT INTO achat (DateDAchat, SupplierID, MontantTotal, Notes, last_modification)
+      VALUES (NOW(), ?, ?, ? ,NOW())
+  `;
+
+  con.query(venteSql, [SupplierID, MontantTotal, Notes], function (err, result) {
+    if (err) {
+      console.error('Error adding achat data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    const achatId = result.insertId; // Get the ID of the newly inserted vente
+
+    // Insert data into the 'articlevente' table for each selected product
+    const articleventeSql = `
+          INSERT INTO articleachat (PurchaseID, ArticleID, Quantite, PrixUnitaire, SousTotal, created_at,last_modification)
+          VALUES (?, ?, ?, ?, ?, NOW(), NOW())
+      `;
+
+    for (const productId in SelectedProducts) {
+      if (SelectedProducts.hasOwnProperty(productId)) {
+        const quantity = SelectedProducts[productId];
+        const price = SelectedProductsPrice[productId];
+        const sousTotal = quantity * price;
+
+        con.query(articleventeSql, [achatId, productId, quantity, price, sousTotal], function (err, result) {
+          if (err) {
+            console.error('Error adding articleachat data:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+          }
+        });
+      }
+    }
+
+    console.log('Data added successfully');
+    res.status(200).json({ message: 'Data added successfully' });
+  });
+});
+
+// Add a new route for /api/Achat
+app.get('/api/Achat', (req, res) => {
+  // SQL query to fetch data
+  const sql = `
+        SELECT
+        v.PurchaseID,
+        v.DateDAchat,
+        c.NomDuFournisseur AS NomDuFournisseur,
+        v.MontantTotal,
+        CONCAT('[', GROUP_CONCAT(
+          JSON_OBJECT(
+            'ArticleID', av.ArticleID,
+            'NomDeLArticle', a.NomDeLArticle, -- Join with article table
+            'Quantite', av.Quantite,
+            'PrixUnitaire', av.PrixUnitaire,
+            'SousTotal', av.SousTotal
+          )
+          SEPARATOR ','
+        ), ']') AS Products,
+        v.Notes
+        FROM achat v
+        JOIN fournisseur c ON v.SupplierID = c.SupplierID
+        JOIN articleachat av ON v.PurchaseID = av.PurchaseID
+        JOIN article a ON av.ArticleID = a.ArticleID -- Join with the article table
+        GROUP BY v.PurchaseID;
+  `;
+
+  con.query(sql, function (err, result) {
+    if (err) {
+      console.error('Error fetching Vente data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    // Process the result as needed, and return it as a JSON response
+    res.status(200).json(result);
+  });
+});
+
+// Delete achat from table 
+app.post('/api/deleteAchat', (req, res) => {
+  const { AchatID } = req.body; // Get the AchatID from the URL parameter
+  // SQL query to delete the vente
+  const sql = 'DELETE FROM achat WHERE PurchaseID = ?';
+
+  con.query(sql, [AchatID], (err, result) => {
+    if (err) {
+      console.error('Error deleting Achat:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(200).json({ message: 'Achat deleted successfully' });
+    }
+  });
+});
+
+
+// Stock data handeling
+
+app.post('/api/addStock', async (req, res) => {
+  const { Supplier, Product, Notes, Total } = req.body;
+
+  const sql = `
+    INSERT INTO stock (Supplier, NomDuProduit, Description, QuantiteDisponible)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  con.query(sql, [Supplier, Product, Notes, Total], function (err, result) {
+    if (err) {
+      console.error('Error adding data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Stock added successfully');
+    res.status(200).json({ message: 'Stock added successfully' });
+  });
+});
+
+app.get('/api/Stock', (req, res) => {
+  con.query("SELECT * FROM stock ORDER BY NomDuProduit ASC", function (err, result) {
+    if (err) {
+      console.error('Error fetching data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (result.length > 0) {
+      res.json(result); // Return the first record
+      // console.log(result);
+    } else {
+      res.json({ message: 'No data available' });
+    }
+  });
+});
+
+// Delete stock from database
+app.post('/api/deleteStock', async (req, res) => {
+  const { StockID } = req.body;
+  const sql = `
+    DELETE FROM stock WHERE StockID = ? 
+  `;
+
+  con.query(sql, [StockID], function (err, result) {
+    if (err) {
+      console.error('Error Deleting data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Stock data deleted successfully');
+    res.status(200).json({ message: 'Stock data deleted successfully' });
+  });
+});
+
+
+// Transaction Compte...........................
+app.post('/api/addTransaction', async (req, res) => {
+  const { Date, Type, Montant, Notes } = req.body;
+
+  const sql = `
+    INSERT INTO transactioncompte (DateDeLaTransaction, TypeDeTransaction, Montant, Notes)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  con.query(sql, [Date, Type, Montant, Notes], function (err, result) {
+    if (err) {
+      console.error('Error adding data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Transaction added successfully');
+    res.status(200).json({ message: 'Transaction added successfully' });
+  });
+});
+
+app.get('/api/Transaction', (req, res) => {
+  con.query("SELECT * FROM transactioncompte ORDER BY DateDeLaTransaction ASC", function (err, result) {
+    if (err) {
+      console.error('Error fetching data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (result.length > 0) {
+      res.json(result); // Return the first record
+      // console.log(result);
+    } else {
+      res.json({ message: 'No data available' });
+    }
+  });
+});
+
+// Delete Transaction from database
+app.post('/api/deleteTransaction', async (req, res) => {
+  const { TransactionID } = req.body;
+  const sql = `
+    DELETE FROM transactioncompte WHERE TransactionID = ? 
+  `;
+
+  con.query(sql, [TransactionID], function (err, result) {
+    if (err) {
+      console.error('Error Deleting data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Transaction data deleted successfully');
+    res.status(200).json({ message: 'Transaction data deleted successfully' });
+  });
+});
+
+
+
+
+
+
+// Production Compte...........................
+app.post('/api/addProduction', async (req, res) => {
+  const { Date, Product, Quantity, Cout } = req.body;
+
+  const sql = `
+    INSERT INTO production (DateDeProduction, NomDuProduit, QuantiteProduite, Cout)
+    VALUES (?, ?, ?, ?)
+  `;
+
+  con.query(sql, [Date, Product, Quantity, Cout], function (err, result) {
+    if (err) {
+      console.error('Error adding data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Production added successfully');
+    res.status(200).json({ message: 'Production added successfully' });
+  });
+});
+
+app.get('/api/Production', (req, res) => {
+  con.query("SELECT * FROM production ORDER BY DateDeProduction ASC", function (err, result) {
+    if (err) {
+      console.error('Error fetching data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (result.length > 0) {
+      res.json(result); // Return the first record
+      // console.log(result);
+    } else {
+      res.json({ message: 'No data available' });
+    }
+  });
+});
+
+// Delete Transaction from database
+app.post('/api/deleteProduction', async (req, res) => {
+  const { ProductionID } = req.body;
+  const sql = `
+    DELETE FROM production WHERE ProductionID = ? 
+  `;
+
+  con.query(sql, [ProductionID], function (err, result) {
+    if (err) {
+      console.error('Error Deleting data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('production data deleted successfully');
+    res.status(200).json({ message: 'production data deleted successfully' });
+  });
+});
+
+
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

@@ -1,32 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "chart.js";
 
 interface ChartComponentProps {
     DarkMode: boolean;
 }
+
+interface SaleData {
+    SaleID: number;
+    DateDeVente: string;
+    MontantTotal: number;
+}
+
 export default function CardLineChart(props: ChartComponentProps) {
-    let DarkMode = props.DarkMode;
-    React.useEffect(() => {
-        const January = [
-            {
-                label: new Date().getFullYear(),
-                backgroundColor: "#58rg47",
-                borderColor: "#3182ce",
-                data: [65, 78, 66, 44, 56],
-                fill: false,
+    const [salesData, setSalesData] = useState<SaleData[]>([]);
+    const DarkMode = props.DarkMode;
+
+    useEffect(() => {
+        // Fetch data from the API
+        fetch("http://localhost:3001/api/Vente")
+            .then((response) => response.json())
+            .then((data: SaleData[]) => {
+                setSalesData(data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
+
+    useEffect(() => {
+        // Process the sales data to group by day and calculate the total amount sold for each day
+        const groupedData: { [date: string]: number } = {};
+
+        salesData.forEach((sale) => {
+            const date = new Date(sale.DateDeVente).toDateString();
+            if (groupedData[date]) {
+                groupedData[date] += sale.MontantTotal;
+            } else {
+                groupedData[date] = sale.MontantTotal;
             }
-        ]
-        var config = {
+        });
+
+        // Extract the labels and data for the chart
+        const labels = Object.keys(groupedData);
+        const data = labels.map((date) => groupedData[date]);
+
+        // Chart configuration
+        const config = {
             type: "line",
             data: {
-                labels: [
-                    "Atay",
-                    "Caffe",
-                    "Alchohol",
-                    "Raybi",
-                    "Mon3ich",
+                labels: labels,
+                datasets: [
+                    {
+                        label: "Sales Amount",
+                        data: data,
+                        backgroundColor: "#58rg47", // Replace with a valid color code
+                        borderColor: "#3182ce",
+                        fill: false,
+                    },
                 ],
-                datasets: January,
             },
             options: {
                 maintainAspectRatio: false,
@@ -99,12 +130,13 @@ export default function CardLineChart(props: ChartComponentProps) {
                 },
             },
         };
+        // Create the chart
         var ctx = document.getElementById("line-chart").getContext("2d");
         window.myLine = new Chart(ctx, config);
-    }, []);
+    }, [salesData]);
     return (
         <>
-            <div className={`shadow-2xl relative flex flex-col min-w-0 break-words w-full mb-6 rounded ${ DarkMode ? 'bg-gray-700' : 'bg-purple-700'}`}>
+            <div className={`border border-gray-500 shadow-2xl relative flex flex-col min-w-0 break-words w-full mb-6 rounded ${DarkMode ? 'bg-gray-700' : 'bg-purple-700'}`}>
                 <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">

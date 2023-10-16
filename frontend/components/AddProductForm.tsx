@@ -118,14 +118,9 @@ const AddProductForm = ({ closeAddProduct, fetchProducts }: AddProucttPorps) => 
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-50 cursor-pointer"
+            className="bg-black/80 fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-50 cursor-pointer"
         >
             <div className='bg-white p-4 rounded-lg min-w-[600px] max-w-md'>
-                <button
-                    onClick={closeAddProduct}
-                    className="absolute top-0 right-0 bg-black opacity-50 z-[-1] text-gray-600 hover:text-gray-800 w-[100%] h-[100%]"
-                >
-                </button>
                 <h2 className="text-xl font-bold mb-4">Add New Product</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
@@ -189,7 +184,17 @@ const AddProductForm = ({ closeAddProduct, fetchProducts }: AddProucttPorps) => 
                             className="mt-1 p-2 w-full border-gray-300 rounded border"
                         />
                     </div>
-                    <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Add Product</button>
+                    <div className='flex items-center justify-center gap-2'>
+                        <button
+                            onClick={closeAddProduct}
+                            className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
+                        >
+                            Cancel
+                        </button>
+                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">
+                            Add Product
+                        </button>
+                    </div>
                 </form>
                 <p>{message}</p>
             </div>
