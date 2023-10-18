@@ -34,7 +34,7 @@ export const Welcome = ({ name }: any) => {
                         className="fixed bottom-4 end-4 z-50 flex items-center justify-center gap-4 rounded-lg bg-black px-5 py-3 text-white"
                     >
                         <p>
-                            👋 Logged in as {newName}
+                            👋 Connecté en tant que {newName}
                             {/* Welcome back {newName}*/}
                         </p>
 

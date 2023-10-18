@@ -60,7 +60,7 @@ const AddProductionForm = ({ openAlert, closeAddProduction, fetchProduction }: A
             className="bg-black/80 fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-50"
         >
             <div className='bg-white p-4 rounded-lg min-w-[500px] max-w-md'>
-                <h2 className="text-xl font-bold mb-4">Add New Production</h2>
+                <h2 className="text-xl font-bold mb-4">Ajoter Nouvelle Fabrication</h2>
                 <form onSubmit={handleSubmit} className='space-y-5'>
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="Date">
@@ -83,7 +83,7 @@ const AddProductionForm = ({ openAlert, closeAddProduction, fetchProduction }: A
                             <option
                                 className="text-black"
                                 value="">
-                                Select Product
+                                Produit
                             </option>
                             {Products && Products.length > 0 ? (
                                 Products.map((ProductsInfo) => (
@@ -95,14 +95,14 @@ const AddProductionForm = ({ openAlert, closeAddProduction, fetchProduction }: A
                                     </option>
                                 ))
                             ) : (
-                                <option className="text-black">No Product found</option>
+                                <option className="text-black">Aucune donnée disponible</option>
                             )}
                         </select>
 
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="Montant">
-                        Quantity
+                            Quantité
                         </label>
                         <input
                             type="number"
@@ -133,10 +133,10 @@ const AddProductionForm = ({ openAlert, closeAddProduction, fetchProduction }: A
                             onClick={closeAddProduction}
                             className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
                         >
-                            Cancel
+                            Annuler
                         </button>
                         <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover-bg-blue-600 my-4" type="submit">
-                            Add Production
+                            Sauvegarder
                         </button>
                     </div>
                 </form>

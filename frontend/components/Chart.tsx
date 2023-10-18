@@ -51,7 +51,7 @@ export default function CardLineChart(props: ChartComponentProps) {
                 labels: labels,
                 datasets: [
                     {
-                        label: "Sales Amount",
+                        label: "Montant des ventes",
                         data: data,
                         backgroundColor: "#58rg47", // Replace with a valid color code
                         borderColor: "#3182ce",
@@ -140,7 +140,7 @@ export default function CardLineChart(props: ChartComponentProps) {
                 <div className="rounded-t mb-0 px-4 py-3 bg-transparent">
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">
-                            <h1 className="text-white text-lg font-black	tracking-wide">Products sold Per day:</h1>
+                            <h1 className="text-white text-lg font-black	tracking-wide">Produits vendus par jour:</h1>
                         </div>
                         {/* Year */}
                         <div className="relative w-full max-w-full flex gap-5 flex-grow flex-1 justify-end">

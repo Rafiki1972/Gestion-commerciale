@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MdOutlineSecurity } from "react-icons/md";
 import axios from 'axios';
-const EditArticle = ({ Worker, onClose, openAlert, fetchWorker }) => {
+const ModifierArticle = ({ Worker, onClose, openAlert, fetchWorker }) => {
     const [WorkerData, setWorkerData] = useState({
         EmployeeID: Worker.EmployeeID,
         Prenom: Worker.Prenom,
         NomDeFamille: Worker.NomDeFamille,
         NumeroDeContact: Worker.NumeroDeContact,
         Email: Worker.Email,
-        Password: Worker.Password,
+        Password: '',
         Poste: Worker.Poste,
         Salaire: Worker.Salaire,
         GestionDesEmployes: Worker.GestionDesEmployes,
@@ -34,7 +34,7 @@ const EditArticle = ({ Worker, onClose, openAlert, fetchWorker }) => {
         setWorkerData({ ...WorkerData, Poste: selectedJob });
     };
 
-    const handleSave = async () => {
+    const handleSauvegarder = async () => {
         try {
             axios.post('http://localhost:3001/api/editWorker',
                 {
@@ -58,11 +58,11 @@ const EditArticle = ({ Worker, onClose, openAlert, fetchWorker }) => {
                 }
             );
             fetchWorker();
-            openAlert('Worker Edited Successfully');
-            // Close the edit modal
+            openAlert('Worker Modifiered Successfully');
+            // Close the Modifier modal
             onClose();
         } catch (error) {
-            console.log('Error editing Worker', error);
+            console.log('Error Modifiering Worker', error);
         }
 
     };
@@ -219,7 +219,7 @@ const EditArticle = ({ Worker, onClose, openAlert, fetchWorker }) => {
             className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-black/80 z-50"
         >
             <div className="bg-white p-4 rounded-lg w-2/3">
-                <h2 className="text-xl font-bold mb-4">Edit Worker</h2>
+                <h2 className="text-xl font-bold mb-4">Modifier Worker</h2>
                 <div className='w-full grid grid-cols-3 gap-3'>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">Prenom</label>
@@ -305,13 +305,13 @@ const EditArticle = ({ Worker, onClose, openAlert, fetchWorker }) => {
                         onClick={onClose}
                         className="w-[49%] bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                     >
-                        Cancel
+                        Annuler
                     </button>
                     <button
-                        onClick={handleSave}
+                        onClick={handleSauvegarder}
                         className="w-[49%] bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                     >
-                        Save
+                        Sauvegarder
                     </button>
                 </div>
             </div>
@@ -319,4 +319,4 @@ const EditArticle = ({ Worker, onClose, openAlert, fetchWorker }) => {
     );
 };
 
-export default EditArticle;
+export default ModifierArticle;

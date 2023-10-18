@@ -7,12 +7,12 @@ const LogoutButton = () => {
 
     const handleLogout = () => {
         removeCookie('username'); // Remove the cookie
-        router.push('/'); // Navigate to the "About" page if username exists
+        router.push('./'); // Navigate to the "About" page if username exists
     };
 
     return (
         <>
-        <button onClick={handleLogout} className='w-full text-left'>Log Out</button>
+        <button onClick={handleLogout} className='w-full text-left'>Se déconnecter</button>
         </>
     );
 };

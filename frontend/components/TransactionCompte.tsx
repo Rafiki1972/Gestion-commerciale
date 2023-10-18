@@ -47,14 +47,14 @@ export default function Transaction(props: Transaction) {
     //delete a Transaction....
 
     const handleDelete = (TransactionID: any) => {
-        let confirmDelete = confirm('Sure you want to delete??');
-        if (confirmDelete) {
+        let confirmSupprimer = confirm('Sûr vous souhaitez supprimer cette transaction ?');
+        if (confirmSupprimer) {
 
             try {
                 axios.post('http://localhost:3001/api/deleteTransaction', {
                     TransactionID: TransactionID,
                 });
-                openAlert('Transaction Deleted Successfully');
+                openAlert('Transaction Supprimerd Successfully');
                 fetchTransaction();
             } catch (error) {
                 console.log('Error deleting Transaction');
@@ -86,7 +86,7 @@ export default function Transaction(props: Transaction) {
             </div>
 
             <h1 className='py-4 font-black text-white whitespace-nowrap uppercase tracking-wider'>
-                LISTS DES Transaction
+                LISTS DES Transactions
             </h1>
 
 
@@ -141,7 +141,7 @@ export default function Transaction(props: Transaction) {
                                         className='px-3 py-2 text-white bg-red-500 rounded transition hover:bg-red-500/50 border border-white hover:border-black'
                                         onClick={() => handleDelete(Transaction['TransactionID'])}
                                     >
-                                        Delete
+                                        Supprimer
                                     </button>
                                 </td>
                             </tr>
@@ -151,7 +151,7 @@ export default function Transaction(props: Transaction) {
                             className={`border-b dark:bg-gray-900 even:bg-gray-50  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
                         >
                             <td className="px-6 py-4">
-                                Add Data first
+                                Aucun Donnees Desponibles
                             </td>
                             <td className="px-1 py-4"></td>
                             <td className="px-1 py-4"></td>

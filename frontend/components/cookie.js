@@ -31,7 +31,7 @@ const LogoutButton = () => {
   if (process.browser) {
     const router = useRouter(); // Initialize useRouter
     if (!getCookie('username')) {
-      router.push('/'); // Navigate to the "About" page if username exists
+      router.push('./'); // Navigate to the "About" page if username exists
     };
   }
   return (

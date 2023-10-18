@@ -10,11 +10,16 @@
 ::-webkit-scrollbar {
   background-color: var(--wb-bg);
   width: 5px;
+  transition: all .3s ease;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: var(--wt-bg);
   border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 :root {

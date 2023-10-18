@@ -5,19 +5,27 @@ import { motion } from 'framer-motion';
 import AddClientForm from './AddClientForm';
 import Alert from './Alert'
 import EditClient from './EditClient'
+import SearchBar from './SearchBar';
 
 
 interface Client {
+    ClientID: number;
     DarkMode: boolean;
+    Prenom: string;
+    NomDeFamille: string;
+    NumeroDeContact: string;
+    Email: string;
+    ConditionsDePaiement: string;
 }
 
 export default function Client(props: Client) {
 
     let DarkMode = props.DarkMode;
     const [AlertState, setAlertState] = useState(null);
-    const [client, setClient] = useState([]);
+    const [client, setClient] = useState<Client[]>([]);
     const [AddClient, setAddClient] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null);
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
 
 
@@ -32,7 +40,7 @@ export default function Client(props: Client) {
         setSelectedClient(client);
     };
 
-    const closeOpenEditClient = () => {
+    const closeopenEditClient = () => {
         setSelectedClient(null);
     };
 
@@ -57,20 +65,29 @@ export default function Client(props: Client) {
     //delete a client....
 
     const handleDelete = (ClientID: any) => {
-        var confirmDelete = confirm('Sure you want to delete this client ??');
-        if (confirmDelete) {
+        var confirmSupprimer = confirm('Sûr vous souhaitez supprimer ce client ??');
+        if (confirmSupprimer) {
 
             try {
                 axios.post('http://localhost:3001/api/deleteClient', {
                     ClientID: ClientID,
                 });
-                openAlert('Client Deleted Successfully');
+                openAlert('Client Supprimerd Successfully');
                 fetchClient();
             } catch (error) {
                 console.log('Error deleting client');
             }
         }
     }
+
+    const filteredClient =
+        client && client.length > 0 ? (
+            client.filter(cl => {
+                const prenom = cl.Prenom ? cl.Prenom.toLowerCase() : '';
+                const nomDeFamille = cl.NomDeFamille ? cl.NomDeFamille.toLowerCase() : '';
+                return prenom.includes(searchTerm.toLowerCase()) || nomDeFamille.includes(searchTerm.toLowerCase());
+            })
+        ) : [];
 
     return (
         <motion.div
@@ -86,7 +103,7 @@ export default function Client(props: Client) {
                 <Alert AlertText={AlertState} closeAlert={closeAlert} />
             )}
             {selectedClient && (
-                <EditClient client={selectedClient} onClose={closeOpenEditClient} openAlert={openAlert} fetchClient={fetchClient} />
+                <EditClient client={selectedClient} onClose={closeopenEditClient} openAlert={openAlert} fetchClient={fetchClient} />
             )}
             <div className='fixed z-90 bottom-10 right-8 group'>
                 <div className='flex items-end justify-center flex-col'>
@@ -102,9 +119,14 @@ export default function Client(props: Client) {
                 LISTS DES CLIENTS
             </h1>
 
+            <SearchBar DarkMode={DarkMode} searchTerm={searchTerm} onSearchTermChange={setSearchTerm} />
 
             <table
                 className="w-full text-sm text-left "
+                style={{
+                    transition: 'height 0.5s ease-in-out',
+                    height: `${filteredClient.length * 50 + 40}px`
+                }}
             >
                 <thead className={`text-xs uppercase ${DarkMode ? 'bg-gray-900 text-white' : ' bg-purple-900 text-white '}`}>
                     <tr>
@@ -129,37 +151,37 @@ export default function Client(props: Client) {
                     </tr>
                 </thead>
                 <tbody>
-                    {client && client.length > 0 ? (
-                        client.map((user) => (
+                    {filteredClient && filteredClient.length > 0 ? (
+                        filteredClient.map((clientData) => (
                             <tr
-                                key={user['ClientID']}
+                                key={clientData.ClientID}
                                 className={`border-b dark:bg-gray-900 even:bg-gray-50 even:text-black  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
                             >
                                 <td className="px-6 py-4 font-black whitespace-nowrap">
-                                    {user['Prenom']} {user['NomDeFamille']}
+                                    {clientData.Prenom} {clientData.NomDeFamille}
                                 </td>
                                 <td className="px-6 py-4 ">
-                                    {user['NumeroDeContact']}
+                                    {clientData.NumeroDeContact}
                                 </td>
                                 <td className="px-6 py-4 ">
-                                    {user['Email']}
+                                    {clientData.Email}
                                 </td>
                                 <td className="px-6 py-4 ">
-                                    {user['ConditionsDePaiement']}
+                                    {clientData.ConditionsDePaiement}
                                 </td>
                                 <td className="px-1 py-4 ">
                                     <button className='px-3 py-2 text-white bg-cyan-500 rounded transition hover:bg-cyan-500/50 border border-white hover:border-black'
-                                        onClick={() => openEditClient(user)}
+                                        onClick={() => openEditClient(clientData)}
                                     >
-                                        Edit
+                                        Modifier
                                     </button>
                                 </td>
                                 <td className="px-1 py-4 ">
                                     <button
                                         className='px-3 py-2 text-white bg-red-500 rounded transition hover:bg-red-500/50 border border-white hover:border-black'
-                                        onClick={() => handleDelete(user['ClientID'])}
+                                        onClick={() => handleDelete(clientData.ClientID)}
                                     >
-                                        Delete
+                                        Supprimer
                                     </button>
                                 </td>
                             </tr>
@@ -169,7 +191,7 @@ export default function Client(props: Client) {
                             className={`border-b dark:bg-gray-900 even:bg-gray-50  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
                         >
                             <td className="px-1 py-4">
-                                Add clients first
+                                Aucune donnée disponible
                             </td>
                             <td className="px-1 py-4"></td>
                             <td className="px-1 py-4"></td>

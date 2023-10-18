@@ -69,7 +69,7 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">nom de client</label>
+                        <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">Nom De Client</label>
                         <input
                             type="text"
                             id="NomDeFamille"
@@ -113,9 +113,9 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
                             onClick={closeAddClient}
                             className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
                         >
-                            Cancel
+                            Annuler
                         </button>
-                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Add Client</button>
+                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Sauvegarder</button>
                     </div>
                 </form>
                 <p>{message}</p>

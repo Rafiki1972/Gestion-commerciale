@@ -110,7 +110,7 @@ const AddAchatForm = ({ openAlert, closeAddAchat, fetchAchat }: AddAchatPorps) =
                             <option
                                 className="text-black"
                                 value="">
-                                Select Supplier
+                                    Fornisseur
                             </option>
                             {Supplier && Supplier.length > 0 ? (
                                 Supplier.map((SupplierInfo) => (
@@ -122,7 +122,7 @@ const AddAchatForm = ({ openAlert, closeAddAchat, fetchAchat }: AddAchatPorps) =
                                     </option>
                                 ))
                             ) : (
-                                <option className="text-black">No Class found</option>
+                                <option className="text-black">Aucun Donnees Desponibles</option>
                             )}
                         </select>
 
@@ -164,7 +164,7 @@ const AddAchatForm = ({ openAlert, closeAddAchat, fetchAchat }: AddAchatPorps) =
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="text-black">No Suppliers found</div>
+                                        <div className="text-black">Aucun Donnees Desponibles</div>
                                     )}
                                 </div>
                             }
@@ -181,7 +181,7 @@ const AddAchatForm = ({ openAlert, closeAddAchat, fetchAchat }: AddAchatPorps) =
                         />
                     </div>
                     <div>
-                        <div className="block text-sm font-medium text-gray-700">Total</div>
+                        <div className="block text-sm font-medium text-gray-700">Totale</div>
                         <div className="mt-1 p-2 w-full border-gray-300 rounded border">
                             {Total} Dh
                         </div>
@@ -193,9 +193,9 @@ const AddAchatForm = ({ openAlert, closeAddAchat, fetchAchat }: AddAchatPorps) =
                             onClick={closeAddAchat}
                             className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
                         >
-                            Cancel
+                            Annuler
                         </button>
-                    <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Add Achat</button>
+                    <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Sauvegarder</button>
                     </div>
                 </form>
             </div>

@@ -83,14 +83,14 @@ const ArticleComponent = (props: ArticleProps) => {
                     <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                         <header>
                             <h2 className="text-xl font-bold text-white sm:text-3xl">
-                                Product Collection
+                                Collection des produits
                             </h2>
 
-                            <p className="mt-4 max-w-md text-white">
+                            {/* <p className="mt-4 max-w-md text-white">
                                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
                                 praesentium cumque iure dicta incidunt est ipsam, officia dolor fugit
                                 natus?
-                            </p>
+                            </p> */}
                         </header>
                         <div className="mt-8 flex items-center justify-between">
                             <div className="flex rounde flex gap-2">
@@ -136,7 +136,7 @@ const ArticleComponent = (props: ArticleProps) => {
                                 </button>
                             </div>
 
-                            <div>
+                            {/* <div>
                                 <label htmlFor="SortBy" className="sr-only">SortBy</label>
 
                                 <select id="SortBy"
@@ -147,7 +147,7 @@ const ArticleComponent = (props: ArticleProps) => {
                                     <option value="Price, DESC">Price, DESC</option>
                                     <option value="Price, ASC">Price, ASC</option>
                                 </select>
-                            </div>
+                            </div> */}
                         </div>
                         <ul className={`mt-4 grid gap-4 sm:grid-cols-2 ${view}`}>
                             {products && products.length > 0 ? (
@@ -161,7 +161,7 @@ const ArticleComponent = (props: ArticleProps) => {
 
                                             <img
                                                 src={`http://localhost:3001/images/` + product['product_image']}
-
+                                                loading='lazy'
                                                 alt={product['NomDeLArticle']}
                                                 className={`h-[350px] object-cover transition duration-500 group-hover:scale-105 ${img}`}
                                             />
@@ -172,7 +172,7 @@ const ArticleComponent = (props: ArticleProps) => {
                                                 </h3>
 
                                                 <p className="mt-2">
-                                                    <span className="sr-only"> Regular Price </span>
+                                                    <span className="sr-only"> Prix ​​habituel </span>
                                                     <span className="tracking-wider text-gray-900">
                                                         {product['PrixDeVente']} DH
                                                     </span>
@@ -182,7 +182,7 @@ const ArticleComponent = (props: ArticleProps) => {
                                     </li>
                                 ))
                             ) : (
-                                <p>No products found.</p>
+                                <h2 className='text-white my-2'>Aucune donnée disponible.</h2>
                             )}
                         </ul>
                         {selectedProduct && (
@@ -196,8 +196,10 @@ const ArticleComponent = (props: ArticleProps) => {
                         )}
                         <div className='fixed z-90 top-10 right-8 group'>
                             <div className='flex items-end justify-center flex-col'>
-                                <p className={`rounded-full -translate-x-10 p-4 drop-shadow-lg flex justify-center items-center text-white shadow-xl opacity-0 group-hover:opacity-100 transition delay-700 duration-300 ease-in-out mb-2 rounded-ee-none ${DarkMode ? 'bg-gray-600' : 'bg-purple-600'}`}>Add Product</p>
-                                <button onClick={handleAddAricle} title="Add Product"
+                                <p className={`rounded-full -translate-x-10 p-4 drop-shadow-lg flex justify-center items-center text-white shadow-xl opacity-0 group-hover:opacity-100 transition delay-700 duration-300 ease-in-out mb-2 rounded-ee-none ${DarkMode ? 'bg-gray-600' : 'bg-purple-600'}`}>
+                                    Ajouter Produit
+                                </p>
+                                <button onClick={handleAddAricle}
                                     className={`rounded-full drop-shadow-lg flex justify-center items-center text-white text-2xl h-14 w-14 shadow-xl ${DarkMode ? 'bg-gray-600 hover:bg-gray-400' : 'bg-purple-600 hover:bg-purple-400'}`}>
                                     <AiOutlineAppstoreAdd />
                                 </button>

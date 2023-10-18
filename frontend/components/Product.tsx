@@ -29,7 +29,7 @@ const Product: React.FC<ProductProps> = ({ productData, closeProduct }) => {
                         className="absolute top-0 right-0 bg-black opacity-50 z-[-1] text-gray-600 hover:text-gray-800 w-[100%] h-[100%]"
                     >
                     </button>
-                    <h2>Products</h2>
+                    <h2>Produit</h2>
                     <ul className='w-full grid grid-cols-3 gap-3 my-5'>
                         {parsedProductData.map((product) => (
                             <li
@@ -44,7 +44,7 @@ const Product: React.FC<ProductProps> = ({ productData, closeProduct }) => {
                     </ul>
                     <button onClick={closeProduct}
                         className='mx-auto bg-gray-600 text-white w-full mt-3 p-3'>
-                        Cancel
+                        Annuler
                     </button>
                 </motion.div>
             </div >
@@ -53,8 +53,6 @@ const Product: React.FC<ProductProps> = ({ productData, closeProduct }) => {
         // If parsing failed or the parsed data is not an array, display an error message
         return (
             <div>
-                <p>Product data is not available or not in the expected format.</p>
-                <button onClick={closeProduct}>Close</button>
             </div>
         );
     }

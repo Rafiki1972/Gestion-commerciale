@@ -7,21 +7,28 @@ import AccessLevles from './AccessLevles';
 import Alert from './Alert'
 import EditWorker from './EditWorker'
 import { MdOutlineSecurity } from "react-icons/md";
-
+import SearchBar from './SearchBar'
 
 interface Worker {
     DarkMode: boolean;
+    EmployeeID: number;
+    Prenom: string;
+    NomDeFamille: string;
+    NumeroDeContact: string;
+    Email: string;
+    Poste: string;
+    Salaire: number;
 }
 
 export default function Worker(props: Worker) {
 
     let DarkMode = props.DarkMode;
     const [AlertState, setAlertState] = useState(null);
-    const [Worker, setWorker] = useState([]);
+    const [Worker, setWorker] = useState<Worker[]>([]);
     const [AddWorker, setAddWorker] = useState(false);
     const [selectedWorker, setSelectedWorker] = useState(null);
     const [LevelsDropdown, setLevelsDropdown] = useState([]);
-
+    const [searchTerm, setSearchTerm] = useState<string>('')
     const handlLevelsDropdown = (user: any) => {
         const levels = [
             { name: 'GestionDesEmployes', value: user.GestionDesEmployes },
@@ -55,7 +62,7 @@ export default function Worker(props: Worker) {
         setSelectedWorker(Worker);
     };
 
-    const closeOpenEditWorker = () => {
+    const closeopenEditWorker = () => {
         setSelectedWorker(null);
     };
 
@@ -80,14 +87,14 @@ export default function Worker(props: Worker) {
     //delete a Worker....
 
     const handleDelete = (WorkerID: any) => {
-        var confirmDelete = confirm('Sure you want to delete this Worker ??');
-        if (confirmDelete) {
+        var confirmSupprimer = confirm('Sûr vous souhaitez supprimer cet employé ??');
+        if (confirmSupprimer) {
 
             try {
                 axios.post('http://localhost:3001/api/deleteWorker', {
                     WorkerID: WorkerID,
                 });
-                openAlert('Worker Deleted Successfully');
+                openAlert('Worker Supprimerd Successfully');
                 fetchWorker();
             } catch (error) {
                 console.log('Error deleting Worker');
@@ -96,7 +103,14 @@ export default function Worker(props: Worker) {
     }
 
 
-
+    const filteredWorker =
+        Worker && Worker.length > 0 ? (
+            Worker.filter(wr => {
+                const prenom = wr.Prenom ? wr.Prenom.toLowerCase() : '';
+                const nomDeFamille = wr.NomDeFamille ? wr.NomDeFamille.toLowerCase() : '';
+                return prenom.includes(searchTerm.toLowerCase()) || nomDeFamille.includes(searchTerm.toLowerCase());
+            })
+        ) : [];
 
 
 
@@ -113,14 +127,14 @@ export default function Worker(props: Worker) {
             )}
 
             {LevelsDropdown.length > 0 && (
-                <AccessLevles levels={LevelsDropdown} closeOpenEditWorker={closeLevelsDropdown} />
+                <AccessLevles levels={LevelsDropdown} closeopenEditWorker={closeLevelsDropdown} />
             )}
             {AlertState && (
                 <Alert AlertText={AlertState} closeAlert={closeAlert} />
             )}
 
             {selectedWorker && (
-                <EditWorker Worker={selectedWorker} onClose={closeOpenEditWorker} openAlert={openAlert} fetchWorker={fetchWorker} />
+                <EditWorker Worker={selectedWorker} onClose={closeopenEditWorker} openAlert={openAlert} fetchWorker={fetchWorker} />
             )}
             <div className='fixed z-90 bottom-10 right-8 group'>
                 <div className='flex items-end justify-center flex-col'>
@@ -133,12 +147,18 @@ export default function Worker(props: Worker) {
             </div>
 
             <h1 className='py-4 font-black text-white whitespace-nowrap uppercase tracking-wider'>
-                LISTS DES WorkerS
+                LISTS DES EMPOYES
             </h1>
+
+            <SearchBar DarkMode={DarkMode} searchTerm={searchTerm} onSearchTermChange={setSearchTerm} />
 
 
             <table
                 className="w-full text-sm text-left"
+                style={{
+                    transition: 'height 0.5s ease-in-out',
+                    height: `${filteredWorker.length * 50 + 40}px`
+                }}
             >
                 <thead className={`text-xs uppercase ${DarkMode ? 'bg-gray-900 text-white' : ' bg-purple-900 text-white '}`}>
                     <tr>
@@ -146,7 +166,7 @@ export default function Worker(props: Worker) {
                             Nom
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Phone
+                            Numero de contact
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Email
@@ -158,7 +178,7 @@ export default function Worker(props: Worker) {
                             Salaire
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Access
+                            Accéder
                         </th>
                         <th>
 
@@ -169,8 +189,8 @@ export default function Worker(props: Worker) {
                     </tr>
                 </thead>
                 <tbody className='relative'>
-                    {Worker && Worker.length > 0 ? (
-                        Worker.map((user) => (
+                    {filteredWorker && filteredWorker.length > 0 ? (
+                        filteredWorker.map((user) => (
 
                             <tr
                                 key={user['EmployeeID']}
@@ -204,7 +224,7 @@ export default function Worker(props: Worker) {
                                     <button className='px-3 py-2 text-white bg-cyan-500 rounded transition hover:bg-cyan-500/50 border border-white hover:border-black'
                                         onClick={() => openEditWorker(user)}
                                     >
-                                        Edit
+                                        Modifier
                                     </button>
                                 </td>
                                 <td className="px-2">
@@ -212,7 +232,7 @@ export default function Worker(props: Worker) {
                                         className='px-3 py-2 text-white bg-red-500 rounded transition hover:bg-red-500/50 border border-white hover:border-black'
                                         onClick={() => handleDelete(user['EmployeeID'])}
                                     >
-                                        Delete
+                                        Supprimer
                                     </button>
                                 </td>
                             </tr>
@@ -222,7 +242,7 @@ export default function Worker(props: Worker) {
                             className={`border-b dark:bg-gray-900 even:bg-gray-50  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
                         >
                             <td className="px-6 py-4">
-                                Add Workers first
+                                No Data Found
                             </td>
                             <td className="px-1 py-4"></td>
                             <td className="px-1 py-4"></td>

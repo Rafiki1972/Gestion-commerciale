@@ -63,14 +63,14 @@ export default function Vente(props: Vente) {
     //delete a Vente....
 
     const handleDelete = (VenteID: any) => {
-        let confirmDelete = confirm('Sure you want to delete this Sell ??' + VenteID);
-        if (confirmDelete) {
+        let confirmSupprimer = confirm('Sûr vous souhaitez supprimer cette vente ??');
+        if (confirmSupprimer) {
 
             try {
                 axios.post('http://localhost:3001/api/deleteVente', {
                     VenteID: VenteID,
                 });
-                openAlert('Vente Deleted Successfully');
+                openAlert('Vente Supprimerd Successfully');
                 fetchVente();
             } catch (error) {
                 console.log('Error deleting Vente');
@@ -105,7 +105,7 @@ export default function Vente(props: Vente) {
             </div>
 
             <h1 className='py-4 font-black text-white whitespace-nowrap uppercase tracking-wider'>
-                LISTS DES Vente
+                LISTS DES Ventes
             </h1>
 
 
@@ -127,7 +127,7 @@ export default function Vente(props: Vente) {
                             Notes
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Products
+                            Produits
                         </th>
                         <th>
 
@@ -174,7 +174,7 @@ export default function Vente(props: Vente) {
                                         className='px-3 py-2 text-white bg-red-500 rounded transition hover:bg-red-500/50 border border-white hover:border-black'
                                         onClick={() => handleDelete(vente['SaleID'])}
                                     >
-                                        Delete
+                                        Supprimer
                                     </button>
                                 </td>
                             </tr>
@@ -184,7 +184,7 @@ export default function Vente(props: Vente) {
                             className={`border-b dark:bg-gray-900 even:bg-gray-50  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
                         >
                             <td className="px-6 py-4">
-                                Add Data first
+                                Aucun Donnees Desponibles
                             </td>
                             <td className="px-1 py-4"></td>
                             <td className="px-1 py-4"></td>

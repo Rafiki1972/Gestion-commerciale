@@ -5,9 +5,12 @@ import React from 'react';
 import { VscAccount } from "react-icons/vsc";
 import { IoMoon, IoLogOut } from "react-icons/io5";
 import { FaRegSun } from "react-icons/fa6";
-import { FaHospitalUser, FaUserTag } from "react-icons/fa";
-import { HiChartPie } from "react-icons/hi2";
-import { MdSell, MdWork } from "react-icons/md";
+import { FaHospitalUser, FaUserTag, FaReceipt , FaBusinessTime} from "react-icons/fa";
+import { HiChartPie, HiMiniBanknotes } from "react-icons/hi2";
+import { MdSell, MdWork, MdProductionQuantityLimits } from "react-icons/md";
+import { TbBusinessplan } from "react-icons/tb";
+import { BsClipboard2DataFill } from "react-icons/bs";
+import { BiSolidFactory } from "react-icons/bi";
 import LogoutButton from './LogOut';
 import CheckCookie from './cookie';
 import { getCookie } from './cookie';
@@ -33,7 +36,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
             <CheckCookie />
             <div className="relative flex-1 flex flex-col min-h-0 pt-0">
                 <div className="w-full relative flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-                    <div className="flex-1 px-3 border-b  divide-y space-y-1">
+                    <div className="pb-[60%] flex-1 px-3 border-b  divide-y space-y-1">
                         <ul className="">
                             <li>
                                 {/* <form action="#" method="GET" className="">
@@ -66,7 +69,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                 <HiChartPie
                                     className="w-5 h-5 flex-shrink-0 transition duration-75"
                                 />
-                                <span className="ml-4  hidden md:block">Dashboard</span>
+                                <span className="ml-4  hidden md:block">Tableau de bord</span>
                             </div>
                             {GestionDesArticles !== 0 || adminState === 'admin' ? (
                                 <div
@@ -106,7 +109,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                     <FaHospitalUser
                                         className="w-5 h-5 flex-shrink-0 transition duration-75"
                                     />
-                                    <span className="ml-4  hidden md:block">Supplier</span>
+                                    <span className="ml-4  hidden md:block">Fournisseur</span>
                                 </div>
                             ) : (
                                 <>
@@ -121,7 +124,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                     <MdWork
                                         className="w-5 h-5 flex-shrink-0 transition duration-75"
                                     />
-                                    <span className="ml-4  hidden md:block">worker</span>
+                                    <span className="ml-4  hidden md:block">Employé</span>
                                 </div>
                             ) : (
                                 <>
@@ -133,7 +136,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                     className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'vente' ? ' text-amber-400' : 'text-white'}`}
                                     onClick={() => handleItemClick('vente')}
                                 >
-                                    <FaHospitalUser
+                                    <MdProductionQuantityLimits
                                         className="w-5 h-5 flex-shrink-0 transition duration-75"
                                     />
                                     <span className="ml-4  hidden md:block">Vente</span>
@@ -148,7 +151,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                     className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'achat' ? ' text-amber-400' : 'text-white'}`}
                                     onClick={() => handleItemClick('achat')}
                                 >
-                                    <FaHospitalUser
+                                    <TbBusinessplan
                                         className="w-5 h-5 flex-shrink-0 transition duration-75"
                                     />
                                     <span className="ml-4  hidden md:block">Achat</span>
@@ -163,8 +166,8 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                     className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'stock' ? ' text-amber-400' : 'text-white'}`}
                                     onClick={() => handleItemClick('stock')}
                                 >
-                                    <FaHospitalUser
-                                        className="w-5 h-5 flex-shrink-0 transition duration-75"
+                                    <BsClipboard2DataFill
+                                        className="w-5 h-5 flex-shrink-0 transition duration-75 text-white"
                                     />
                                     <span className="ml-4  hidden md:block">Stock</span>
                                 </div>
@@ -178,7 +181,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                     className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'client' ? ' text-amber-400' : 'text-white'}`}
                                     onClick={() => handleItemClick('achat')}
                                 >
-                                    <FaHospitalUser
+                                    <FaReceipt
                                         className="w-5 h-5 flex-shrink-0 transition duration-75"
                                     />
                                     <span className="ml-4  hidden md:block">Facteure et devis</span>
@@ -192,7 +195,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                 className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'transaction' ? ' text-amber-400' : 'text-white'}`}
                                 onClick={() => handleItemClick('transaction')}
                             >
-                                <FaHospitalUser
+                                <HiMiniBanknotes
                                     className="w-5 h-5 flex-shrink-0 transition duration-75"
                                 />
                                 <span className="ml-4  hidden md:block">Transaction Compte</span>
@@ -201,7 +204,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                 className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'production' ? ' text-amber-400' : 'text-white'}`}
                                 onClick={() => handleItemClick('production')}
                             >
-                                <FaHospitalUser
+                                <BiSolidFactory
                                     className="w-5 h-5 flex-shrink-0 transition duration-75"
                                 />
                                 <span className="ml-4  hidden md:block">Production</span>
@@ -210,23 +213,25 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                 className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'timesheet' ? ' text-amber-400' : 'text-white'}`}
                                 onClick={() => handleItemClick('timesheet')}
                             >
-                                <FaHospitalUser
+                                <FaBusinessTime
                                     className="w-5 h-5 flex-shrink-0 transition duration-75"
                                 />
-                                <span className="ml-4 hidden md:block">Time Sheet</span>
+                                <span className="ml-4 hidden md:block">Emploi du temps</span>
                             </div>
                         </div>
                     </div>
-                    <div className={`px-3 pt-2 border-t border-r space-y-2 ${DarkMode ? 'bg-gray-900' : 'bg-purple-900'}`}>
+                    <div className={`w-2/12 px-3 pt-2 border-t border-r space-y-2 fixed bottom-0 ${DarkMode ? 'bg-gray-900' : 'bg-purple-900'}`}>
                         {adminState === 'admin' &&
-                            <a href=""
-                                className={`text-base text-white font-normal rounded-lg flex items-center p-2  group ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}`}>
+                            <div
+                                className={`text-base text-white font-normal rounded-lg flex items-center p-2 cursor-pointer group ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'profile' ? ' text-amber-400' : 'text-white'}`}
+                                onClick={() => handleItemClick('profile')}
+                            >
                                 <VscAccount
                                     className="w-6 h-6 text-white group-hover:text-white transition duration-75" />
                                 <span className="ml-3  hidden md:block">
                                     Profile
                                 </span>
-                            </a>
+                            </div>
                         }
                         <div onClick={handleDarkMode}
                             className={`cursor-pointer text-base text-white font-normal rounded-lg flex items-center p-2 group ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'} `}>
@@ -234,14 +239,18 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                 <>
                                     <FaRegSun className="w-6 h-6 text-white group-hover:text-white transition duration-75" />
                                     <span className="ml-3 hidden md:block">
-                                        <button>Light Mode</button>
+                                        <button>
+                                            Mode lumière
+                                        </button>
                                     </span></>
                             ) :
                                 (
                                     <>
                                         <IoMoon className="w-6 h-6 text-white group-hover:text-white transition duration-75" />
                                         <span className="ml-3 hidden md:block">
-                                            <button>Dark Mode</button>
+                                            <button>
+                                                Mode sombre
+                                            </button>
                                         </span>
                                     </>
                                 )}

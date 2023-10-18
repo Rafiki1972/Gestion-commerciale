@@ -59,7 +59,7 @@ const AddTransactionForm = ({ openAlert, closeAddTransaction, fetchTransaction }
             className="bg-black/80 fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-50"
         >
             <div className='bg-white p-4 rounded-lg min-w-[500px] max-w-md'>
-                <h2 className="text-xl font-bold mb-4">Add New Transaction</h2>
+                <h2 className="text-xl font-bold mb-4">Ajouter Une Nouvelle Transaction</h2>
                 <form onSubmit={handleSubmit} className='space-y-5'>
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="Date">
@@ -108,7 +108,7 @@ const AddTransactionForm = ({ openAlert, closeAddTransaction, fetchTransaction }
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="Notes">
-                            Notes
+                            Note
                         </label>
                         <textarea
                             id="Notes"
@@ -124,10 +124,10 @@ const AddTransactionForm = ({ openAlert, closeAddTransaction, fetchTransaction }
                             onClick={closeAddTransaction}
                             className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
                         >
-                            Cancel
+                            Annuler
                         </button>
                         <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover-bg-blue-600 my-4" type="submit">
-                            Add Transaction
+                            Sauvegarder
                         </button>
                     </div>
                 </form>

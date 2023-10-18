@@ -1,13 +1,52 @@
-import { getCookie } from './cookie'
+import React, { useState, useEffect } from 'react';
+
+interface Sale {
+    SaleID: number;
+    DateDeVente: string;
+    Prenom: string;
+    NomDeFamille: string;
+    MontantTotal: number;
+    Products: string;
+    Notes: string;
+}
+
 interface ChartComponentProps {
     DarkMode: boolean;
 }
+
 export const State = (props: ChartComponentProps) => {
-    let DarkMode = props.DarkMode;
+    const [sales, setSales] = useState<Sale[]>([]);
+    const { DarkMode } = props;
+
+    // Fetch data from the API using useEffect
+    useEffect(() => {
+        fetch('http://localhost:3001/api/Vente')
+            .then((res) => res.json())
+            .then((data) => setSales(data));
+    }, []); // Empty dependency array to run the effect only once when the component mounts
+
+    // Calculate sales for the day, week, and month
+    const today = new Date();
+    const oneWeekAgo = new Date();
+
+
+    today.setDate(oneWeekAgo.getDate() - 1);
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+    const salesToday = sales.filter((sale) => new Date(sale.DateDeVente) >= today);
+    const salesThisWeek = sales.filter((sale) => new Date(sale.DateDeVente) >= oneWeekAgo);
+    const salesThisMonth = sales.filter((sale) => new Date(sale.DateDeVente) >= oneMonthAgo);
+
+    console.log('today : ', today)
+    console.log('oneWeekAgo : ', oneWeekAgo)
+    console.log('oneMonthAgo : ', oneMonthAgo)
+
     return (
         <div className="ap-5 my-5">
             <h1 className='text-lg font-black tracking-wide text-white'>
-                Products sold :
+                Produits vendus :
             </h1>
             <div className="flex gap-5 my-5">
                 <article
@@ -34,9 +73,9 @@ export const State = (props: ChartComponentProps) => {
                         </span>
 
                         <div>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">THIS DAY</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">CE JOUR</p>
 
-                            <p className="text-2xl font-medium text-gray-900 dark:text-white">$240.94</p>
+                            <p className="text-2xl font-medium text-gray-900 dark:text-white">{calculateTotalSales(salesToday)} Dh</p>
                         </div>
                     </div>
 
@@ -85,9 +124,9 @@ export const State = (props: ChartComponentProps) => {
                         </span>
 
                         <div>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">THIS WEEK</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">CETTE SEMAINE</p>
 
-                            <p className="text-2xl font-medium text-gray-900 dark:text-white">$240.94</p>
+                            <p className="text-2xl font-medium text-gray-900 dark:text-white">{calculateTotalSales(salesThisWeek)} Dh</p>
                         </div>
                     </div>
 
@@ -137,9 +176,9 @@ export const State = (props: ChartComponentProps) => {
                         </span>
 
                         <div>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">THIS MOUNTH</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">CE MOIS</p>
 
-                            <p className="text-2xl font-medium text-gray-900 dark:text-white">$240.94</p>
+                            <p className="text-2xl font-medium text-gray-900 dark:text-white">{calculateTotalSales(salesThisMonth)} Dh</p>
                         </div>
                     </div>
 
@@ -167,4 +206,8 @@ export const State = (props: ChartComponentProps) => {
             </div>
         </div>
     )
+
+    function calculateTotalSales(sales: Sale[]) {
+        return sales.reduce((total, sale) => total + sale.MontantTotal, 0);
+    }
 }

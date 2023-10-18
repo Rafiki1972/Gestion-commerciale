@@ -63,15 +63,15 @@ export default function Achat(props: Achat) {
 
     //delete a Achat....
 
-    const handleDelete = (AchatID: any) => {
-        let confirmDelete = confirm('Sure you want to delete this Sell ??');
-        if (confirmDelete) {
+    const hadleDelete = (AchatID: any) => {
+        let confirmSupprimer = confirm('sûr vous souhaitez supprimer cette acha ??');
+        if (confirmSupprimer) {
 
             try {
                 axios.post('http://localhost:3001/api/deleteAchat', {
                     AchatID: AchatID,
                 });
-                openAlert('Achat Deleted Successfully');
+                openAlert('Achat Supprimerd Successfully');
                 fetchAchat();
             } catch (error) {
                 console.log('Error deleting Achat');
@@ -106,7 +106,7 @@ export default function Achat(props: Achat) {
             </div>
 
             <h1 className='py-4 font-black text-white whitespace-nowrap uppercase tracking-wider'>
-                LISTS DES Achat
+                LISTS DES ACHATS
             </h1>
 
 
@@ -116,7 +116,7 @@ export default function Achat(props: Achat) {
                 <thead className={`text-xs uppercase ${DarkMode ? 'bg-gray-900 text-white' : ' bg-purple-900 text-white '}`}>
                     <tr>
                         <th scope="col" className="px-6 py-3">
-                            Date De Achat
+                            Date D'achat
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Fornisseur
@@ -128,7 +128,7 @@ export default function Achat(props: Achat) {
                             Notes
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Products
+                            Produits
                         </th>
                         <th>
 
@@ -173,9 +173,9 @@ export default function Achat(props: Achat) {
                                 <td className="px-1 py-4 ">
                                     <button
                                         className='px-3 py-2 text-white bg-red-500 rounded transition hover:bg-red-500/50 border border-white hover:border-black'
-                                        onClick={() => handleDelete(Achat['PurchaseID'])}
+                                        onClick={() => hadleDelete(Achat['PurchaseID'])}
                                     >
-                                        Delete
+                                        Supprimer
                                     </button>
                                 </td>
                             </tr>
@@ -185,7 +185,7 @@ export default function Achat(props: Achat) {
                             className={`border-b dark:bg-gray-900 even:bg-gray-50  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
                         >
                             <td className="px-6 py-4">
-                                Add Data first
+                                Aucun Donnees Desponibles
                             </td>
                             <td className="px-1 py-4"></td>
                             <td className="px-1 py-4"></td>

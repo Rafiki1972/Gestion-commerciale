@@ -65,7 +65,7 @@ export const Footer = (props : FooterDarkmMode) => {
             </div>
             <div className="mx-auto max-w-[75%] flex flex-col justify-between pt-5 pb-10 border-t border-purple-200 sm:flex-row">
                 <p className="text-sm text-gray-100 font-mono">
-                    © Copyright 2023. All rights reserved for <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" className="text-teal-400">Ahmed rfk</a>
+                    © Copyright 2023. Tous droits réservés à <a href="https://github.com/Rafiki1972" className="text-teal-400">Ahmed rfk</a>
                 </p>
             </div>
         </div>

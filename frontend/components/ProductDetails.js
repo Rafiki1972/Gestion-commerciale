@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import EditArticle from './EditArticle'
+import  EditArticle  from './EditArticle'
 import axios from 'axios';
 
 const ProductDetails = ({ product, onClose, openAlert, fetchProducts }) => {
@@ -15,8 +15,8 @@ const ProductDetails = ({ product, onClose, openAlert, fetchProducts }) => {
     };
 
     const handleDelete = async () => {
-        var confirmDelete = confirm('Sure you want to delete this item ??');
-        if (confirmDelete) {
+        var confirmSupprimer = confirm('sûr vous souhaitez supprimer cet élément ??');
+        if (confirmSupprimer) {
 
             try {
                 axios.post('http://localhost:3001/api/deleteProduct', {
@@ -24,7 +24,7 @@ const ProductDetails = ({ product, onClose, openAlert, fetchProducts }) => {
                 });
                 fetchProducts();
                 onClose();
-                openAlert('Product Deleted Successfully');
+                openAlert('Product Supprimerd Successfully');
             } catch (error) {
                 console.log('Error deleting product');
             }
@@ -69,7 +69,7 @@ const ProductDetails = ({ product, onClose, openAlert, fetchProducts }) => {
                     <span
                         className="block border border-red-600 bg-red-600 px-12 py-3 transition-transform active:border-red-500 active:bg-red-500 group-hover:-translate-x-1 group-hover:-translate-y-1"
                     >
-                        Delete
+                        Supprimer
                     </span>
                 </div>
 
@@ -83,7 +83,7 @@ const ProductDetails = ({ product, onClose, openAlert, fetchProducts }) => {
                     <span
                         className="block border border-current bg-white px-12 py-3 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1"
                     >
-                        Edit
+                        Modifier
                     </span>
                 </div>
             </div>

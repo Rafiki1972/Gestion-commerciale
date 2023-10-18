@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
     database: 'gestion_commerciale',
 });
 
-router.get('/users', async (req, res) => {
+router.get('./users', async (req, res) => {
     try {
         const [rows] = await connection.query('SELECT * FROM user');
         res.json(rows);

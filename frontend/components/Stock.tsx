@@ -3,6 +3,7 @@ import { AiOutlineAppstoreAdd } from "react-icons/ai";
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import AddStockForm from './AddStockForm';
+import EditStock from './EditStock'
 import Alert from './Alert'
 
 
@@ -16,6 +17,18 @@ export default function Stock(props: Stock) {
     const [AlertState, setAlertState] = useState(null);
     const [Stock, setStock] = useState([]);
     const [AddStock, setAddStock] = useState(false);
+    const stockNomDuProduitArray = Stock.map(stock => stock['NomDuProduit']);
+    const [selectedStock, setSelectedStock] = useState(null);
+
+
+    const openEditStock = (Stock: any) => {
+        setSelectedStock(Stock);
+    };
+
+    const closeopenEditStock = () => {
+        setSelectedStock(null);
+    };
+
 
 
     function fetchStock() {
@@ -47,14 +60,14 @@ export default function Stock(props: Stock) {
     //delete a Stock....
 
     const handleDelete = (StockID: any) => {
-        let confirmDelete = confirm('Sure you want to delete??');
-        if (confirmDelete) {
+        let confirmSupprimer = confirm('Sûr vous souhaitez supprimer ce produit ??');
+        if (confirmSupprimer) {
 
             try {
                 axios.post('http://localhost:3001/api/deleteStock', {
                     StockID: StockID,
                 });
-                openAlert('Stock Deleted Successfully');
+                openAlert('Stock Supprimerd Successfully');
                 fetchStock();
             } catch (error) {
                 console.log('Error deleting Stock');
@@ -70,10 +83,13 @@ export default function Stock(props: Stock) {
             transition={{ duration: 0.5 }}
             className="px-8 py-5 w-10/12 min-h-[100vh] ml-auto relative overflow-x-auto mb-5 shadow-md sm:rounded-lg">
             {AddStock && (
-                <AddStockForm openAlert={() => openAlert('Stock added Successfully')} closeAddStock={handleAddStock} fetchStock={fetchStock} />
+                <AddStockForm openAlert={() => openAlert('Stock added Successfully')} closeAddStock={handleAddStock} fetchStock={fetchStock} productsToExclude={stockNomDuProduitArray} />
             )}
             {AlertState && (
                 <Alert AlertText={AlertState} closeAlert={closeAlert} />
+            )}
+            {selectedStock && (
+                <EditStock Stock={selectedStock} onClose={closeopenEditStock} openAlert={openAlert} fetchStock={fetchStock} />
             )}
             <div className='fixed z-90 bottom-10 right-8 group'>
                 <div className='flex items-end justify-center flex-col'>
@@ -99,7 +115,7 @@ export default function Stock(props: Stock) {
                             Nom Du Produit
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Supplier
+                            Fornisseur
                         </th>
                         <th scope="col" className="px-6 py-3">
                             Quantite Disponible
@@ -129,18 +145,24 @@ export default function Stock(props: Stock) {
                                     {Stock['Supplier']}
                                 </td>
                                 <td className="px-6 py-4 ">
-                                    {Stock['QuantiteDisponible']} 
+                                    {Stock['QuantiteDisponible']}
                                 </td>
                                 <td className="px-6 py-4 ">
                                     {Stock['Description']}
                                 </td>
-
+                                <td className="px-1 py-4">
+                                    <button className='px-3 py-2 text-white bg-cyan-500 rounded transition hover:bg-cyan-500/50 border border-white hover:border-black'
+                                        onClick={() => openEditStock(Stock)}
+                                    >
+                                        Modifier
+                                    </button>
+                                </td>
                                 <td className="px-1 py-4 ">
                                     <button
                                         className='px-3 py-2 text-white bg-red-500 rounded transition hover:bg-red-500/50 border border-white hover:border-black'
                                         onClick={() => handleDelete(Stock['StockID'])}
                                     >
-                                        Delete
+                                        Supprimer
                                     </button>
                                 </td>
                             </tr>
@@ -150,7 +172,7 @@ export default function Stock(props: Stock) {
                             className={`border-b dark:bg-gray-900 even:bg-gray-50  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
                         >
                             <td className="px-6 py-4">
-                                Add Data first
+                                Aucun Donnees Desponibles
                             </td>
                             <td className="px-1 py-4"></td>
                             <td className="px-1 py-4"></td>

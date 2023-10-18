@@ -5,19 +5,27 @@ import { motion } from 'framer-motion';
 import AddSupplierForm from './AddSupplierForm';
 import Alert from './Alert'
 import EditSupplier from './EditSupplier'
+import SearchBar from './SearchBar';
 
 
 interface Supplier {
     DarkMode: boolean;
+    SupplierID: number;
+    Prenom: string;
+    NomDuFournisseur: string;
+    NumeroDeContact: string;
+    Email: string;
+    ConditionsDePaiement: string;
 }
 
 export default function Supplier(props: Supplier) {
 
     let DarkMode = props.DarkMode;
     const [AlertState, setAlertState] = useState(null);
-    const [Supplier, setSupplier] = useState([]);
+    const [Supplier, setSupplier] = useState<Supplier[]>([]);
     const [AddSupplier, setAddSupplier] = useState(false);
     const [selectedSupplier, setSelectedSupplier] = useState(null);
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
 
 
@@ -32,7 +40,7 @@ export default function Supplier(props: Supplier) {
         setSelectedSupplier(Supplier);
     };
 
-    const closeOpenEditSupplier = () => {
+    const closeopenEditSupplier = () => {
         setSelectedSupplier(null);
     };
 
@@ -54,17 +62,27 @@ export default function Supplier(props: Supplier) {
     };
 
 
+    const filteredSupplier =
+        Supplier && Supplier.length > 0 ? (
+            Supplier.filter(sp => {
+                const prenom = sp.Prenom ? sp.Prenom.toLowerCase() : '';
+                const nomDeFamille = sp.NomDuFournisseur ? sp.NomDuFournisseur.toLowerCase() : '';
+                return prenom.includes(searchTerm.toLowerCase()) || nomDeFamille.includes(searchTerm.toLowerCase());
+            })
+        ) : [];
+
+        
     //delete a Supplier....
 
     const handleDelete = (SupplierID: any) => {
-        var confirmDelete = confirm('Sure you want to delete this Supplier ??');
-        if (confirmDelete) {
+        var confirmSupprimer = confirm('Sûr vous souhaitez supprimer ce fornisseur');
+        if (confirmSupprimer) {
 
             try {
                 axios.post('http://localhost:3001/api/deleteSupplier', {
                     SupplierID: SupplierID,
                 });
-                openAlert('Supplier Deleted Successfully');
+                openAlert('Supplier Supprimerd Successfully');
                 fetchSupplier();
             } catch (error) {
                 console.log('Error deleting Supplier');
@@ -86,7 +104,7 @@ export default function Supplier(props: Supplier) {
                 <Alert AlertText={AlertState} closeAlert={closeAlert} />
             )}
             {selectedSupplier && (
-                <EditSupplier Supplier={selectedSupplier} onClose={closeOpenEditSupplier} openAlert={openAlert} fetchSupplier={fetchSupplier} />
+                <EditSupplier Supplier={selectedSupplier} onClose={closeopenEditSupplier} openAlert={openAlert} fetchSupplier={fetchSupplier} />
             )}
             <div className='fixed z-90 bottom-10 right-8 group'>
                 <div className='flex items-end justify-center flex-col'>
@@ -102,8 +120,14 @@ export default function Supplier(props: Supplier) {
                 LISTS DES FORNISSEURES
             </h1>
 
+            <SearchBar DarkMode={DarkMode} searchTerm={searchTerm} onSearchTermChange={setSearchTerm} />
+
             <table
                 className="w-full text-sm text-left "
+                style={{
+                    transition: 'height 0.5s ease-in-out',
+                    height : `${filteredSupplier.length * 50 + 40}px`
+                }}
             >
                 <thead className={`text-xs uppercase ${DarkMode ? 'bg-gray-900 text-white' : ' bg-purple-900 text-white '}`}>
                     <tr>
@@ -128,37 +152,37 @@ export default function Supplier(props: Supplier) {
                     </tr>
                 </thead>
                 <tbody>
-                    {Supplier && Supplier.length > 0 ? (
-                        Supplier.map((user) => (
+                    {filteredSupplier && filteredSupplier.length > 0 ? (
+                        filteredSupplier.map((user) => (
                             <tr
-                                key={user['SupplierID']}
+                                key={user.SupplierID}
                                 className={`border-b dark:bg-gray-900 even:bg-gray-50 even:text-black  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
                             >
                                 <td className="px-6 py-4 font-black whitespace-nowrap">
-                                    {user['Prenom']} {user['NomDuFournisseur']}
+                                    {user.Prenom} {user.NomDuFournisseur}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {user['NumeroDeContact']}
+                                    {user.NumeroDeContact}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {user['Email']}
+                                    {user.Email}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {user['ConditionsDePaiement']}
+                                    {user.ConditionsDePaiement}
                                 </td>
                                 <td className="px-1 py-4">
                                     <button className='px-3 py-2 text-white bg-cyan-500 rounded transition hover:bg-cyan-500/50 border border-white hover:border-black'
                                         onClick={() => openEditSupplier(user)}
                                     >
-                                        Edit
+                                        Modifier
                                     </button>
                                 </td>
                                 <td className="px-1 py-4">
                                     <button
                                         className='px-3 py-2 text-white bg-red-500 rounded transition hover:bg-red-500/50 border border-white hover:border-black'
-                                        onClick={() => handleDelete(user['SupplierID'])}
+                                        onClick={() => handleDelete(user.SupplierID)}
                                     >
-                                        Delete
+                                        Supprimer
                                     </button>
                                 </td>
                             </tr>
@@ -168,7 +192,7 @@ export default function Supplier(props: Supplier) {
                             className={`border-b dark:bg-gray-900 even:bg-gray-50  ${DarkMode ? 'bg-gray-500' : 'bg-white'}`}
                         >
                             <td className="px-4 py-4  text-gray-800">
-                                Add Suppliers first
+                                Aucun donnes desponible
                             </td>
                             <td className="px-1 py-4  text-gray-800"></td>
                             <td className="px-1 py-4  text-gray-800"></td>

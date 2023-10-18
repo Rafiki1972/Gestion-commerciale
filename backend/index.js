@@ -49,7 +49,7 @@ app.get('/api/admin', (req, res) => {
 // Test route to fetch and return a sample record from the database
 
 app.get('/api/Product', (req, res) => {
-  con.query("SELECT * FROM article ORDER BY NomDeLArticle ASC", function (err, result) {
+  con.query("SELECT * FROM article ORDER BY NomDeLArticle DESC", function (err, result) {
     if (err) {
       console.error('Error fetching data:', err);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -453,25 +453,45 @@ app.post('/api/editWorker', async (req, res) => {
   const { EmployeeID, Prenom, NomDeFamille, NumeroDeContact, Email, Password, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient,
     GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine } = req.body;
   // Hash the password
-  const hashedPassword = await bcrypt.hash(Password, saltRounds);
+  if (Password !== '') {
+    const hashedPassword = await bcrypt.hash(Password, saltRounds);
+    const sql = `
+      UPDATE employe
+      SET Prenom = ?, NomDeFamille = ?, NumeroDeContact = ?, Email = ?, Password = ? ,Poste = ?, Salaire = ?, GestionDesEmployes = ?, GestionDesArticles = ?, GestionDesClient = ?,
+      GestionDesFournisseur = ?, GestionDeStock = ?, GestionDesAchats = ?, GestionDesVentes = ?, GestionDesFactures = ?, GestionDesResourcesHumaine  = ?, last_modification = NOW()
+      WHERE EmployeeID  = ?
+    `;
+    con.query(sql, [Prenom, NomDeFamille, NumeroDeContact, Email, hashedPassword, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient,
+      GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine, EmployeeID], function (err, result) {
+        if (err) {
+          console.error('Error updating data:', err);
+          res.status(500).json({ error: 'Internal Server Error' });
+          return;
+        }
 
-  const sql = `
+        console.log('Worker updated successfully');
+        res.status(200).json({ message: 'Worker updated successfully' });
+      });
+  } else {
+    const sql = `
     UPDATE employe
-    SET Prenom = ?, NomDeFamille = ?, NumeroDeContact = ?, Email = ?, Password = ? ,Poste = ?, Salaire = ?, GestionDesEmployes = ?, GestionDesArticles = ?, GestionDesClient = ?,
+    SET Prenom = ?, NomDeFamille = ?, NumeroDeContact = ?, Email = ?, Poste = ?, Salaire = ?, GestionDesEmployes = ?, GestionDesArticles = ?, GestionDesClient = ?,
     GestionDesFournisseur = ?, GestionDeStock = ?, GestionDesAchats = ?, GestionDesVentes = ?, GestionDesFactures = ?, GestionDesResourcesHumaine  = ?, last_modification = NOW()
     WHERE EmployeeID  = ?
   `;
-  con.query(sql, [Prenom, NomDeFamille, NumeroDeContact, Email, hashedPassword, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient,
-    GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine, EmployeeID], function (err, result) {
-      if (err) {
-        console.error('Error updating data:', err);
-        res.status(500).json({ error: 'Internal Server Error' });
-        return;
-      }
+    con.query(sql, [Prenom, NomDeFamille, NumeroDeContact, Email, Poste, Salaire, GestionDesEmployes, GestionDesArticles, GestionDesClient,
+      GestionDesFournisseur, GestionDeStock, GestionDesAchats, GestionDesVentes, GestionDesFactures, GestionDesResourcesHumaine, EmployeeID], function (err, result) {
+        if (err) {
+          console.error('Error updating data:', err);
+          res.status(500).json({ error: 'Internal Server Error' });
+          return;
+        }
 
-      console.log('Worker updated successfully');
-      res.status(200).json({ message: 'Worker updated successfully' });
-    });
+        console.log('Worker updated successfully');
+        res.status(200).json({ message: 'Worker updated successfully' });
+      });
+  }
+
 });
 // Edit worker from table....................................................................................
 
@@ -551,7 +571,8 @@ app.get('/api/Vente', (req, res) => {
         JOIN client c ON v.ClientID = c.ClientID
         JOIN articlevente av ON v.SaleID = av.SaleID
         JOIN article a ON av.ArticleID = a.ArticleID -- Join with the article table
-        GROUP BY v.SaleID;
+        GROUP BY v.SaleID
+        ;
   `;
 
   con.query(sql, function (err, result) {
@@ -653,7 +674,8 @@ app.get('/api/Achat', (req, res) => {
         JOIN fournisseur c ON v.SupplierID = c.SupplierID
         JOIN articleachat av ON v.PurchaseID = av.PurchaseID
         JOIN article a ON av.ArticleID = a.ArticleID -- Join with the article table
-        GROUP BY v.PurchaseID;
+        GROUP BY v.PurchaseID
+        ORDER BY v.DateDAchat DESC;
   `;
 
   con.query(sql, function (err, result) {
@@ -708,7 +730,7 @@ app.post('/api/addStock', async (req, res) => {
 });
 
 app.get('/api/Stock', (req, res) => {
-  con.query("SELECT * FROM stock ORDER BY NomDuProduit ASC", function (err, result) {
+  con.query("SELECT * FROM stock ORDER BY NomDuProduit DESC", function (err, result) {
     if (err) {
       console.error('Error fetching data:', err);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -744,6 +766,28 @@ app.post('/api/deleteStock', async (req, res) => {
 });
 
 
+// edit stock quantity
+app.post('/api/editStock', async (req, res) => {
+  const { StockID, QuantiteDisponible } = req.body;
+
+  const sql = `
+    UPDATE stock
+    SET QuantiteDisponible = ?
+    WHERE StockID = ?
+  `;
+  con.query(sql, [QuantiteDisponible, StockID], function (err, result) {
+    if (err) {
+      console.error('Error updating data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('Stock updated successfully');
+    res.status(200).json({ message: 'Stock updated successfully' });
+  });
+});
+// Edit Stock from table....................................................................................v
+
 // Transaction Compte...........................
 app.post('/api/addTransaction', async (req, res) => {
   const { Date, Type, Montant, Notes } = req.body;
@@ -766,7 +810,7 @@ app.post('/api/addTransaction', async (req, res) => {
 });
 
 app.get('/api/Transaction', (req, res) => {
-  con.query("SELECT * FROM transactioncompte ORDER BY DateDeLaTransaction ASC", function (err, result) {
+  con.query("SELECT * FROM transactioncompte ORDER BY DateDeLaTransaction DESC", function (err, result) {
     if (err) {
       console.error('Error fetching data:', err);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -806,7 +850,7 @@ app.post('/api/deleteTransaction', async (req, res) => {
 
 
 
-// Production Compte...........................
+// Production ...........................
 app.post('/api/addProduction', async (req, res) => {
   const { Date, Product, Quantity, Cout } = req.body;
 
@@ -828,7 +872,7 @@ app.post('/api/addProduction', async (req, res) => {
 });
 
 app.get('/api/Production', (req, res) => {
-  con.query("SELECT * FROM production ORDER BY DateDeProduction ASC", function (err, result) {
+  con.query("SELECT * FROM production ORDER BY DateDeProduction DESC", function (err, result) {
     if (err) {
       console.error('Error fetching data:', err);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -860,6 +904,65 @@ app.post('/api/deleteProduction', async (req, res) => {
 
     console.log('production data deleted successfully');
     res.status(200).json({ message: 'production data deleted successfully' });
+  });
+});
+
+
+
+// TIME SHEET ...........................
+app.post('/api/addTimeSheet', async (req, res) => {
+  const { EmployeeID, Date, HeuresTravaillees } = req.body;
+
+  const sql = `
+    INSERT INTO timesheet (EmployeeID, Date, HeuresTravaillees)
+    VALUES (?, ?, ?)
+  `;
+
+  con.query(sql, [EmployeeID, Date, HeuresTravaillees], function (err, result) {
+    if (err) {
+      console.error('Error adding data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('timesheet added successfully');
+    res.status(200).json({ message: 'Time Sheet added successfully' });
+  });
+});
+
+app.get('/api/TimeSheet', (req, res) => {
+  con.query("SELECT timesheet.*, employe.NomDeFamille, employe.Prenom FROM timesheet INNER JOIN employe ON timesheet.EmployeeID = employe.EmployeeID ORDER BY timesheet.Date DESC", function (err, result) {
+    if (err) {
+      console.error('Error fetching data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    if (result.length > 0) {
+      res.json(result); // Return the first record
+      // console.log(result);
+    } else {
+      res.json({ message: 'No data available' });
+    }
+  });
+});
+
+// Delete Transaction from database
+app.post('/api/deleteTimeSheet', async (req, res) => {
+  const { TimesheetID } = req.body;
+  const sql = `
+    DELETE FROM timesheet WHERE TimesheetID = ? 
+  `;
+
+  con.query(sql, [TimesheetID], function (err, result) {
+    if (err) {
+      console.error('Error Deleting data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+
+    console.log('timesheet data deleted successfully');
+    res.status(200).json({ message: 'timesheet data deleted successfully' });
   });
 });
 

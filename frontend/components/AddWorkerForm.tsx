@@ -112,7 +112,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                     <div className="py-1 grid grid-cols-2 gap-3 " role="none">
                         <label
                             className="flex items-center justify-between w-full px-4 py-2 cursor-pointer">
-                            GestionDesEmployes
+                            Gestion Des Employes
                             <input
                                 className="form-checkbox h-5 w-5 text-blue-600"
                                 type="checkbox"
@@ -123,7 +123,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         </label>
                         <label
                             className="flex items-center justify-between w-full px-4 py-2 cursor-pointer">
-                            GestionDesArticles
+                            Gestion Des Articles
                             <input
                                 className="form-checkbox h-5 w-5 text-blue-600"
                                 type="checkbox"
@@ -145,7 +145,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         </label>
                         <label
                             className="flex items-center justify-between w-full px-4 py-2 cursor-pointer">
-                            GestionDesFournisseur
+                            Gestion Des Fournisseur
                             <input
                                 className="form-checkbox h-5 w-5 text-blue-600"
                                 type="checkbox"
@@ -156,7 +156,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         </label>
                         <label
                             className="flex items-center justify-between w-full px-4 py-2 cursor-pointer">
-                            GestionDeStock
+                            Gestion De Stock
                             <input
                                 className="form-checkbox h-5 w-5 text-blue-600"
                                 type="checkbox"
@@ -167,7 +167,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         </label>
                         <label
                             className="flex items-center justify-between w-full px-4 py-2 cursor-pointer">
-                            GestionDesAchats
+                            Gestion Des Achats
                             <input
                                 className="form-checkbox h-5 w-5 text-blue-600"
                                 type="checkbox"
@@ -189,7 +189,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         </label>
                         <label
                             className="flex items-center justify-between w-full px-4 py-2 cursor-pointer">
-                            GestionDesFactures
+                            Gestion Des Factures
                             <input
                                 className="form-checkbox h-5 w-5 text-blue-600"
                                 type="checkbox"
@@ -201,7 +201,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                     </div>
                     <label
                         className="flex items-center justify-center gap-5 w-full px-4 py-2 cursor-pointer">
-                        GestionDesResourcesHumaine
+                        Gestion Des ResourcesHumaine
                         <input
                             className="form-checkbox h-5 w-5 text-blue-600"
                             type="checkbox"
@@ -214,7 +214,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         className="flex w-full mt-3 items-center justify-center text-center p-4 border border-black rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
                         onClick={e => handlLevelsDropdown()}
                     >
-                        Finish
+                        Fini
                     </div>
                 </motion.div>
             )}
@@ -232,11 +232,11 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
             className="bg-black/80 fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-50"
         >
             <div className='bg-white p-4 rounded-lg min-w-[500px] max-w-[950px]'>
-                <h2 className="text-xl font-bold mb-4">Add New Worker</h2>
+                <h2 className="text-xl font-bold mb-4">Ajouter Un Nouveau Employe</h2>
                 <form onSubmit={handleSubmit}>
                     <div className='grid grid-cols-2 gap-3'>
                         <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700" htmlFor="Prenom">Prénom de Worker</label>
+                            <label className="block text-sm font-medium text-gray-700" htmlFor="Prenom">Prénom d'employee</label>
                             <input
                                 type="text"
                                 id="Prenom"
@@ -246,7 +246,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">nom de Worker</label>
+                            <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">Nom d'employee</label>
                             <input
                                 type="text"
                                 id="NomDeFamille"
@@ -324,9 +324,11 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                             onClick={closeAddWorker}
                             className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
                         >
-                            Cancel
+                            Annuler
                         </button>
-                    <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Add Worker</button>
+                    <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">
+                        Sauvegarde
+                    </button>
                     </div>
                 </form>
             </div >

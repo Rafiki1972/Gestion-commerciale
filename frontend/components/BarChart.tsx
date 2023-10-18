@@ -90,10 +90,10 @@ export default function BarChart(props: ChartDarkMode) {
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full max-w-full flex-grow flex-1">
                             <h1 className={`text-lg font-black tracking-wide ${DarkMode ? "text-white" : "text-purple-600 "}`}>
-                                Products Percentage:
+                                Pourcentage de produits:
                             </h1>
                             <p className={`font-extrabold text-sm mt-2 ${DarkMode ? "text-gray-100" : "text-purple-400"}`}>
-                                Percentage of each product
+                                Percentage de chaqued produit
                             </p>
                         </div>
                     </div>

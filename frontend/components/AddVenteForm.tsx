@@ -100,7 +100,7 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
             className="bg-black/80 fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-50"
         >
             <div className='bg-white p-4 rounded-lg min-w-[500px] max-w-md'>
-                <h2 className="text-xl font-bold mb-4">Add New Vente</h2>
+                <h2 className="text-xl font-bold mb-4">Ajoutr Nouveau Vente</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4 w-full">
                         <select
@@ -110,7 +110,7 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
                             <option
                                 className="text-black"
                                 value="">
-                                Select Client
+                                Client
                             </option>
                             {Client && Client.length > 0 ? (
                                 Client.map((ClientInfo) => (
@@ -122,7 +122,7 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
                                     </option>
                                 ))
                             ) : (
-                                <option className="text-black">No Class found</option>
+                                <option className="text-black">Aucune donnée disponible</option>
                             )}
                         </select>
 
@@ -133,7 +133,7 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
                             className="w-full flex relative bg-transparent text-gray-900 border border-gray-200 px-4 pt-2"
                         >
                             <div className="text-black mb-2 w-full" onClick={handleShowProducts}>
-                                Select Products
+                                Produit
                             </div>
                             {showProducts &&
                                 <div className='absolute top-[100%] left-0 p-3 flex flex-col bg-gray-300 border border-gray-900 w-full '>
@@ -165,7 +165,7 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="text-black">No Prodcuts found</div>
+                                        <div className="text-black">Aucune donnée disponible</div>
                                     )}
                                 </div>
                             }
@@ -173,7 +173,7 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
 
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">Notes</label>
+                        <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">Note</label>
                         <textarea
                             id="NomDeFamille"
                             value={VenteData.Notes}
@@ -194,9 +194,11 @@ const AddVenteForm = ({ openAlert, closeAddVente, fetchVentes }: AddVentePorps) 
                             onClick={closeAddVente}
                             className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
                         >
-                            Cancel
+                            Annuler
                         </button>
-                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Add Vente</button>
+                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">
+                            Sauvegarder
+                        </button>
                     </div>
                 </form>
             </div>

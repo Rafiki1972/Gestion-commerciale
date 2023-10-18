@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
-const EditArticle = ({ product, onClose, openAlert }) => {
+const ModifierArticle = ({ product, onClose, openAlert }) => {
     const [productData, setProductData] = useState({
         articleID: product.ArticleID,
         nomDeLArticle: product.NomDeLArticle,
@@ -13,7 +13,7 @@ const EditArticle = ({ product, onClose, openAlert }) => {
     const [selectedImage, setSelectedImage] = useState(null);
 
 
-    const handleSave = async () => {
+    const handleSauvegarder = async () => {
         const formData = new FormData();
         formData.append('ArticleID', productData.articleID);
         formData.append('updatenomDeLArticle', productData.nomDeLArticle);
@@ -30,13 +30,13 @@ const EditArticle = ({ product, onClose, openAlert }) => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            // You can implement the logic here to save the edited article.
+            // You can implement the logic here to Sauvegarder the Modifiered article.
             // For example, you can make an API call to update the article data.
-            openAlert('Product Edited Successfully');
-            // Close the edit modal
+            openAlert('Product Modifiered Successfully');
+            // Close the Modifier modal
             onClose();
         } catch (error) {
-            console.log('Error editing product', error);
+            console.log('Error Modifiering product', error);
         }
 
     };
@@ -57,9 +57,9 @@ const EditArticle = ({ product, onClose, openAlert }) => {
             className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-black/80 z-50"
         >
             <div className="bg-white p-4 rounded-lg w-2/3">
-                <h2 className="text-xl font-bold mb-4">Edit Article</h2>
+                <h2 className="text-xl font-bold mb-4">Modifier Article</h2>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Nom De LArticle</label>
+                    <label className="block text-sm font-medium text-gray-700">Nom D'Article</label>
                     <input
                         type="text"
                         name="NomDeLArticle"
@@ -122,13 +122,13 @@ const EditArticle = ({ product, onClose, openAlert }) => {
                         onClick={onClose}
                         className="w-[49%] bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                     >
-                        Cancel
+                        Annuler
                     </button>
                     <button
-                        onClick={handleSave}
+                        onClick={handleSauvegarder}
                         className="w-[49%] bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                     >
-                        Save
+                        Sauvegarder
                     </button>
                 </div>
             </div>
@@ -136,7 +136,7 @@ const EditArticle = ({ product, onClose, openAlert }) => {
     );
 };
 
-export default EditArticle;
+export default ModifierArticle;
 
 
 

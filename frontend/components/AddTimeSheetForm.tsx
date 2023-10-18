@@ -9,24 +9,22 @@ interface AddTimeSheetPorps {
 }
 
 interface TimeSheetData {
-    Date: string;
-    Product: string; // Added to store the type of TimeSheet
-    Quantity: string;
-    Cout: string;
+    EmployeeID: string;
+    Date: string; // Added to store the type of TimeSheet
+    HeuresTravaillees: string;
 }
 
 const AddTimeSheetForm = ({ openAlert, closeAddTimeSheet, fetchTimeSheet }: AddTimeSheetPorps) => {
     const [TimeSheetData, setTimeSheetData] = useState<TimeSheetData>({
+        EmployeeID: '',
         Date: '',
-        Product: '', // Initialize with an empty string
-        Quantity: '',
-        Cout: '',
+        HeuresTravaillees: '',
     });
 
     const [Products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3001/api/Product')
+        fetch('http://localhost:3001/api/Worker')
             .then((res) => res.json())
             .then((data) => setProducts(data));
     }, []);
@@ -37,10 +35,9 @@ const AddTimeSheetForm = ({ openAlert, closeAddTimeSheet, fetchTimeSheet }: AddT
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:3001/api/addTimeSheet', {
+                EmployeeID: TimeSheetData.EmployeeID,
                 Date: TimeSheetData.Date,
-                Product: TimeSheetData.Product,
-                Quantity: TimeSheetData.Quantity,
-                Cout: TimeSheetData.Cout,
+                HeuresTravaillees: TimeSheetData.HeuresTravaillees,
             });
             // Handle the response from the backend here
         } catch (error) {
@@ -60,7 +57,7 @@ const AddTimeSheetForm = ({ openAlert, closeAddTimeSheet, fetchTimeSheet }: AddT
             className="bg-black/80 fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-50"
         >
             <div className='bg-white p-4 rounded-lg min-w-[500px] max-w-md'>
-                <h2 className="text-xl font-bold mb-4">Add New TimeSheet</h2>
+                <h2 className="text-xl font-bold mb-4">Emploi du temps</h2>
                 <form onSubmit={handleSubmit} className='space-y-5'>
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="Date">
@@ -77,53 +74,39 @@ const AddTimeSheetForm = ({ openAlert, closeAddTimeSheet, fetchTimeSheet }: AddT
                     </div>
                     <div className="mb-4 w-full">
                         <select
-                            onChange={(e) => setTimeSheetData({ ...TimeSheetData, Product: e.target.value })}
+                            onChange={(e) => setTimeSheetData({ ...TimeSheetData, EmployeeID: e.target.value })}
                             className="w-full bg-transparent text-gray-900 border border-gray-200 px-4 py-2"
                         >
                             <option
                                 className="text-black"
                                 value="">
-                                Select Product
+                                Employé
                             </option>
                             {Products && Products.length > 0 ? (
                                 Products.map((ProductsInfo) => (
                                     <option
-                                        key={ProductsInfo['ArticleID']}
+                                        key={ProductsInfo['EmployeeID']}
                                         className="text-black"
-                                        value={ProductsInfo['NomDeLArticle']}>
-                                        {ProductsInfo['NomDeLArticle']}
+                                        value={ProductsInfo['EmployeeID']}>
+                                        {ProductsInfo['Prenom']} {ProductsInfo['NomDeFamille']}
                                     </option>
                                 ))
                             ) : (
-                                <option className="text-black">No Product found</option>
+                                <option className="text-black">No Worker Found</option>
                             )}
                         </select>
-
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="Montant">
-                        Quantity
+                            Heures Travaillees
                         </label>
                         <input
                             type="number"
                             name="Montant"
                             id="Montant"
                             className="mt-1 p-2 w-full border-gray-300 rounded border"
-                            value={TimeSheetData.Quantity}
-                            onChange={(e) => setTimeSheetData({ ...TimeSheetData, Quantity: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="Montant">
-                            Cout
-                        </label>
-                        <input
-                            type="number"
-                            name="Montant"
-                            id="Montant"
-                            className="mt-1 p-2 w-full border-gray-300 rounded border"
-                            value={TimeSheetData.Cout}
-                            onChange={(e) => setTimeSheetData({ ...TimeSheetData, Cout: e.target.value })}
+                            value={TimeSheetData.HeuresTravaillees}
+                            onChange={(e) => setTimeSheetData({ ...TimeSheetData, HeuresTravaillees: e.target.value })}
                         />
                     </div>
                     <div className='mt-4'>
@@ -133,10 +116,10 @@ const AddTimeSheetForm = ({ openAlert, closeAddTimeSheet, fetchTimeSheet }: AddT
                             onClick={closeAddTimeSheet}
                             className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
                         >
-                            Cancel
+                            Annuler
                         </button>
                         <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover-bg-blue-600 my-4" type="submit">
-                            Add TimeSheet
+                            Sauvegarder
                         </button>
                     </div>
                 </form>

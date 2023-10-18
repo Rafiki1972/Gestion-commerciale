@@ -7,8 +7,13 @@ interface AddStockPorps {
     closeAddStock: () => void;
     fetchStock(): void;
     openAlert(): void;
+    productsToExclude: string[]
 }
-const AddStockForm = ({ openAlert, closeAddStock, fetchStock }: AddStockPorps) => {
+interface ProductData {
+    ArticleID: number;
+    NomDeLArticle: string
+}
+const AddStockForm = ({ openAlert, closeAddStock, fetchStock, productsToExclude }: AddStockPorps) => {
     const [StockData, setStockData] = useState({
         Supplier: '',
         Product: '',
@@ -16,7 +21,7 @@ const AddStockForm = ({ openAlert, closeAddStock, fetchStock }: AddStockPorps) =
         Notes: '',
     });
     const [Supplier, setSupplier] = useState([]);
-    const [Products, setProducts] = useState([]);
+    const [Products, setProducts] = useState<ProductData[]>([]);
     useEffect(() => {
         fetch('http://localhost:3001/api/Supplier')
             .then((res) => res.json())
@@ -28,6 +33,13 @@ const AddStockForm = ({ openAlert, closeAddStock, fetchStock }: AddStockPorps) =
             .then((data) => setProducts(data));
     }, []);
 
+
+    const filteredProducts = Products && Products.length > 0 ? (
+        Products.filter(cl => {
+            const nomDeLArticle = cl.NomDeLArticle ? cl.NomDeLArticle.toLowerCase() : '';
+            return !productsToExclude.some(product => nomDeLArticle.includes(product.toLowerCase()));
+        })
+    ) : [];
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -68,7 +80,7 @@ const AddStockForm = ({ openAlert, closeAddStock, fetchStock }: AddStockPorps) =
                             <option
                                 className="text-black"
                                 value="">
-                                Select Supplier
+                                Fornisseur
                             </option>
                             {Supplier && Supplier.length > 0 ? (
                                 Supplier.map((SupplierInfo) => (
@@ -80,7 +92,7 @@ const AddStockForm = ({ openAlert, closeAddStock, fetchStock }: AddStockPorps) =
                                     </option>
                                 ))
                             ) : (
-                                <option className="text-black">No Class found</option>
+                                <option className="text-black">Aucune donnée disponible </option>
                             )}
                         </select>
 
@@ -93,15 +105,15 @@ const AddStockForm = ({ openAlert, closeAddStock, fetchStock }: AddStockPorps) =
                             <option
                                 className="text-black"
                                 value="">
-                                Select Product
+                                Produit
                             </option>
-                            {Products && Products.length > 0 ? (
-                                Products.map((ProductsInfo) => (
+                            {filteredProducts && filteredProducts.length > 0 ? (
+                                filteredProducts.map((ProductsInfo) => (
                                     <option
-                                        key={ProductsInfo['ArticleID']}
+                                        key={ProductsInfo.ArticleID}
                                         className="text-black"
-                                        value={ProductsInfo['NomDeLArticle']}>
-                                        {ProductsInfo['NomDeLArticle']}
+                                        value={ProductsInfo.NomDeLArticle}>
+                                        {ProductsInfo.NomDeLArticle}
                                     </option>
                                 ))
                             ) : (
@@ -112,7 +124,7 @@ const AddStockForm = ({ openAlert, closeAddStock, fetchStock }: AddStockPorps) =
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">Stock</label>
+                        <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">Quantité</label>
                         <input type="number" name="total" id="total"
                             className="mt-1 p-2 w-full border-gray-300 rounded border"
                             value={StockData.Total}
@@ -120,7 +132,7 @@ const AddStockForm = ({ openAlert, closeAddStock, fetchStock }: AddStockPorps) =
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">Notes</label>
+                        <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">Note</label>
                         <textarea
                             id="NomDeFamille"
                             value={StockData.Notes}
@@ -135,9 +147,11 @@ const AddStockForm = ({ openAlert, closeAddStock, fetchStock }: AddStockPorps) =
                             onClick={closeAddStock}
                             className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
                         >
-                            Cancel
+                            Annuler
                         </button>
-                    <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Add Stock</button>
+                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">
+                            Sauvegarder
+                        </button>
                     </div>
                 </form>
             </div>

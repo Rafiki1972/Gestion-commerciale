@@ -52,10 +52,10 @@ const AddSupplierForm = ({ openAlert, closeAddSupplier, fetchSupplier }: AddSupl
             className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center z-50 bg-black/80"
         >
             <div className='bg-white p-4 rounded-lg min-w-[500px] max-w-md'>
-                <h2 className="text-xl font-bold mb-4">Add New Supplier</h2>
+                <h2 className="text-xl font-bold mb-4">Ajouter Nouveau</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700" htmlFor="Prenom">Prénom de fornisseur</label>
+                        <label className="block text-sm font-medium text-gray-700" htmlFor="Prenom">Nom</label>
                         <input
                             type="text"
                             id="Prenom"
@@ -99,9 +99,11 @@ const AddSupplierForm = ({ openAlert, closeAddSupplier, fetchSupplier }: AddSupl
                             onClick={closeAddSupplier}
                             className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
                         >
-                            Cancel
+                            Annuler
                         </button>
-                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Add Client</button>
+                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">
+                            Sauvegarder
+                        </button>
                     </div>
                 </form>
                 <p>{message}</p>

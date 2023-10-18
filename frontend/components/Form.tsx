@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { setCookie, getCookie, removeCookie } from '../components/cookie';
+import { setCookie } from '../components/cookie';
 import { useRouter } from 'next/navigation'; // Import useRouter from Next.js
 const bcrypt = require('bcryptjs');
 
@@ -115,11 +115,11 @@ export const Form = () => {
         <div className="w-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
             <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
-                    Sign In To Dashboard
+                    Connectez-Vous Au Tableau De Bord
                 </h3>
                 {!userInput && (
                     <span className="mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                        {formData.Email === '' || formData.Password === '' ? 'Please enter username and password' : 'Invalid username, password, or user type'}
+                        {formData.Email === '' || formData.Password === '' ? 'Veuillez entrer votre nom d&sbquoutilisateur et votre mot de passe' : 'Nom d&sbquoutilisateur, mot de passe ou type d&sbquoutilisateur invalide'}
                     </span>
                 )}
 
@@ -181,7 +181,7 @@ export const Form = () => {
                                     className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-purple-500 peer-checked:ring-1 peer-checked:ring-purple-500"
                                 >
                                     <div className="flex items-center justify-between">
-                                        <p className="text-gray-700 cursor-pointer">Worker</p>
+                                        <p className="text-gray-700 cursor-pointer">Empoye</p>
 
                                         <svg
                                             className="hidden h-5 w-5 text-purple-600"
@@ -221,7 +221,7 @@ export const Form = () => {
                     </div>
                     <div className="mb-1 sm:mb-2">
                         <label htmlFor="password" className="inline-block mb-1 font-medium">
-                            Password
+                            Mots De Pass
                         </label>
                         <input
                             placeholder={
@@ -242,12 +242,9 @@ export const Form = () => {
                             className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-900 hover:bg-purple-700 focus:shadow-outline focus:outline-none
                             group-invalid:cursor-not-allowed group-invalid:opacity-30"
                         >
-                            Subscribe
+                            Se Connecter
                         </button>
                     </div>
-                    <p className="text-xs text-gray-600 sm:text-sm">
-                        Forgot password ?
-                    </p>
                 </form>
             </div>
         </div>

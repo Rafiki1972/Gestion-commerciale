@@ -5,7 +5,7 @@ interface AlertPorps {
     closeAlert: () => void;
 }
 
-const Alert = ({ AlertText , closeAlert }: AlertPorps) => {
+const Alert = ({ AlertText, closeAlert }: AlertPorps) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -37,7 +37,7 @@ const Alert = ({ AlertText , closeAlert }: AlertPorps) => {
                     </span>
 
                     <div className="flex-1">
-                        <strong className="block font-medium text-gray-900"> Changes saved </strong>
+                        <strong className="block font-medium text-gray-900"> Bien Sauvegarder </strong>
 
                         <p className="mt-1 text-sm text-gray-700 cursor-pointer">
                             {AlertText}
