@@ -63,3 +63,12 @@ body:hover #trailer {
 input[type=checkbox] {
   accent-color: gray;
 }
+
+table {
+  border-collapse: separate !important;
+  border-spacing: 0;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 10px;
+  overflow: hidden;
+}

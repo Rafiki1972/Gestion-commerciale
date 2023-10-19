@@ -44,7 +44,7 @@ interface User {
 /* These import statements are importing specific icons from different icon libraries
 (`react-icons/vsc`, `react-icons/io5`, `react-icons/md`). */
 function Dashboard() {
-    const [selectModifierem, setSelectModifierem] = useState('dashboard'); // Default selected item
+    const [selectedItem, setselectedItem] = useState('dashboard'); // Default selected item
     const [DarkMode, setDarkMode] = useState(false); // Default selected item
     // Storing the last selected Item in local starage
 
@@ -52,18 +52,18 @@ function Dashboard() {
 
     /* The `useEffect` hook is used in React to perform side effects in functional components. In this code
     snippet, there are two `useEffect` hooks. */
-    /* This `useEffect` hook is used to retrieve the value of the `selectModifierem` from the local storage and
-    set it as the initial value of the `selectModifierem` state variable. */
+    /* This `useEffect` hook is used to retrieve the value of the `selectedItem` from the local storage and
+    set it as the initial value of the `selectedItem` state variable. */
     useEffect(() => {
-        const data = window.localStorage.getItem('selectModifierem');
-        if (data !== null) setSelectModifierem(data);
+        const data = window.localStorage.getItem('selectedItem');
+        if (data !== null) setselectedItem(data);
     }, []);
 
-    /* This is used to store the value of the `selectModifierem` state variable in the browser's
+    /* This is used to store the value of the `selectedItem` state variable in the browser's
     local storage whenever it changes. */
     useEffect(() => {
-        window.localStorage.setItem('selectModifierem', selectModifierem);
-    }, [selectModifierem]);
+        window.localStorage.setItem('selectedItem', selectedItem);
+    }, [selectedItem]);
 
 
     useEffect(() => {
@@ -88,7 +88,7 @@ function Dashboard() {
     }
 
     const handleItemClick = (item: any) => {
-        setSelectModifierem(item);
+        setselectedItem(item);
     };
     useEffect(() => {
         const userId = getCookie('userId'); // Retrieve the user ID from the cookie
@@ -123,29 +123,29 @@ function Dashboard() {
         <div className={`transition bg-black/50 ${DarkMode ? 'bg-gradient-to-r from-slate-900 to-slate-700' : 'bg-gradient-to-r from-purple-500 to-purple-900'}`}>
             {/* <FollowCursor /> */}
             <ConnectionLost />
-            <NavBar worker={worker} handleItemClick={handleItemClick} handleDarkMode={handleDarkMode} DarkMode={DarkMode} selectModifierem={selectModifierem} />
+            <NavBar worker={worker} handleItemClick={handleItemClick} handleDarkMode={handleDarkMode} DarkMode={DarkMode} selectedItem={selectedItem} />
             <AnimatePresence mode='wait'>
-                {selectModifierem === 'article' ? (
+                {selectedItem === 'article' ? (
                     <Article DarkMode={DarkMode} />
-                ) : selectModifierem === 'client' ? (
+                ) : selectedItem === 'client' ? (
                     <Client DarkMode={DarkMode} />
-                ) : selectModifierem === 'supplier' ? (
+                ) : selectedItem === 'supplier' ? (
                     <Supplier DarkMode={DarkMode} />
-                ) : selectModifierem === 'worker' ? (
+                ) : selectedItem === 'worker' ? (
                     <Worker DarkMode={DarkMode} />
-                ) : selectModifierem === 'vente' ? (
+                ) : selectedItem === 'vente' ? (
                     <Vente DarkMode={DarkMode} />
-                ) : selectModifierem === 'achat' ? (
+                ) : selectedItem === 'achat' ? (
                     <Achat DarkMode={DarkMode} />
-                ) : selectModifierem === 'stock' ? (
+                ) : selectedItem === 'stock' ? (
                     <Stock DarkMode={DarkMode} />
-                ) : selectModifierem === 'transaction' ? (
+                ) : selectedItem === 'transaction' ? (
                     <Transaction DarkMode={DarkMode} />
-                ) : selectModifierem === 'production' ? (
+                ) : selectedItem === 'production' ? (
                     <Production DarkMode={DarkMode} />
-                ) : selectModifierem === 'timesheet' ? (
+                ) : selectedItem === 'timesheet' ? (
                     <TimeSheet DarkMode={DarkMode} />
-                ) : selectModifierem === 'profile' ? (
+                ) : selectedItem === 'profile' ? (
                     <Profile DarkMode={DarkMode} />
                 ) : (
                     <DashboardComponnent DarkMode={DarkMode} />

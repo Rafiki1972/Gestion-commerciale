@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 19 oct. 2023 à 14:32
+-- Généré le : jeu. 19 oct. 2023 à 20:55
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -41,7 +41,9 @@ CREATE TABLE `achat` (
 --
 
 INSERT INTO `achat` (`PurchaseID`, `DateDAchat`, `SupplierID`, `MontantTotal`, `Notes`, `last_modification`) VALUES
-(2, '2023-10-13', NULL, 400.00, 'test note', '2023-10-13');
+(2, '2023-10-13', NULL, 400.00, 'test note', '2023-10-13'),
+(6, '2023-10-19', 4, 1350.00, 'dfdfd', '2023-10-19'),
+(7, '2023-10-19', 4, 600.00, 'jr jr ,', '2023-10-19');
 
 -- --------------------------------------------------------
 
@@ -93,7 +95,10 @@ CREATE TABLE `articleachat` (
 --
 
 INSERT INTO `articleachat` (`PurchaseItemID`, `PurchaseID`, `ArticleID`, `Quantite`, `PrixUnitaire`, `SousTotal`, `created_at`, `last_modification`) VALUES
-(3, 2, 33, 2, 200.00, 400.00, '2023-10-13', '2023-10-13');
+(3, 2, 33, 2, 200.00, 400.00, '2023-10-13', '2023-10-13'),
+(7, 6, 34, 3, 250.00, 750.00, '2023-10-19', '2023-10-19'),
+(8, 6, 35, 2, 300.00, 600.00, '2023-10-19', '2023-10-19'),
+(9, 7, 35, 2, 300.00, 600.00, '2023-10-19', '2023-10-19');
 
 -- --------------------------------------------------------
 
@@ -234,7 +239,8 @@ CREATE TABLE `production` (
 --
 
 INSERT INTO `production` (`ProductionID`, `DateDeProduction`, `NomDuProduit`, `QuantiteProduite`, `Cout`) VALUES
-(2, '2023-10-19', 'Khtek', 25, 525.00);
+(2, '2023-10-19', 'Khtek', 25, 525.00),
+(3, '2023-10-05', 'Khtek', 200, 100.00);
 
 -- --------------------------------------------------------
 
@@ -256,7 +262,7 @@ CREATE TABLE `stock` (
 
 INSERT INTO `stock` (`StockID`, `Supplier`, `NomDuProduit`, `Description`, `QuantiteDisponible`) VALUES
 (17, 'Hayat', 'coffee', 'dfdfd', 200),
-(22, 'Hayat', 'Atay bn3na3', 'note for testing', 200),
+(22, 'Hayat', 'Atay bn3na3', 'note for testing', 198),
 (23, 'Hayat', 'Water', 'gzergz', 251);
 
 -- --------------------------------------------------------
@@ -277,7 +283,8 @@ CREATE TABLE `timesheet` (
 --
 
 INSERT INTO `timesheet` (`TimesheetID`, `EmployeeID`, `Date`, `HeuresTravaillees`) VALUES
-(3, 9, '2023-10-17', 20.00);
+(3, 9, '2023-10-17', 20.00),
+(4, 9, '2023-10-05', 12.00);
 
 -- --------------------------------------------------------
 
@@ -322,8 +329,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `username`, `Email`, `Password`, `created_at`, `last_modification`) VALUES
-(1, 'musta', 'musta@gmail.com', '$2a$12$fYMIhNA4dJGZIeBRJI1LVOXOc8nQO6qqv0CvMzlpOHcW6GqhpRMmi', '2023-08-20', '2023-08-20'),
-(2, 'ahmed', 'ahmed@gmail.com', '1234', '2023-08-20', '2023-08-20');
+(1, 'musta', 'musta@gmail.com', '$2a$12$fYMIhNA4dJGZIeBRJI1LVOXOc8nQO6qqv0CvMzlpOHcW6GqhpRMmi', '2023-08-20', '2023-08-20');
 
 -- --------------------------------------------------------
 
@@ -449,7 +455,7 @@ ALTER TABLE `vente`
 -- AUTO_INCREMENT pour la table `achat`
 --
 ALTER TABLE `achat`
-  MODIFY `PurchaseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `PurchaseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `article`
@@ -461,7 +467,7 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT pour la table `articleachat`
 --
 ALTER TABLE `articleachat`
-  MODIFY `PurchaseItemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `PurchaseItemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `articlevente`
@@ -491,7 +497,7 @@ ALTER TABLE `fournisseur`
 -- AUTO_INCREMENT pour la table `production`
 --
 ALTER TABLE `production`
-  MODIFY `ProductionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ProductionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `stock`
@@ -503,7 +509,7 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT pour la table `timesheet`
 --
 ALTER TABLE `timesheet`
-  MODIFY `TimesheetID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `TimesheetID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `transactioncompte`

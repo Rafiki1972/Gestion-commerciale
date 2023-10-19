@@ -5,20 +5,29 @@ import { motion } from 'framer-motion';
 import AddStockForm from './AddStockForm';
 import EditStock from './EditStock'
 import Alert from './Alert'
+import SearchBar from './SearchBar';
 
 
 interface Stock {
     DarkMode: boolean;
 }
-
+interface Stock {
+    DarkMode: boolean;
+    StockID: number;
+    NomDuProduit: string;
+    Supplier: string;
+    QuantiteDisponible: string;
+    Description: string;
+}
 export default function Stock(props: Stock) {
 
     let DarkMode = props.DarkMode;
     const [AlertState, setAlertState] = useState(null);
-    const [Stock, setStock] = useState([]);
+    const [Stock, setStock] = useState<Stock[]>([]);
     const [AddStock, setAddStock] = useState(false);
     const stockNomDuProduitArray = Stock.map(stock => stock['NomDuProduit']);
     const [selectedStock, setSelectedStock] = useState(null);
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
 
     const openEditStock = (Stock: any) => {
@@ -75,6 +84,15 @@ export default function Stock(props: Stock) {
         }
     }
 
+    const filteredStock =
+        Stock && Stock.length > 0 ? (
+            Stock.filter(cl => {
+                const prenom = cl.NomDuProduit ? cl.NomDuProduit.toLowerCase() : '';
+                const nomDeFamille = cl.Supplier ? cl.Supplier.toLowerCase() : '';
+                return prenom.includes(searchTerm.toLowerCase()) || nomDeFamille.includes(searchTerm.toLowerCase());
+            })
+        ) : [];
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -105,9 +123,14 @@ export default function Stock(props: Stock) {
                 LISTS DES Stock
             </h1>
 
+            <SearchBar DarkMode={DarkMode} searchTerm={searchTerm} onSearchTermChange={setSearchTerm} />
 
             <table
                 className="w-full text-sm text-left "
+                style={{
+                    transition: 'height 0.5s ease-in-out',
+                    height: `${filteredStock.length * 50 + 40}px`
+                }}
             >
                 <thead className={`text-xs font-black whitespace-nowrap uppercase ${DarkMode ? 'bg-gray-900 text-white' : ' bg-purple-900 text-white '}`}>
                     <tr>
@@ -132,11 +155,11 @@ export default function Stock(props: Stock) {
                     </tr>
                 </thead>
                 <tbody>
-                    {Stock && Stock.length > 0 ? (
-                        Stock.map((Stock) => (
+                    {filteredStock && filteredStock.length > 0 ? (
+                        filteredStock.map((Stock) => (
                             <tr
                                 key={Stock['StockID']}
-                                className={`border-b dark:bg-gray-900 even:bg-gray-10 even:text-black hover:opacity-90 ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
+                                className={`border-b hover:opacity-90 ${DarkMode ? 'odd:bg-gray-600 even:bg-gray-500 even:text-white odd:text-gray-200' : 'odd:bg-gray-200 even:bg-white even:text-gray-900 odd:text-gray-800'}`}
                             >
                                 <td className="px-6 py-4 font-black whitespace-nowrap">
                                     {Stock['NomDuProduit']}

@@ -122,7 +122,7 @@ export default function Client(props: Client) {
             <SearchBar DarkMode={DarkMode} searchTerm={searchTerm} onSearchTermChange={setSearchTerm} />
 
             <table
-                className="w-full text-sm text-left "
+                className="w-full text-sm text-left"
                 style={{
                     transition: 'height 0.5s ease-in-out',
                     height: `${filteredClient.length * 50 + 40}px`
@@ -155,7 +155,7 @@ export default function Client(props: Client) {
                         filteredClient.map((clientData) => (
                             <tr
                                 key={clientData.ClientID}
-                                className={`border-b dark:bg-gray-900 even:bg-gray-50 even:text-black  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
+                                className={`border-b hover:opacity-90 ${DarkMode ? 'odd:bg-gray-600 even:bg-gray-500 even:text-white odd:text-gray-200' : 'odd:bg-gray-200 even:bg-white even:text-gray-900 odd:text-gray-800'}`}
                             >
                                 <td className="px-6 py-4 font-black whitespace-nowrap">
                                     {clientData.Prenom} {clientData.NomDeFamille}

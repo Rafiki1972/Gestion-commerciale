@@ -143,7 +143,7 @@ export default function Achat(props: Achat) {
                         Achat.map((Achat) => (
                             <tr
                                 key={Achat['PurchaseID']}
-                                className={`border-b dark:bg-gray-900 even:bg-gray-10 even:text-black hover:opacity-90 ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
+                                className={`border-b hover:opacity-90 ${DarkMode ? 'odd:bg-gray-600 even:bg-gray-500 even:text-white odd:text-gray-200' : 'odd:bg-gray-200 even:bg-white even:text-gray-900 odd:text-gray-800'}`}
                             >
                                 <td className="px-6 py-4 font-black whitespace-nowrap">
                                     {new Date(Achat['DateDAchat']).toLocaleDateString('en-US', {

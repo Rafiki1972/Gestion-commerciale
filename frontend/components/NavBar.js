@@ -16,7 +16,6 @@ import CheckCookie from './cookie';
 import { getCookie } from './cookie';
 
 export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, selectedItem }) => {
-    const workerName = worker[0]?.Prenom; // Assuming you want the name of the first worker
     const GestionDesEmployes = worker[0]?.GestionDesEmployes;
     const GestionDesArticles = worker[0]?.GestionDesArticles;
     const GestionDesClient = worker[0]?.GestionDesClient;
@@ -62,7 +61,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                         <div className="space-y-2 pt-2">
                             <div
                                 className={
-                                    `text-base cursor-pointer  font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'} ${selectedItem === 'dahsboard' ? ' text-amber-400' : 'text-white'}`
+                                    `text-base cursor-pointer  font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'} ${selectedItem === 'dahsboard' ? 'font-extrabold text-amber-400' : 'text-white'}`
                                 }
                                 onClick={() => handleItemClick('dahsboard')}
                             >
@@ -73,7 +72,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                             </div>
                             {GestionDesArticles !== 0 || adminState === 'admin' ? (
                                 <div
-                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'article' ? ' text-amber-400' : 'text-white'}`}
+                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'article' ? 'font-extrabold text-amber-400' : 'text-white'}`}
                                     onClick={() => handleItemClick('article')}
                                 >
                                     <MdSell
@@ -88,7 +87,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                             }
                             {GestionDesClient !== 0 || adminState === 'admin' ? (
                                 <div
-                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'client' ? ' text-amber-400' : 'text-white'}`}
+                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'client' ? 'font-extrabold text-amber-400' : 'text-white'}`}
                                     onClick={() => handleItemClick('client')}
                                 >
                                     <FaUserTag
@@ -103,7 +102,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                             }
                             {GestionDesFournisseur !== 0 || adminState === 'admin' ? (
                                 <div
-                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'supplier' ? ' text-amber-400' : 'text-white'}`}
+                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'supplier' ? 'font-extrabold text-amber-400' : 'text-white'}`}
                                     onClick={() => handleItemClick('supplier')}
                                 >
                                     <FaHospitalUser
@@ -118,7 +117,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                             }
                             {GestionDesEmployes !== 0 || adminState === 'admin' ? (
                                 <div
-                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'worker' ? ' text-amber-400' : 'text-white'}`}
+                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'worker' ? 'font-extrabold text-amber-400' : 'text-white'}`}
                                     onClick={() => handleItemClick('worker')}
                                 >
                                     <MdWork
@@ -133,7 +132,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                             }
                             {GestionDesVentes !== 0 || adminState === 'admin' ? (
                                 <div
-                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'vente' ? ' text-amber-400' : 'text-white'}`}
+                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'vente' ? 'font-extrabold text-amber-400 ' : 'text-white'}`}
                                     onClick={() => handleItemClick('vente')}
                                 >
                                     <MdProductionQuantityLimits
@@ -148,7 +147,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                             }
                             {GestionDesAchats !== 0 || adminState === 'admin' ? (
                                 <div
-                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'achat' ? ' text-amber-400' : 'text-white'}`}
+                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'achat' ? 'font-extrabold text-amber-400' : 'text-white'}`}
                                     onClick={() => handleItemClick('achat')}
                                 >
                                     <TbBusinessplan
@@ -163,7 +162,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                             }
                             {GestionDeStock !== 0 || adminState === 'admin' ? (
                                 <div
-                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'stock' ? ' text-amber-400' : 'text-white'}`}
+                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'stock' ? 'font-extrabold text-amber-400' : 'text-white'}`}
                                     onClick={() => handleItemClick('stock')}
                                 >
                                     <BsClipboard2DataFill
@@ -178,13 +177,13 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                             }
                             {GestionDesFactures !== 0 || adminState === 'admin' ? (
                                 <div
-                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'client' ? ' text-amber-400' : 'text-white'}`}
+                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'client' ? 'font-extrabold text-amber-400' : 'text-white'}`}
                                     onClick={() => handleItemClick('achat')}
                                 >
                                     <FaReceipt
                                         className="w-5 h-5 flex-shrink-0 transition duration-75"
                                     />
-                                    <span className="ml-4  hidden md:block">Facteure et devis</span>
+                                    <span className="ml-4  hidden md:block">Facteurs</span>
                                 </div>
                             ) : (
                                 <>
@@ -192,7 +191,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                             )
                             }
                             <div
-                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'transaction' ? ' text-amber-400' : 'text-white'}`}
+                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'transaction' ? 'font-extrabold text-amber-400' : 'text-white'}`}
                                 onClick={() => handleItemClick('transaction')}
                             >
                                 <HiMiniBanknotes
@@ -201,7 +200,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                 <span className="ml-4  hidden md:block">Transaction Compte</span>
                             </div>
                             <div
-                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'production' ? ' text-amber-400' : 'text-white'}`}
+                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'production' ? 'font-extrabold text-amber-400' : 'text-white'}`}
                                 onClick={() => handleItemClick('production')}
                             >
                                 <BiSolidFactory
@@ -210,7 +209,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                                 <span className="ml-4  hidden md:block">Production</span>
                             </div>
                             <div
-                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'timesheet' ? ' text-amber-400' : 'text-white'}`}
+                                className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'timesheet' ? 'font-extrabold text-amber-400' : 'text-white'}`}
                                 onClick={() => handleItemClick('timesheet')}
                             >
                                 <FaBusinessTime
@@ -223,7 +222,7 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                     <div className={`w-2/12 px-3 pt-2 border-t border-r space-y-2 fixed bottom-0 ${DarkMode ? 'bg-gray-900' : 'bg-purple-900'}`}>
                         {adminState === 'admin' &&
                             <div
-                                className={`text-base text-white font-normal rounded-lg flex items-center p-2 cursor-pointer group ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'profile' ? ' text-amber-400' : 'text-white'}`}
+                                className={`text-base text-white font-normal rounded-lg flex items-center p-2 cursor-pointer group ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'profile' ? 'font-extrabold text-amber-400' : 'text-white'}`}
                                 onClick={() => handleItemClick('profile')}
                             >
                                 <VscAccount

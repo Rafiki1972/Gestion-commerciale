@@ -68,6 +68,7 @@ export const Form = () => {
 
             if (foundWorker) {
                 const passwordMatch = await bcrypt.compare(formData.Password, foundWorker.Password);
+                console.log(passwordMatch)
 
                 if (passwordMatch) {
                     // Passwords match, set cookies and navigate to Dashboard
@@ -207,7 +208,7 @@ export const Form = () => {
                         </label>
                         <input
                             placeholder={
-                                formData.Email ? formData.Email : 'Musta hr'
+                                formData.Email ? formData.Email : 'Your Mail'
                             }
                             required
                             // pattern="[a-zA-Z\s]+"
@@ -225,7 +226,7 @@ export const Form = () => {
                         </label>
                         <input
                             placeholder={
-                                formData.Password ? formData.Password : ''
+                                formData.Password ? formData.Password : 'Your Password'
                             }
                             required
                             type="password"
