@@ -39,10 +39,6 @@ export const State = (props: ChartComponentProps) => {
     const salesThisWeek = sales.filter((sale) => new Date(sale.DateDeVente) >= oneWeekAgo);
     const salesThisMonth = sales.filter((sale) => new Date(sale.DateDeVente) >= oneMonthAgo);
 
-    console.log('today : ', today)
-    console.log('oneWeekAgo : ', oneWeekAgo)
-    console.log('oneMonthAgo : ', oneMonthAgo)
-
     return (
         <div className="ap-5 my-5">
             <h1 className='text-lg font-black tracking-wide text-white'>

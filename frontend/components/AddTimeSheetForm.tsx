@@ -33,6 +33,15 @@ const AddTimeSheetForm = ({ openAlert, closeAddTimeSheet, fetchTimeSheet }: AddT
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (TimeSheetData.EmployeeID === '') {
+            alert('Veuillez sélectionner un employe.');
+            return; // This will exit the function if the condition is met
+        }
+
+        if (TimeSheetData.Date === '') {
+            alert('Veuillez sélectionner une date.');
+            return; // This will exit the function if the condition is met
+        }
         try {
             const response = await axios.post('http://localhost:3001/api/addTimeSheet', {
                 EmployeeID: TimeSheetData.EmployeeID,
@@ -64,6 +73,7 @@ const AddTimeSheetForm = ({ openAlert, closeAddTimeSheet, fetchTimeSheet }: AddT
                             Date
                         </label>
                         <input
+                            required
                             type="date"
                             name="Date"
                             id="Date"
@@ -101,6 +111,7 @@ const AddTimeSheetForm = ({ openAlert, closeAddTimeSheet, fetchTimeSheet }: AddT
                             Heures Travaillees
                         </label>
                         <input
+                            required
                             type="number"
                             name="Montant"
                             id="Montant"

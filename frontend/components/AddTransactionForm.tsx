@@ -67,6 +67,7 @@ const AddTransactionForm = ({ openAlert, closeAddTransaction, fetchTransaction }
                         </label>
                         <input
                             type="date"
+                            required
                             name="Date"
                             id="Date"
                             className="mt-1 p-2 w-full border-gray-300 rounded border"
@@ -79,6 +80,7 @@ const AddTransactionForm = ({ openAlert, closeAddTransaction, fetchTransaction }
                             Type De Transaction
                         </label>
                         <select
+                            required
                             name="Type"
                             id="Type"
                             className="mt-1 p-2 w-full border-gray-300 rounded border"
@@ -98,6 +100,7 @@ const AddTransactionForm = ({ openAlert, closeAddTransaction, fetchTransaction }
                             Montant
                         </label>
                         <input
+                            required
                             type="number"
                             name="Montant"
                             id="Montant"

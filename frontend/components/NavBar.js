@@ -177,13 +177,13 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                             }
                             {GestionDesFactures !== 0 || adminState === 'admin' ? (
                                 <div
-                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'client' ? 'font-extrabold text-amber-400' : 'text-white'}`}
-                                    onClick={() => handleItemClick('achat')}
+                                    className={`text-base cursor-pointer font-normal rounded-lg group transition duration-75 flex items-center p-2 ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'facture' ? 'font-extrabold text-amber-400' : 'text-white'}`}
+                                    onClick={() => handleItemClick('facture')}
                                 >
                                     <FaReceipt
                                         className="w-5 h-5 flex-shrink-0 transition duration-75"
                                     />
-                                    <span className="ml-4  hidden md:block">Facteurs</span>
+                                    <span className="ml-4  hidden md:block">Facture</span>
                                 </div>
                             ) : (
                                 <>

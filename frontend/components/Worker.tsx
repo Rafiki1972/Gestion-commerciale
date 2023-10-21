@@ -241,9 +241,10 @@ export default function Worker(props: Worker) {
                         <tr
                             className={`border-b dark:bg-gray-900 even:bg-gray-50  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white text-gray-800'}`}
                         >
-                            <td className="px-6 py-4">
-                                No Data Found
+                            <td className="px-4 py-4 text-white">
+                                Aucun donnes desponible
                             </td>
+                            <td className="px-1 py-4"></td>
                             <td className="px-1 py-4"></td>
                             <td className="px-1 py-4"></td>
                             <td className="px-1 py-4"></td>

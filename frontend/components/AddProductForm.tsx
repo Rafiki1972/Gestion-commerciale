@@ -126,6 +126,7 @@ const AddProductForm = ({ closeAddProduct, fetchProducts }: AddProucttPorps) => 
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700" htmlFor="nomDeLArticle">Nom d'article</label>
                         <input
+                            required
                             type="text"
                             id="nomDeLArticle"
                             value={productData.nomDeLArticle}
@@ -136,6 +137,7 @@ const AddProductForm = ({ closeAddProduct, fetchProducts }: AddProucttPorps) => 
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="description">Description</label>
                         <input
+                            required
                             type="text"
                             id="description"
                             value={productData.description}
@@ -146,6 +148,7 @@ const AddProductForm = ({ closeAddProduct, fetchProducts }: AddProucttPorps) => 
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="description">Code</label>
                         <input
+                            required
                             type="text"
                             id="code"
                             readOnly={true}
@@ -157,6 +160,7 @@ const AddProductForm = ({ closeAddProduct, fetchProducts }: AddProucttPorps) => 
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="cout">Cout</label>
                         <input
+                            required
                             type="text"
                             id="cout"
                             value={productData.cout}
@@ -167,6 +171,7 @@ const AddProductForm = ({ closeAddProduct, fetchProducts }: AddProucttPorps) => 
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="prixDeVente">Prix de vente</label>
                         <input
+                            required
                             type="text"
                             id="prixDeVente"
                             value={productData.prixDeVente}
@@ -177,6 +182,7 @@ const AddProductForm = ({ closeAddProduct, fetchProducts }: AddProucttPorps) => 
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="image">Image</label>
                         <input
+                            required
                             type="file"
                             id="image"
                             accept="image/*"

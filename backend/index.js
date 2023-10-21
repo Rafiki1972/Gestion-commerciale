@@ -967,6 +967,119 @@ app.post('/api/deleteTimeSheet', async (req, res) => {
 });
 
 
+
+
+
+// pdf..............................................
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
+
+app.post('/api/generateFacture', (req, res) => {
+  try {
+    const Data = req.body;
+
+    // Create a new PDF document
+    const doc = new PDFDocument();
+    const filePath = 'public/facture.pdf'; // Customize the file name and location
+
+    doc.pipe(fs.createWriteStream(filePath));
+    doc.info['Title'] = 'Factre';
+
+    // Add logo to the PDF
+    const logoPath = path.join(__dirname, 'public', 'assets', 'logo.png'); // Adjust the path to your logo
+
+    doc.image(logoPath, 10, 0, { width: 150 });
+
+    const titelX = doc.page.width / 10;
+    doc.fontSize(20).font('Helvetica-Bold').text('FACTURE', titelX, 60, { align: 'center' });
+
+
+
+    // Add date and client name in the top right
+    doc.fontSize(8).font('Helvetica-Bold').text(`${Data.date}`, 400, 50, { align: 'right' });
+    doc.fontSize(8).font('Helvetica-Bold').text(`${Data.SelectedClient}`, 400, 38, { align: 'right' });
+
+    // Create a table for other data
+    const tableX = 40;
+    const tableY = 200;
+    const columnWidth = 150;
+    const rowHeight = 20;
+    doc.moveDown(15); // Move down by 2 lines
+
+    // Headers
+    doc.fontSize(12).font('Helvetica-Bold');
+    doc.text('Produit', tableX, tableY);
+    doc.text('Quantité', tableX + columnWidth, tableY);
+    doc.text('Prix Unitaire', tableX + 2 * columnWidth, tableY);
+    doc.text('Total', tableX + 3 * columnWidth, tableY);
+
+    doc.fontSize(10).font('Helvetica');
+
+    let currentY = tableY + rowHeight;
+
+    // Product rows
+    for (const product in Data.selectedProducts) {
+      const { quantity, unitPrice, productTotal } = Data.selectedProducts[product];
+
+      if (quantity > 0) {
+        doc.text(product, tableX, currentY);
+        doc.text(quantity.toString(), tableX + columnWidth, currentY);
+        doc.text(`${unitPrice.toString()} Dh`, tableX + 2 * columnWidth, currentY);
+        doc.text(productTotal.toString(), tableX + 3 * columnWidth, currentY);
+
+        currentY += rowHeight;
+      }
+    }
+
+    doc.moveDown(2); // Move down by 2 lines
+    doc.fontSize(10).font('Helvetica-Bold');
+    doc.text(`Total HT: ${Data.TotalHTC} DH`, 400, doc.y, { align: 'right' });
+
+    const tvaAmount = (Data.TotalTTC - Data.TotalHTC).toFixed(2);
+    doc.text(`TVA (${Data.Tva}%): ${tvaAmount} DH`, 400, doc.y, { align: 'right' });
+
+    doc.text(`Total TTC: ${Data.TotalTTC} DH`, 400, doc.y, { align: 'right' });
+
+
+    // footer
+
+    // Set the background color for the footer
+    doc.rect(0, doc.page.height - 50, doc.page.width, 100).fill('#000000');
+
+    // Add your contact information
+    doc.fontSize(8).fill('#000000').font('Helvetica').text('Signateur : ',
+      titelX,
+      600,
+      {
+        align: 'center',
+      });
+
+
+    // End the document and send it as a response
+    doc.end();
+
+    res.sendFile(filePath, { root: __dirname }, (err) => {
+      if (err) {
+        console.error('Error sending the PDF:', err);
+        res.status(500).send('Error sending the PDF');
+      } else {
+        console.log('PDF generation and display successful');
+      }
+    });
+
+  } catch (error) {
+    console.error('An error occurred:', error);
+    res.status(500).send('PDF generation failed');
+  }
+});
+
+
+
+
+
+// pdf generator........................................................
+
+
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

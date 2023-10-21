@@ -20,6 +20,7 @@ import Production from '../components/Production';
 import TimeSheet from '../components/TimeSheet';
 import ConnectionLost from '../components/ConnectionLost';
 import Profile from '../components/Profile';
+import Facture from '../components/Facture';
 import { AnimatePresence } from 'framer-motion';
 interface User {
     EmployeeID: 9,
@@ -122,7 +123,7 @@ function Dashboard() {
     return (
         <div className={`transition bg-black/50 ${DarkMode ? 'bg-gradient-to-r from-slate-900 to-slate-700' : 'bg-gradient-to-r from-purple-500 to-purple-900'}`}>
             {/* <FollowCursor /> */}
-            <ConnectionLost />
+            {/* <ConnectionLost /> */}
             <NavBar worker={worker} handleItemClick={handleItemClick} handleDarkMode={handleDarkMode} DarkMode={DarkMode} selectedItem={selectedItem} />
             <AnimatePresence mode='wait'>
                 {selectedItem === 'article' ? (
@@ -147,6 +148,8 @@ function Dashboard() {
                     <TimeSheet DarkMode={DarkMode} />
                 ) : selectedItem === 'profile' ? (
                     <Profile DarkMode={DarkMode} />
+                ) : selectedItem === 'facture' ? (
+                    <Facture DarkMode={DarkMode} />
                 ) : (
                     <DashboardComponnent DarkMode={DarkMode} />
                 )}

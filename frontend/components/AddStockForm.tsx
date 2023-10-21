@@ -44,6 +44,15 @@ const AddStockForm = ({ openAlert, closeAddStock, fetchStock, productsToExclude 
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (StockData.Supplier === '') {
+            alert('Veuillez sélectionner un fornisseur.');
+            return; // This will exit the function if the condition is met
+        }
+
+        if (StockData.Product === '') {
+            alert('Veuillez sélectionner au moins un produit.');
+            return; // This will exit the function if the condition is met
+        }
         try {
             const response = await axios.post('http://localhost:3001/api/addStock', {
                 Supplier: StockData.Supplier,
@@ -125,7 +134,11 @@ const AddStockForm = ({ openAlert, closeAddStock, fetchStock, productsToExclude 
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">Quantité</label>
-                        <input type="number" name="total" id="total"
+                        <input
+                            required
+                            type="number"
+                            name="total"
+                            id="total"
                             className="mt-1 p-2 w-full border-gray-300 rounded border"
                             value={StockData.Total}
                             onChange={(e) => setStockData({ ...StockData, Total: e.target.value })}

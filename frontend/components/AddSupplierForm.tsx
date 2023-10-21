@@ -57,6 +57,7 @@ const AddSupplierForm = ({ openAlert, closeAddSupplier, fetchSupplier }: AddSupl
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700" htmlFor="Prenom">Nom</label>
                         <input
+                            required
                             type="text"
                             id="Prenom"
                             value={supplierData.NomDuFournisseur}
@@ -67,6 +68,7 @@ const AddSupplierForm = ({ openAlert, closeAddSupplier, fetchSupplier }: AddSupl
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="NumeroDeContact">Numero De Contact</label>
                         <input
+                            required
                             type="text"
                             id="NumeroDeContact"
                             value={supplierData.NumeroDeContact}
@@ -77,6 +79,7 @@ const AddSupplierForm = ({ openAlert, closeAddSupplier, fetchSupplier }: AddSupl
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="Email">Email</label>
                         <input
+                            required
                             type="mail"
                             id="Email"
                             value={supplierData.Email}
@@ -87,6 +90,7 @@ const AddSupplierForm = ({ openAlert, closeAddSupplier, fetchSupplier }: AddSupl
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="ConditionsDePaiement">Conditions De Paiement</label>
                         <input
+                            required
                             type="text"
                             id="ConditionsDePaiement"
                             value={supplierData.ConditionsDePaiement}

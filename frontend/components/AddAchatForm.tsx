@@ -46,33 +46,46 @@ const AddAchatForm = ({ openAlert, closeAddAchat, fetchAchat }: AddAchatPorps) =
 
 
     // Function to handle changes in the number of products
-    const handleQuantityChange = (productId: any, quantity: any, price: any) => {   
-        // Calculate the previous quantity for the selected product
-        const prevQuantity = selectedProducts[productId] || 0;
+    const handleQuantityChange = (productId: any, quantity: any, price: any) => {
+        // Check if quantity is a valid number (not empty and a number)
+        if (!isNaN(quantity) && quantity >= 0) {
+            // Calculate the previous quantity for the selected product
+            const prevQuantity = selectedProducts[productId] || 0;
 
-        // Calculate the change in quantity
-        const quantityChange = quantity - prevQuantity;
+            // Calculate the change in quantity
+            const quantityChange = quantity - prevQuantity;
 
-        // Calculate the total change in price for the selected product
-        const productTotalChange = quantityChange * price;
+            // Calculate the total change in price for the selected product
+            const productTotalChange = quantityChange * price;
 
-        // Update the selectedProducts state
-        setSelectedProducts({
-            ...selectedProducts,
-            [productId]: quantity,
-        });
-        setSelectedProductsPrice({
-            ...selectedProductsPrice,
-            [productId]: price,
-        });
+            // Update the selectedProducts state
+            setSelectedProducts({
+                ...selectedProducts,
+                [productId]: quantity,
+            });
+            setSelectedProductsPrice({
+                ...selectedProductsPrice,
+                [productId]: price,
+            });
 
-        // Update the Total state by subtracting the productTotalChange
-        setTotal((prevTotal) => prevTotal + productTotalChange);
+            // Update the Total state by subtracting the productTotalChange
+            setTotal((prevTotal) => prevTotal + productTotalChange);
+        }
     };
+
 
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (SupplierId === '') {
+            alert('Veuillez sélectionner un fornisseur.');
+            return; // This will exit the function if the condition is met
+        }
+
+        if (Object.keys(selectedProducts).length === 0 || Object.values(selectedProducts).every(product => product === 0)) {
+            alert('Veuillez sélectionner au moins un produit.');
+            return; // This will exit the function if the condition is met
+        }
         try {
             const response = await axios.post('http://localhost:3001/api/addAchat', {
                 SupplierID: SupplierId,
@@ -110,7 +123,7 @@ const AddAchatForm = ({ openAlert, closeAddAchat, fetchAchat }: AddAchatPorps) =
                             <option
                                 className="text-black"
                                 value="">
-                                    Fornisseur
+                                Fornisseur
                             </option>
                             {Supplier && Supplier.length > 0 ? (
                                 Supplier.map((SupplierInfo) => (
@@ -147,6 +160,8 @@ const AddAchatForm = ({ openAlert, closeAddAchat, fetchAchat }: AddAchatPorps) =
                                                 </div>
                                                 <div className='float-right'>
                                                     <input
+                                                        required
+                                                        min="0"
                                                         className='w-13 h-8 p-2 rounded border border-gray-900'
                                                         type="number"
                                                         name=""
@@ -195,7 +210,7 @@ const AddAchatForm = ({ openAlert, closeAddAchat, fetchAchat }: AddAchatPorps) =
                         >
                             Annuler
                         </button>
-                    <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Sauvegarder</button>
+                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Sauvegarder</button>
                     </div>
                 </form>
             </div>

@@ -67,6 +67,7 @@ const AddProductionForm = ({ openAlert, closeAddProduction, fetchProduction }: A
                             Date
                         </label>
                         <input
+                            required
                             type="date"
                             name="Date"
                             id="Date"
@@ -105,6 +106,7 @@ const AddProductionForm = ({ openAlert, closeAddProduction, fetchProduction }: A
                             Quantité
                         </label>
                         <input
+                            required
                             type="number"
                             name="Montant"
                             id="Montant"
@@ -118,6 +120,7 @@ const AddProductionForm = ({ openAlert, closeAddProduction, fetchProduction }: A
                             Cout
                         </label>
                         <input
+                            required
                             type="number"
                             name="Montant"
                             id="Montant"

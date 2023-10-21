@@ -61,6 +61,7 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700" htmlFor="Prenom">Prénom de client</label>
                         <input
+                            required
                             type="text"
                             id="Prenom"
                             value={clientData.Prenom}
@@ -71,6 +72,7 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">Nom De Client</label>
                         <input
+                            required
                             type="text"
                             id="NomDeFamille"
                             value={clientData.NomDeFamille}
@@ -81,6 +83,7 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="NumeroDeContact">Numero De Contact</label>
                         <input
+                            required
                             type="text"
                             id="NumeroDeContact"
                             value={clientData.NumeroDeContact}
@@ -91,6 +94,7 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="Email">Email</label>
                         <input
+                            required
                             type="mail"
                             id="Email"
                             value={clientData.Email}
@@ -101,6 +105,7 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
                     <div>
                         <label className="block text-sm font-medium text-gray-700" htmlFor="ConditionsDePaiement">Conditions De Paiement</label>
                         <input
+                            required
                             type="text"
                             id="ConditionsDePaiement"
                             value={clientData.ConditionsDePaiement}
@@ -115,7 +120,9 @@ const AddClientForm = ({ openAlert, closeAddClient, fetchClients }: AddClientPor
                         >
                             Annuler
                         </button>
-                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">Sauvegarder</button>
+                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">
+                            Sauvegarder
+                        </button>
                     </div>
                 </form>
                 <p>{message}</p>

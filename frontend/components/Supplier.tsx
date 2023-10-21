@@ -71,7 +71,7 @@ export default function Supplier(props: Supplier) {
             })
         ) : [];
 
-        
+
     //delete a Supplier....
 
     const handleDelete = (SupplierID: any) => {
@@ -126,7 +126,7 @@ export default function Supplier(props: Supplier) {
                 className="w-full text-sm text-left "
                 style={{
                     transition: 'height 0.5s ease-in-out',
-                    height : `${filteredSupplier.length * 50 + 40}px`
+                    height: `${filteredSupplier.length * 50 + 40}px`
                 }}
             >
                 <thead className={`text-xs uppercase ${DarkMode ? 'bg-gray-900 text-white' : ' bg-purple-900 text-white '}`}>
@@ -191,14 +191,14 @@ export default function Supplier(props: Supplier) {
                         <tr
                             className={`border-b dark:bg-gray-900 even:bg-gray-50  ${DarkMode ? 'bg-gray-500' : 'bg-white'}`}
                         >
-                            <td className="px-4 py-4  text-gray-800">
+                            <td className="px-4 py-4  text-white">
                                 Aucun donnes desponible
                             </td>
-                            <td className="px-1 py-4  text-gray-800"></td>
-                            <td className="px-1 py-4  text-gray-800"></td>
-                            <td className="px-1 py-4  text-gray-800"></td>
-                            <td className="px-1 py-4  text-gray-800"></td>
-                            <td className="px-1 py-4  text-gray-800"></td>
+                            <td className="px-1 py-4"></td>
+                            <td className="px-1 py-4"></td>
+                            <td className="px-1 py-4"></td>
+                            <td className="px-1 py-4"></td>
+                            <td className="px-1 py-4"></td>
                         </tr>
                     )
                     }

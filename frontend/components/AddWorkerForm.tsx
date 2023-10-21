@@ -238,6 +238,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         <div className="mb-4">
                             <label className="block text-sm font-medium text-gray-700" htmlFor="Prenom">Prénom d'employee</label>
                             <input
+                                required
                                 type="text"
                                 id="Prenom"
                                 value={WorkerData.Prenom}
@@ -248,6 +249,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         <div>
                             <label className="block text-sm font-medium text-gray-700" htmlFor="NomDeFamille">Nom d'employee</label>
                             <input
+                                required
                                 type="text"
                                 id="NomDeFamille"
                                 value={WorkerData.NomDeFamille}
@@ -258,6 +260,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         <div>
                             <label className="block text-sm font-medium text-gray-700" htmlFor="NumeroDeContact">Numero De Contact</label>
                             <input
+                                required
                                 type="text"
                                 id="NumeroDeContact"
                                 value={WorkerData.NumeroDeContact}
@@ -268,6 +271,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         <div>
                             <label className="block text-sm font-medium text-gray-700" htmlFor="Email">Email</label>
                             <input
+                                required
                                 type="mail"
                                 id="Email"
                                 value={WorkerData.Email}
@@ -280,6 +284,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                                 Poste
                             </label>
                             <select
+                                required
                                 id="Poste"
                                 value={WorkerData.Poste}
                                 onChange={handleJobChange}
@@ -296,6 +301,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         <div>
                             <label className="block text-sm font-medium text-gray-700" htmlFor="Poste">Salaire</label>
                             <input
+                                required
                                 type="text"
                                 id="Salaire"
                                 value={WorkerData.Salaire}
@@ -307,6 +313,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mt-5" htmlFor="Password">Mots De Pass</label>
                         <input
+                            required
                             type="text"
                             id="Password"
                             value={WorkerData.Password}
@@ -326,9 +333,9 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         >
                             Annuler
                         </button>
-                    <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">
-                        Sauvegarde
-                    </button>
+                        <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">
+                            Sauvegarde
+                        </button>
                     </div>
                 </form>
             </div >
