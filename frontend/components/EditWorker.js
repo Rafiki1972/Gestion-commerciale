@@ -22,7 +22,7 @@ const ModifierArticle = ({ Worker, onClose, openAlert, fetchWorker }) => {
         GestionDesFactures: Worker.GestionDesFactures,
         GestionDesResourcesHumaine: Worker.GestionDesResourcesHumaine,
     });
-    const jobOptions = ['Job 1', 'Job 2', 'Job 3'];
+    const jobOptions = ['Post 1', 'Post 2', 'Post 3'];
     const [LevelsDropdown, setLevelsDropdown] = useState(false)
     const handlLevelsDropdown = () => {
         setLevelsDropdown(!LevelsDropdown)
@@ -296,7 +296,7 @@ const ModifierArticle = ({ Worker, onClose, openAlert, fetchWorker }) => {
                             className="mt-1 p-2 w-full border-gray-300 rounded  border"
                         />
                     </div>
-                    <div className='mb-4'>
+                    <div className='mt-4'>
                         {accessLevelsDropdown}
                     </div>
                 </div>

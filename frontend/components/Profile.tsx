@@ -9,19 +9,19 @@ interface ProfileProps {
 interface UserProfile {
     username: string;
     Email: string;
+    Password: string;
 }
 
 const Profile = ({ DarkMode }: ProfileProps) => {
     // State to manage username and password
-    const [users, setUsers] = useState<UserProfile[]>([]);
+    const [userProfile, setUserProfile] = useState<UserProfile>({
+        username: '',
+        Email: '',
+        Password: '',
+    });
 
 
-    // State to manage whether Modifiering is enabled
-    const [isModifiering, setIsModifiering] = useState(false);
 
-    const hendleIsModifiering = () => {
-        setIsModifiering(!isModifiering)
-    }
 
     // Function to handle form submission
     const handleSubmit = (e: any) => {
@@ -34,8 +34,14 @@ const Profile = ({ DarkMode }: ProfileProps) => {
     useEffect(() => {
         fetch('http://localhost:3001/api/admin')
             .then((res) => res.json())
-            .then((data) => setUsers(data));
+            .then((data) => setUserProfile(data[0]));
     }, []);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setUserProfile({ ...userProfile, [name]: value });
+    }
+
 
     return (
         <motion.div
@@ -44,54 +50,54 @@ const Profile = ({ DarkMode }: ProfileProps) => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
             className="px-8 py-5 w-10/12 min-h-[100vh] ml-auto relative overflow-x-auto mb-5 shadow-md sm:rounded-lg">
+            <div className='flex gap-10 items-start justify-between'>
                 <div>
                     <h1 className='py-4 font-black text-white whitespace-nowrap uppercase'>
-                        Personal Information
+                        Informations Personelles
                     </h1>
                 </div>
-                <form onSubmit={handleSubmit} className='w-[70%] float-right px-20 space-y-8 border-l border-l-gray-600'>
+                <form
+                    onSubmit={handleSubmit}
+                    className={`px-20 mt-10 w-full space-y-8 border-l ${ DarkMode ? 'border-l-gray-600' : 'border-l-white'}`}>
                     <div className="mb-4">
                         <input
                             type="text"
                             id="Prenom"
-                            className={`mt-1 p-2 w-full border-gray-300 rounded border ${!isModifiering ? 'text-white bg-transparent border-b border-gray-600' : ''}`}
-                            value={users.length > 0 ? users[0].username : ''}
-                            readOnly={!isModifiering}
+                            name="username"
+                            className={`mt-1 p-2 w-full rounded border ${DarkMode ? 'border-gray-300' : 'border-white'}`}
+                            value={userProfile.username}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <input
+                            type="text"
+                            id="Email"
+                            name="Email"
+                            className={`mt-1 p-2 w-full rounded border ${DarkMode ? 'border-gray-300' : 'border-white'}`}
+                            value={userProfile.Email}
+                            onChange={handleInputChange}
                         />
                     </div>
                     <div className="mb-4">
                         <input
                             type="text"
                             id="Email"
-                            className={`mt-1 p-2 w-full border-gray-300 rounded border ${!isModifiering ? 'text-white bg-transparent border-b border-gray-600' : ''}`}
-                            value={users.length > 0 ? users[0].Email : ''}
-                            readOnly={!isModifiering}
+                            placeholder='Mots de passe'
+                            className={`mt-1 p-2 w-full rounded border ${DarkMode ? 'border-gray-300' : 'border-white'}`}
                         />
                     </div>
                     <div className='flex items-center justify-center gap-2'>
-                        {isModifiering ? (
-                            <>
-                                <button
-                                    className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
-                                    onClick={hendleIsModifiering}
-                                >
-                                    Annuler
-                                </button>
-                                <button className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 my-4" type="submit">
-                                    Sauvegarder
-                                </button>
-                            </>
-                        ) : (
-                            <button
-                                className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
-                                onClick={hendleIsModifiering}
-                            >
-                                Modifier
-                            </button>
-                        )
-                        }
+                        <button
+                            className="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 my-4"
+                            onClick={handleSubmit}
+                        >
+                            Modifier
+                        </button>
                     </div>
                 </form>
+            </div>
         </motion.div>
     );
 };

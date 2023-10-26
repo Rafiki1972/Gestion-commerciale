@@ -25,10 +25,12 @@ export default function Stock(props: Stock) {
     const [AlertState, setAlertState] = useState(null);
     const [Stock, setStock] = useState<Stock[]>([]);
     const [AddStock, setAddStock] = useState(false);
-    const stockNomDuProduitArray = Stock.map(stock => stock['NomDuProduit']);
     const [selectedStock, setSelectedStock] = useState(null);
     const [searchTerm, setSearchTerm] = useState<string>('');
-
+    const stockNomDuProduitArray =
+        Stock && Stock.length > 0 ? (
+            Stock.map(stock => stock['NomDuProduit'])
+        ) : [];
 
     const openEditStock = (Stock: any) => {
         setSelectedStock(Stock);

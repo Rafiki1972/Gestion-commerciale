@@ -189,9 +189,9 @@ export default function Supplier(props: Supplier) {
                         ))
                     ) : (
                         <tr
-                            className={`border-b dark:bg-gray-900 even:bg-gray-50  ${DarkMode ? 'bg-gray-500' : 'bg-white'}`}
+                            className={`border-b dark:bg-gray-900 even:bg-gray-50  ${DarkMode ? 'bg-gray-500 text-white' : 'bg-white'}`}
                         >
-                            <td className="px-4 py-4  text-white">
+                            <td className="px-4 py-4">
                                 Aucun donnes desponible
                             </td>
                             <td className="px-1 py-4"></td>

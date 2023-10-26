@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 19 oct. 2023 à 20:55
+-- Généré le : ven. 27 oct. 2023 à 00:13
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -36,15 +36,6 @@ CREATE TABLE `achat` (
   `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `achat`
---
-
-INSERT INTO `achat` (`PurchaseID`, `DateDAchat`, `SupplierID`, `MontantTotal`, `Notes`, `last_modification`) VALUES
-(2, '2023-10-13', NULL, 400.00, 'test note', '2023-10-13'),
-(6, '2023-10-19', 4, 1350.00, 'dfdfd', '2023-10-19'),
-(7, '2023-10-19', 4, 600.00, 'jr jr ,', '2023-10-19');
-
 -- --------------------------------------------------------
 
 --
@@ -63,16 +54,6 @@ CREATE TABLE `article` (
   `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `article`
---
-
-INSERT INTO `article` (`ArticleID`, `NomDeLArticle`, `Description`, `Code`, `Cout`, `PrixDeVente`, `product_image`, `created_at`, `last_modification`) VALUES
-(32, 'Khtek', 'Khtek has big boobs', '1078', 25.00, 98.00, 'image_1694904072445.png', '2023-09-16', '2023-09-16'),
-(33, 'Atay bn3na3', 'Best drink to drink', 'PROD-2076', 200.00, 199.00, 'image_1696627765361.png', '2023-10-06', '2023-10-06'),
-(34, 'coffe', 'coffee is the best', 'PROD-4144', 250.00, 125.00, 'image_1697451904892.JPG', '2023-10-16', '2023-10-18'),
-(35, 'Water', 'Water is nice', 'PROD-2235', 300.00, 199.00, 'image_1697452009285.jpeg', '2023-10-16', '2023-10-16');
-
 -- --------------------------------------------------------
 
 --
@@ -89,16 +70,6 @@ CREATE TABLE `articleachat` (
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `articleachat`
---
-
-INSERT INTO `articleachat` (`PurchaseItemID`, `PurchaseID`, `ArticleID`, `Quantite`, `PrixUnitaire`, `SousTotal`, `created_at`, `last_modification`) VALUES
-(3, 2, 33, 2, 200.00, 400.00, '2023-10-13', '2023-10-13'),
-(7, 6, 34, 3, 250.00, 750.00, '2023-10-19', '2023-10-19'),
-(8, 6, 35, 2, 300.00, 600.00, '2023-10-19', '2023-10-19'),
-(9, 7, 35, 2, 300.00, 600.00, '2023-10-19', '2023-10-19');
 
 -- --------------------------------------------------------
 
@@ -117,23 +88,6 @@ CREATE TABLE `articlevente` (
   `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `articlevente`
---
-
-INSERT INTO `articlevente` (`SaleItemID`, `SaleID`, `ArticleID`, `Quantite`, `PrixUnitaire`, `SousTotal`, `created_at`, `last_modification`) VALUES
-(9, 13, 32, 1, 98.00, 98.00, '2023-10-13', '2023-10-13'),
-(10, 13, 33, 2, 199.00, 398.00, '2023-10-13', '2023-10-13'),
-(11, 14, 32, 1, 98.00, 98.00, '2023-10-13', '2023-10-13'),
-(12, 15, 32, 2, 98.00, 196.00, '2023-10-16', '2023-10-16'),
-(13, 15, 33, 2, 199.00, 398.00, '2023-10-16', '2023-10-16'),
-(14, 15, 35, 1, 199.00, 199.00, '2023-10-16', '2023-10-16'),
-(15, 16, 33, 1, 199.00, 199.00, '2023-10-16', '2023-10-16'),
-(16, 17, 33, 1, 199.00, 199.00, '2023-10-18', '2023-10-18'),
-(17, 17, 35, 2, 199.00, 398.00, '2023-10-18', '2023-10-18'),
-(21, 19, 34, 2, 125.00, 250.00, '2023-10-19', '2023-10-19'),
-(22, 19, 35, 2, 199.00, 398.00, '2023-10-19', '2023-10-19');
-
 -- --------------------------------------------------------
 
 --
@@ -150,15 +104,6 @@ CREATE TABLE `client` (
   `created_at` date DEFAULT NULL,
   `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `client`
---
-
-INSERT INTO `client` (`ClientID`, `Prenom`, `NomDeFamille`, `NumeroDeContact`, `Email`, `ConditionsDePaiement`, `created_at`, `last_modification`) VALUES
-(5, 'Ahmed', 'Harmouch', '6862616786', 'mustaphaharmouch1972@gmail.com', 'Contrat thrth', '2023-09-16', '2023-10-16'),
-(9, 'Mustapha', 'Harmouch', '25', 'mustaphaharmouch1972@gmail.com', 'Contrat', '2023-09-16', '2023-09-16'),
-(10, 'Must', 'Harmouch', '25', 'mustaphaharmouch1972@gmail.com', 'Contrat', '2023-09-16', '2023-09-17');
 
 -- --------------------------------------------------------
 
@@ -188,13 +133,6 @@ CREATE TABLE `employe` (
   `last_modification` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `employe`
---
-
-INSERT INTO `employe` (`EmployeeID`, `Prenom`, `NomDeFamille`, `NumeroDeContact`, `Email`, `Password`, `Poste`, `Salaire`, `GestionDesEmployes`, `GestionDesArticles`, `GestionDesClient`, `GestionDesFournisseur`, `GestionDeStock`, `GestionDesAchats`, `GestionDesVentes`, `GestionDesFactures`, `GestionDesResourcesHumaine`, `created_at`, `last_modification`) VALUES
-(9, 'Souka', ' SR', '060873153', 'souka@gmail.com', '$2b$10$.1eVp4TpqW0IvG9XzDVKEuxyrUMpgcKPCzf5KH32lMfBcQzULyinS', 'Job 2', 2500, 1, 1, 0, 0, 1, 1, 1, 1, 1, '2023-10-03', '2023-10-17');
-
 -- --------------------------------------------------------
 
 --
@@ -211,15 +149,6 @@ CREATE TABLE `fournisseur` (
   `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `fournisseur`
---
-
-INSERT INTO `fournisseur` (`SupplierID`, `NomDuFournisseur`, `NumeroDeContact`, `Email`, `ConditionsDePaiement`, `created_at`, `last_modification`) VALUES
-(4, 'Mustapha', '0608731353', 'mustaphaharmouch1972@gmail.com', 'contrat cdn', '2023-09-17', '2023-10-18'),
-(5, 'Hayat', '25', 'mustaphaharmouch1972@gmail.com', 'contrat', '2023-09-17', '2023-09-17'),
-(6, 'Hayat', '25', 'mustaphaharmouch1972@gmail.com', 'contrat', '2023-09-17', '2023-09-17');
-
 -- --------------------------------------------------------
 
 --
@@ -233,14 +162,6 @@ CREATE TABLE `production` (
   `QuantiteProduite` int(11) DEFAULT NULL,
   `Cout` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `production`
---
-
-INSERT INTO `production` (`ProductionID`, `DateDeProduction`, `NomDuProduit`, `QuantiteProduite`, `Cout`) VALUES
-(2, '2023-10-19', 'Khtek', 25, 525.00),
-(3, '2023-10-05', 'Khtek', 200, 100.00);
 
 -- --------------------------------------------------------
 
@@ -256,15 +177,6 @@ CREATE TABLE `stock` (
   `QuantiteDisponible` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `stock`
---
-
-INSERT INTO `stock` (`StockID`, `Supplier`, `NomDuProduit`, `Description`, `QuantiteDisponible`) VALUES
-(17, 'Hayat', 'coffee', 'dfdfd', 200),
-(22, 'Hayat', 'Atay bn3na3', 'note for testing', 198),
-(23, 'Hayat', 'Water', 'gzergz', 251);
-
 -- --------------------------------------------------------
 
 --
@@ -277,14 +189,6 @@ CREATE TABLE `timesheet` (
   `Date` date DEFAULT NULL,
   `HeuresTravaillees` decimal(6,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `timesheet`
---
-
-INSERT INTO `timesheet` (`TimesheetID`, `EmployeeID`, `Date`, `HeuresTravaillees`) VALUES
-(3, 9, '2023-10-17', 20.00),
-(4, 9, '2023-10-05', 12.00);
 
 -- --------------------------------------------------------
 
@@ -299,15 +203,6 @@ CREATE TABLE `transactioncompte` (
   `Montant` decimal(10,2) DEFAULT NULL,
   `Notes` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `transactioncompte`
---
-
-INSERT INTO `transactioncompte` (`TransactionID`, `DateDeLaTransaction`, `TypeDeTransaction`, `Montant`, `Notes`) VALUES
-(3, '2023-10-18', 'Purchase', 150.00, 'Now the first note ( hope so )'),
-(5, '2023-10-18', 'Sale', 120.00, 'test'),
-(6, '2023-10-19', 'Expense', 200.00, 'rah hmad li 7azq wdwerna m3ah');
 
 -- --------------------------------------------------------
 
@@ -345,18 +240,6 @@ CREATE TABLE `vente` (
   `Notes` text DEFAULT NULL,
   `last_modification` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `vente`
---
-
-INSERT INTO `vente` (`SaleID`, `DateDeVente`, `ClientID`, `MontantTotal`, `Notes`, `last_modification`) VALUES
-(13, '2023-10-13', 9, 516.00, 'This is a note for Ahmed zaml', '2023-10-13'),
-(14, '2023-10-13', 10, 98.00, 'had syed 7azq ', '2023-10-13'),
-(15, '2023-10-16', 10, 793.00, 'dfdfa', '2023-10-16'),
-(16, '2023-10-16', 9, 199.00, '25273', '2023-10-16'),
-(17, '2023-10-18', 5, 597.00, 'vente note', '2023-10-18'),
-(19, '2023-10-19', 5, 648.00, 'dfagaer', '2023-10-19');
 
 --
 -- Index pour les tables déchargées
@@ -455,7 +338,7 @@ ALTER TABLE `vente`
 -- AUTO_INCREMENT pour la table `achat`
 --
 ALTER TABLE `achat`
-  MODIFY `PurchaseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `PurchaseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `article`
@@ -467,19 +350,19 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT pour la table `articleachat`
 --
 ALTER TABLE `articleachat`
-  MODIFY `PurchaseItemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `PurchaseItemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `articlevente`
 --
 ALTER TABLE `articlevente`
-  MODIFY `SaleItemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `SaleItemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT pour la table `client`
 --
 ALTER TABLE `client`
-  MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pour la table `employe`
@@ -527,7 +410,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `vente`
 --
 ALTER TABLE `vente`
-  MODIFY `SaleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `SaleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Contraintes pour les tables déchargées
@@ -557,13 +440,13 @@ ALTER TABLE `articlevente`
 -- Contraintes pour la table `timesheet`
 --
 ALTER TABLE `timesheet`
-  ADD CONSTRAINT `timesheet_ibfk_1` FOREIGN KEY (`EmployeeID`) REFERENCES `employe` (`EmployeeID`);
+  ADD CONSTRAINT `timesheet_ibfk_1` FOREIGN KEY (`EmployeeID`) REFERENCES `employe` (`EmployeeID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `vente`
 --
 ALTER TABLE `vente`
-  ADD CONSTRAINT `vente_ibfk_1` FOREIGN KEY (`ClientID`) REFERENCES `client` (`ClientID`);
+  ADD CONSTRAINT `vente_ibfk_1` FOREIGN KEY (`ClientID`) REFERENCES `client` (`ClientID`) ON DELETE SET NULL ON UPDATE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

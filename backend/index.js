@@ -275,7 +275,6 @@ app.post('/api/deleteClient', async (req, res) => {
 // Define a route to check if a code exists
 app.get('/api/checkCode/:code', (req, res) => {
   const codeToCheck = req.params.code;
-  console.log(codeToCheck)
   con.query(`SELECT * FROM article WHERE code = ${codeToCheck} `, function (err, result) {
     if (err) {
       console.error('Error fetching data:', err);

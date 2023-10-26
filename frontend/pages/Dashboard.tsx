@@ -109,7 +109,9 @@ function Dashboard() {
         const userId = getCookie('userId'); // Retrieve the user ID from the cookie
 
         // Find the worker with the matching user ID
-        const selectedWorker = worker.find(w => w.EmployeeID === Number(userId));
+        const selectedWorker = worker && worker.length > 0 ? (
+            worker.find(w => w.EmployeeID === Number(userId))
+        ) : []
 
         if (selectedWorker) {
             // Now you have the selected worker's data in the selectedWorker variable

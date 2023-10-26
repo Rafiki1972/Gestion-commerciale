@@ -72,3 +72,31 @@ table {
   border-radius: 10px;
   overflow: hidden;
 }
+
+.form-animation {
+  animation: formAnimation .3s cubic-bezier(0.89, 1.25, 0.34, 0.06);;
+}
+
+@keyframes formAnimation {
+  0% {
+    transform: translateX(-0px);
+    border: 1px solid red
+  }
+  25% {
+    transform: translateX(-50px);
+    border: 1px solid red
+  }
+  50% {
+    transform: translateX(0px);
+    border: 1px solid red
+  }
+  75% {
+    transform: translateX(50px);
+    border: 1px solid red
+  }
+
+  100% {
+    transform: translateX(0px);
+    border: 1px solid red
+  }
+}

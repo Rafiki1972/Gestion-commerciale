@@ -322,7 +322,7 @@ const AddWorkerForm = ({ openAlert, closeAddWorker, fetchWorkers }: AddWorkerPor
                         />
                     </div>
                     <div>
-                        <div className="mb-4">
+                        <div className="mx-4">
                             {accessLevelsDropdown}
                         </div>
                     </div>

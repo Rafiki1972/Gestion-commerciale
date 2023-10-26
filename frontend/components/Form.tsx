@@ -24,6 +24,7 @@ export const Form = () => {
     const [worker, setWorker] = useState<User[]>([]);
     const router = useRouter(); // Initialize useRouter
     const [userInput, setuserInput] = useState(true);
+    const [errorAnimation, setErrorAnimation] = useState(false);
 
     // from
 
@@ -40,9 +41,13 @@ export const Form = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setErrorAnimation(false); // Reset errorAnimation to false
+
+
         if (formData.type === 'admin') {
-            // Check if the entered username and hashed password match any user in the state
-            const foundUser = users.find(user => user.Email === formData.Email);
+            const foundUser = Array.isArray(users)
+                ? users.find(user => user.Email === formData.Email) || undefined
+                : undefined;
 
             if (foundUser) {
                 const passwordMatch = await bcrypt.compare(formData.Password, foundUser.Password);
@@ -56,19 +61,22 @@ export const Form = () => {
                     router.push('./Dashboard');
                 } else {
                     console.log('Invalid username or password');
+                    setErrorAnimation(true); // Set errorAnimation to true
                     setuserInput(false);
                 }
             } else {
                 console.log('Invalid username or password');
+                setErrorAnimation(true); // Set errorAnimation to true
                 setuserInput(false);
             }
         } else if (formData.type === 'worker') {
-            // Check if the entered username and hashed password match any user in the state
-            const foundWorker = worker.find(w => w.Email === formData.Email);
+            const foundWorker = Array.isArray(worker)
+                ? worker.find(w => w.Email === formData.Email) || undefined
+                : undefined;
 
             if (foundWorker) {
                 const passwordMatch = await bcrypt.compare(formData.Password, foundWorker.Password);
-                console.log(passwordMatch)
+                console.log(passwordMatch);
 
                 if (passwordMatch) {
                     // Passwords match, set cookies and navigate to Dashboard
@@ -78,14 +86,22 @@ export const Form = () => {
 
                     router.push('./Dashboard');
                 } else {
+                    setErrorAnimation(true); // Set errorAnimation to true
                     console.log('Invalid username or password');
+                    setErrorAnimation(true); // Set errorAnimation to true
                     setuserInput(false);
                 }
             } else {
+                setErrorAnimation(true); // Set errorAnimation to true
                 console.log('Invalid username or password');
+                setErrorAnimation(true); // Set errorAnimation to true
                 setuserInput(false);
             }
         }
+        setTimeout(() => {
+            setErrorAnimation(true);
+            setuserInput(false);
+        }, 500);
     };
 
 
@@ -113,15 +129,15 @@ export const Form = () => {
             });
     }, []);
     return (
-        <div className="w-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
+        <div className={`w-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] ${errorAnimation && 'form-animation'}`}>
             <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
                 <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
                     Connectez-Vous Au Tableau De Bord
                 </h3>
                 {!userInput && (
-                    <span className="mt-2 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                        {formData.Email === '' || formData.Password === '' ? 'Veuillez entrer votre nom d&sbquoutilisateur et votre mot de passe' : 'Nom d&sbquoutilisateur, mot de passe ou type d&sbquoutilisateur invalide'}
-                    </span>
+                    <div className="my-5 text-sm text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                        {formData.Email === '' || formData.Password === '' ? "Veuillez entrer votre nom d'utilisateur et votre mot de passe" : "Nom d'utilisateur, mot de passe ou type d'utilisateur invalide"}
+                    </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="group">
@@ -143,8 +159,7 @@ export const Form = () => {
 
                                 <label
                                     htmlFor="DeliveryStandard"
-                                    className="block cursor-pointer rounded-lg border border-purple-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-purple-200 peer-checked:border-purple-500 peer-checked:ring-1 peer-checked:purple-900"
-
+                                    className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-purple-500 peer-checked:ring-1 peer-checked:ring-purple-500"
                                 >
                                     <div className="flex items-center justify-between">
                                         <p className="text-gray-700 cursor-pointer">Admin</p>
@@ -182,7 +197,7 @@ export const Form = () => {
                                     className="block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-purple-500 peer-checked:ring-1 peer-checked:ring-purple-500"
                                 >
                                     <div className="flex items-center justify-between">
-                                        <p className="text-gray-700 cursor-pointer">Empoye</p>
+                                        <p className="text-gray-700 cursor-pointer">Employee</p>
 
                                         <svg
                                             className="hidden h-5 w-5 text-purple-600"

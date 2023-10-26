@@ -1,11 +1,12 @@
 'use client'
 import React from 'react';
+import { useEffect, useState } from 'react';
 /* These import statements are importing specific icons from different icon libraries
 (`react-icons/vsc`, `react-icons/io5`, `react-icons/md`). */
 import { VscAccount } from "react-icons/vsc";
 import { IoMoon, IoLogOut } from "react-icons/io5";
 import { FaRegSun } from "react-icons/fa6";
-import { FaHospitalUser, FaUserTag, FaReceipt , FaBusinessTime} from "react-icons/fa";
+import { FaHospitalUser, FaUserTag, FaReceipt, FaBusinessTime } from "react-icons/fa";
 import { HiChartPie, HiMiniBanknotes } from "react-icons/hi2";
 import { MdSell, MdWork, MdProductionQuantityLimits } from "react-icons/md";
 import { TbBusinessplan } from "react-icons/tb";
@@ -26,6 +27,14 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
     const GestionDesFactures = worker[0]?.GestionDesFactures;
     const GestionDesResourcesHumaine = worker[0]?.GestionDesResourcesHumaine;
     const adminState = getCookie('usertype')
+
+
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        setIsAdmin(adminState === 'admin');
+    }, [adminState]);
+
     return (
         <nav
             id="sidebar"
@@ -220,18 +229,17 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                         </div>
                     </div>
                     <div className={`w-2/12 px-3 pt-2 border-t border-r space-y-2 fixed bottom-0 ${DarkMode ? 'bg-gray-900' : 'bg-purple-900'}`}>
-                        {adminState === 'admin' &&
+                        {isAdmin && (
                             <div
                                 className={`text-base text-white font-normal rounded-lg flex items-center p-2 cursor-pointer group ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'}  ${selectedItem === 'profile' ? 'font-extrabold text-amber-400' : 'text-white'}`}
                                 onClick={() => handleItemClick('profile')}
                             >
-                                <VscAccount
-                                    className="w-6 h-6 text-white group-hover:text-white transition duration-75" />
-                                <span className="ml-3  hidden md:block">
+                                <VscAccount className="w-6 h-6 text-white group-hover:text-white transition duration-75" />
+                                <span className="ml-3 hidden md:block">
                                     Profile
                                 </span>
                             </div>
-                        }
+                        )}
                         <div onClick={handleDarkMode}
                             className={`cursor-pointer text-base text-white font-normal rounded-lg flex items-center p-2 group ${DarkMode ? 'hover:bg-gray-400' : 'hover:bg-purple-400'} `}>
                             {DarkMode ? (
@@ -265,6 +273,6 @@ export const NavBar = ({ worker, handleItemClick, handleDarkMode, DarkMode, sele
                 </div>
             </div >
 
-        </nav>
+        </nav >
     );
 };

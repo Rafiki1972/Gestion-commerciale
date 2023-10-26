@@ -150,10 +150,10 @@ export default function CardLineChart(props: ChartComponentProps) {
                                     id="HeadlineAct"
                                     className={`py-1.5 px-2 cursor-pointer rounded-lg border-gray-300 sm:text-sm ${DarkMode ? 'bg-transparent border text-white' : 'text-gray-700 '}`}
                                 >
-                                    <option value="2023">2023</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2021">2021</option>
-                                    <option value="2020">2020</option>
+                                    <option className={`${DarkMode ? 'bg-gray-700 ' : ''}`} value="2023">2023</option>
+                                    <option className={`${DarkMode ? 'bg-gray-700 ' : ''}`} value="2023">2022</option>
+                                    <option className={`${DarkMode ? 'bg-gray-700 ' : ''}`} value="2023">2021</option>
+                                    <option className={`${DarkMode ? 'bg-gray-700 ' : ''}`} value="2023">2020</option>
                                 </select>
                             </div>
                         </div>
